@@ -23,8 +23,7 @@ function createViz() {
     loadData();
 }
 
-//comment
-//fdfd
+
 function loadData() {
     const geoDataPromise = d3.json("data/asia2.geojson");
     const csvDataPromise = d3.csv("data/mergeddata.csv");
