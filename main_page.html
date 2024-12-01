@@ -1,33 +1,71 @@
 <!DOCTYPE html>
+
+
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Countries included in our study</title>
-        <!-- Include D3.js library -->
-        <script type="text/javascript" src="data/d3.v7.min.js"></script>
-        <!-- Link to your JavaScript file -->
-        <script type="text/javascript" src="main.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-        <style>
-            /* svg {
-                display: block;
-                border: 1px solid #444;
-                margin: auto;
-            } */
-            /* .country {
-                stroke: gray;
-                fill: #EEE;
-            } */
-        </style>
-    </head>
-    <body onload="createViz()">
-        <div id="mapContainer"></div>
-        <div id="input-container" style="position: absolute; top: 10px; right: 10px;">
-            <label for="question-number">Enter Question Number (1-172):</label>
-            <input type="number" id="question-number" min="1" max="172" />
-            <button id="submit-question">Submit</button>
-            <div id="warning-message" style="color: red; display: none;">Invalid question number. Please enter a number between 1 and 172.</div>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="data/d3.v7.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        #main-container {
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center horizontally */
+        }
+        #histogram-container {
+            width: 80%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #country-histogram {
+            width: 80%;
+            text-align: center;
+            margin-top: 20px; /* Add some spacing above the histogram */
+            margin-bottom: 50px; /* Increase spacing below the histogram */
+        }
+        #individualMap {
+            margin-top: 50px; /* Push the map down further */
+        }
+        svg {
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body onload="createViz()">
+
+    <div id="main-container">
+
+
+        <div id="respondentMap"></div> 
+
+        <!-- All Countries Histogram -->
+        <div id="histogram-container">
+            <h3>Histogram of responses by question</h3>
+            <svg id="histogram" width="600" height="400"></svg>
+            <div id="input-container" style="margin-top: 10px;">
+                <label for="question-number">Enter Question Number (1-172):</label>
+                <input type="number" id="question-number" min="1" max="172" />
+                <div id="warning-message" style="color: red; display: none;"></div>
+            </div>
         </div>
-        <svg id="histogram" width="300" height="300" style="position: absolute; top: 50px; right: 10px;"></svg>
-    </body>
+
+        <!-- Selected Country Histogram -->
+        <h3 style="text-align: center;">Single-country subset of the above histogram:</h3>
+        <div id="country-select-container" style="margin-bottom: 10px;">
+            <select id="country-select">
+                <option value="">Select a country</option>
+            </select>
+        </div>
+        <div id="country-histogram">
+            <svg id="country-specific-histogram" width="600" height="400"></svg>
+        </div>
+
+        <!-- Individual Map -->
+        <div id="individualMap"></div>
+
+    </div>
+
+</body>
 </html>
