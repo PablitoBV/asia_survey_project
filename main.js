@@ -10,6 +10,55 @@ const ctx = {
 };
 
 
+/* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
+
+    TimeSpace:
+        1 country
+        2 year
+        3 month
+        4 idnumber
+        5 region
+        6 Level (Urban or Rural)
+
+    Questions:
+    1 - 179 Questions
+        1 - 6 A Economic Evaluations  
+        7 - 19 B Trust in Institutions  
+        20 - 32 C Social Capita  
+        33 - 39 D Participation In Elections  
+        40 - 44 E Access to Public Service  
+        45 - 47 F Psychological Involvment  
+        48 - 53 G Internet and Social Media  
+        54 - 55 H Partisanship  
+        56 - 69 I Traditionalism  
+        70 - 79 J Political Participation  
+        80 - 92 K Regime Preferences  
+        93 - 96 L Meaning of Democracy  
+        97 - 103 M Satisfaction With Government And Democracy  
+        104 - 107 N Most Important Problems  
+        108 - 127 O Quality Of Governance  
+        128 - 131 P Regime Evaluation  
+        132 - 136 Q Democratic Legitimacy And Preference For Democracy  
+        137 - 156 R Agreement/Disagreement With Specific Statements  
+        157 - 161 S Globalization  
+        162 - 167 T Redistribution  
+        168 - 170 U Citizenship  
+        171 - 179 V International Relations
+    
+
+    SocioEconomic Indicators:
+        1 - 59
+
+    Interview Record:
+        1 - 32
+     
+    Weights:
+        1 w
+        2 wcross
+
+------------------------------------------------------------------------------------------------------------------------------*/
+
+
 function createViz() {
     console.log("Using D3 v" + d3.version);
     const geoDataPromiseAsia = d3.json("data/asia2.geojson");
@@ -18,7 +67,41 @@ function createViz() {
 
     Promise.all([geoDataPromiseAsia, geoDataPromiseIndiv, csvDataPromise]).then(([respondents, indivCountry, csvData]) => {
         const countryCounts = countCountries(csvData);
-        // console.log(countryCounts);
+
+        const columns = csvData.columns;
+
+        // Group columns into variables
+        const TimeSpace = columns.slice(0, 6).map(col => ({
+            header: col,
+            values: csvData.map(row => row[col])
+        }));
+
+        const Questions = columns.slice(6, 185).map(col => ({
+            header: col,
+            values: csvData.map(row => row[col])
+        }));
+    
+        const SocioEconomicIndicators = columns.slice(185, 244).map(col => ({
+            header: col,
+            values: csvData.map(row => row[col])
+        }));
+    
+        const InterviewRecords = columns.slice(244, 276).map(col => ({
+            header: col,
+            values: csvData.map(row => row[col])
+        }));
+
+        const Weights = columns.slice(276, 278).map(col => ({
+            header: col,
+            values: csvData.map(row => row[col])
+        }));
+
+        console.log(TimeSpace);
+        console.log(Questions);
+        console.log(SocioEconomicIndicators);
+        console.log(InterviewRecords);
+        console.log(Weights);
+    
 
         var respondentMap = d3.select("#respondentMap").append("svg")
             .attr("width", ctx.MAP_W)
