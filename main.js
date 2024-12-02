@@ -13,48 +13,48 @@ const ctx = {
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
     TimeSpace:
-        1 country
-        2 year
-        3 month
-        4 idnumber
-        5 region
-        6 Level (Urban or Rural)
+        0 country
+        1 year
+        2 month
+        3 idnumber
+        4 region
+        5 Level (Urban or Rural)
 
     Questions:
-    1 - 179 Questions
-        1 - 6 A Economic Evaluations  
-        7 - 19 B Trust in Institutions  
-        20 - 32 C Social Capita  
-        33 - 39 D Participation In Elections  
-        40 - 44 E Access to Public Service  
-        45 - 47 F Psychological Involvment  
-        48 - 53 G Internet and Social Media  
-        54 - 55 H Partisanship  
-        56 - 69 I Traditionalism  
-        70 - 79 J Political Participation  
-        80 - 92 K Regime Preferences  
-        93 - 96 L Meaning of Democracy  
-        97 - 103 M Satisfaction With Government And Democracy  
-        104 - 107 N Most Important Problems  
-        108 - 127 O Quality Of Governance  
-        128 - 131 P Regime Evaluation  
-        132 - 136 Q Democratic Legitimacy And Preference For Democracy  
-        137 - 156 R Agreement/Disagreement With Specific Statements  
-        157 - 161 S Globalization  
-        162 - 167 T Redistribution  
-        168 - 170 U Citizenship  
-        171 - 179 V International Relations
+    0 - 178 Questions
+        0 - 5 A Economic Evaluations  
+        6 - 18 B Trust in Institutions  
+        19 - 31 C Social Capita  
+        32 - 38 D Participation In Elections  
+        39 - 43 E Access to Public Service  
+        44 - 46 F Psychological Involvment  
+        47 - 52 G Internet and Social Media  
+        53 - 54 H Partisanship  
+        55 - 68 I Traditionalism  
+        69 - 78 J Political Participation  
+        79 - 91 K Regime Preferences  
+        92 - 95 L Meaning of Democracy  
+        96 - 102 M Satisfaction With Government And Democracy  
+        103 - 106 N Most Important Problems  
+        107 - 126 O Quality Of Governance  
+        127 - 130 P Regime Evaluation  
+        131 - 135 Q Democratic Legitimacy And Preference For Democracy  
+        136 - 155 R Agreement/Disagreement With Specific Statements  
+        156 - 160 S Globalization  
+        161 - 166 T Redistribution  
+        167 - 169 U Citizenship  
+        170 - 178 V International Relations
     
 
     SocioEconomic Indicators:
-        1 - 59
+        0 - 58
 
     Interview Record:
-        1 - 32
+        0 - 31
      
     Weights:
-        1 w
-        2 wcross
+        0 w
+        1 wcross
 
 ------------------------------------------------------------------------------------------------------------------------------*/
 
