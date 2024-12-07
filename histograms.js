@@ -1,10 +1,16 @@
-import { ctx } from './parameters.js';  // Import ctx parameters
+import { ctx, loadQuestions } from './parameters.js';  // Import ctx parameters
+
+
+
 
 // trigger histogram updates when a question or a country is selected
 export function Histogram_updates(csvData) {
     const inputBox = document.getElementById("question-number");
+    const descriptionDiv = document.getElementById("question-description"); // future display of selected question
     const warningMessage = document.getElementById("warning-message");
     const countrySelector = document.getElementById('country-select');
+    
+
 
     // Initialization phase (load page with question 1 used directly)
     if (inputBox) {
@@ -14,13 +20,17 @@ export function Histogram_updates(csvData) {
     if (!countrySelector.value) {countrySelector.value = "China";} // Set default to "China" if no selection
         const selectedCountry = countrySelector.value || "China"; // Default to "China" if no value
         countrySpecificHistogram(selectedCountry, csvData, 1);
+
+    getQuestionDescription(1).then(description => {
+        descriptionDiv.innerHTML = description;  // Display the description
+    });
     // end of initialization phase
 
     // Handle Question number change
     inputBox.addEventListener("input", function () {
         let questionNumber = inputBox.value.replace(/^0+/, ''); // Remove leading 0s
 
-        // Check if the input is empty
+        // Check if input is empty
         if (questionNumber === '') {
             console.log("empty input");
             warningMessage.textContent = 'Invalid question number. Please enter a number between 1 and 172.';
@@ -30,6 +40,7 @@ export function Histogram_updates(csvData) {
         else if (isNaN(questionNumber) || questionNumber < 1 || questionNumber > 172) {
             warningMessage.textContent = 'Invalid question number. Please enter a number between 1 and 172.';
             warningMessage.style.display = "block"; // Show warning message
+
         } else { // Valid input
             warningMessage.style.display = "none"; // Hide warning message
             drawHistogram(csvData, questionNumber); // Update the histogram
@@ -37,12 +48,15 @@ export function Histogram_updates(csvData) {
             if (!countrySelector.value) {countrySelector.value = "China";} // Set default to "China" if no selection
             const selectedCountry = countrySelector.value || "China"; 
             countrySpecificHistogram(selectedCountry, csvData, questionNumber);
+            getQuestionDescription(questionNumber).then(description => {
+                descriptionDiv.innerHTML = description;  // Update the description div
+            });
         }
     });
 
     // Handle selected country change
     countrySelector.addEventListener("change", function() {
-        console.log("country changed");
+        // console.log("country changed");
         let questionNumber = inputBox.value.replace(/^0+/, ''); // Remove leading 0s
         if (!countrySelector.value) {countrySelector.value = "China";} // Set default to "China" if no selection
         const selectedCountry = countrySelector.value || "China"; // Default to "China" if no value
@@ -65,6 +79,7 @@ export function drawHistogram(csvData,questionNumber) {
     );
 
     var initData = Array.from(answerCounts, ([answer, count]) => ({ answer, count }));
+
     var sorted_data = initData.sort((a, b) => a.answer.localeCompare(b.answer));
     var data = sorted_data.sort((a, b) => {
         if (a.answer === 'Missing') return 1;  // Move "Missing" to the end
@@ -130,7 +145,7 @@ export function drawHistogram(csvData,questionNumber) {
 };
 
 
-// Build another histogram below, specific to the country selected and the question selected
+// Build another histogram at the side, specific to the country selected and the question selected
 export function countrySpecificHistogram(selectedCountry, csvData, questionNumber) {
     if (!selectedCountry || !csvData) {
         console.error("Invalid country or CSV data");
@@ -233,6 +248,9 @@ export function countrySpecificHistogram(selectedCountry, csvData, questionNumbe
 // On-hover behavior (hoverbox + highlight)
 export function histHoverAndHighlight(bar, highlightColor="rgb(127,205,187)") {
 
+    // have total count of the data, to have the percentages show up
+    const totalCount = d3.sum(bar.data(), d => d.count); 
+    
     const hoverbox = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("position", "absolute")
@@ -247,8 +265,9 @@ export function histHoverAndHighlight(bar, highlightColor="rgb(127,205,187)") {
         .style("font-family", "'Righteous', sans-serif");
 
     bar.on("mouseover", (event, d) => {
+        const percentage = ((d.count / totalCount) * 100).toFixed(1); //get percentage, rounded to 1 decimal
         // Show hoverbox 
-        hoverbox.html(`${d.count}`)
+        hoverbox.html(`${d.count} (${percentage}%)`)
             .style("visibility", "visible")
             .style("top", (event.pageY + 10) + "px")
             .style("left", (event.pageX + 10) + "px")
@@ -284,3 +303,17 @@ export function populateCountryDropdown(csvData) {
         selectElement.appendChild(option);
     });
 }
+
+// function to write out the question under the input box.
+async function getQuestionDescription(questionNumber) {
+    // Wait until the questions are loaded
+    await loadQuestions();  // This will wait for the questions to be fully loaded
+
+    const question = ctx.questions.find(q => q.id === `q${questionNumber}`);
+    if (question) {
+        return question.description;  // Return the description if found
+    } else {
+        return "No description available.";  // Return a fallback message
+    }
+}
+
