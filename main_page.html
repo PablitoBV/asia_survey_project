@@ -4,74 +4,17 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="data/d3.v7.min.js"></script>
     <script type="module" src="main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <style>
-        #main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        /* Top Map */
-        #map-container-1, #map-container-2 {
-            width: 100%;
-            height: 400px;
-            position: relative;
-        }
-
-        /* Container for the two histograms */
-        #histograms-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start; /* Align histograms to the top */
-            width: 100%;
-            margin: 10px 0; 
-            flex-wrap: wrap; 
-        }
-
-        #histogram-1, #histogram-2 {
-            flex: 1; 
-            max-width: 45%;
-            text-align: center;
-            margin: 0 10px; /* Space between histograms */
-            height: auto; 
-        }
-
-        svg {
-            width: 100%;
-            height: auto; 
-        }
-
-        /* Adjust selectors container spacing */
-        #selectors-container {
-            margin-top: 0px; 
-            text-align: center;
-        }
-
-        /* Adjust spacing inside the input container */
-        #input-container, #country-select-container {
-            margin: 5px 0; 
-        }
-
-        /* Optional: Style the selectors for better alignment */
-        #question-number, #country-select {
-            padding: 5px;
-            width: 200px;
-        }
-
-        /* Reduce warning message spacing */
-        #warning-message {
-            margin-top: 5px;
-            color: red;
-            display: none;
-        }
-    </style>
-
 </head>
 <body>
+
+    <nav style="text-align: center; margin: 10px;">
+        <a href="scatterplots_page.html">Scatterplots page</a>
+        
+    </nav>
     <!-- <body onload="createViz()"> -->
     <div id="main-container">
 
@@ -105,6 +48,19 @@
             <div id="input-container">
                 <label for="question-number">Select Question Number (1-172):</label>
                 <input type="number" id="question-number" min="1" max="172" />
+                <div>
+                    <label for="group-dropdown">Select Group:</label>
+                    <select id="group-dropdown">
+                        <option value="">--Select a group--</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="question-dropdown">Select Question:</label>
+                    <select id="question-dropdown">
+                        <option value="">--Select a question--</option>
+                    </select>
+                </div>
                 <div id="warning-message" style="color: red; display: none;"></div>
                 
             </div>

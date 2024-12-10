@@ -1,0 +1,76 @@
+#main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Top Map */
+#map-container-1, #map-container-2 {
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+
+/* Container for the two histograms */
+#histograms-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start; /* Align histograms to the top */
+    width: 100%;
+    margin: 10px 0; 
+    flex-wrap: wrap; 
+}
+
+#histogram-1, #histogram-2 {
+    flex: 1; 
+    max-width: 45%;
+    text-align: center;
+    margin: 0 10px; /* Space between histograms */
+    height: auto; 
+}
+
+svg {
+    width: 100%;
+    height: auto; 
+}
+
+/* Adjust selectors container spacing */
+#selectors-container {
+    margin-top: 0px; 
+    text-align: center;
+}
+
+/* Adjust spacing inside the input container */
+#input-container, #country-select-container {
+    margin: 5px 0; 
+}
+
+/* Optional: Style the selectors for better alignment */
+#question-number, #country-select {
+    padding: 5px;
+    width: 200px;
+}
+/* Style for the buttons for other pages*/
+nav {
+background-color: #f4f4f4;
+padding: 10px;
+font-size: 16px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 10px;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+/* Reduce warning message spacing */
+#warning-message {
+    margin-top: 5px;
+    color: red;
+    display: none;
+}

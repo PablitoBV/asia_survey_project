@@ -239,10 +239,19 @@ export function countrySpecificHistogram(selectedCountry, csvData, questionNumbe
         .call(d3.axisLeft(yScaleCountry));
 }
 
+// End of main part
 
-//////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
-// Helper functions 
+////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////// Helper functions //
 
 
 // On-hover behavior (hoverbox + highlight)
@@ -306,9 +315,7 @@ export function populateCountryDropdown(csvData) {
 
 // function to write out the question under the input box.
 async function getQuestionDescription(questionNumber) {
-    // Wait until the questions are loaded
-    await loadQuestions();  // This will wait for the questions to be fully loaded
-
+    await loadQuestions();  
     const question = ctx.questions.find(q => q.id === `q${questionNumber}`);
     if (question) {
         return question.description;  // Return the description if found
@@ -317,3 +324,46 @@ async function getQuestionDescription(questionNumber) {
     }
 }
 
+
+
+
+// Populate the group dropdown with unique groups from the questions JSON
+export function populateGroupDropdown() {
+    loadQuestions().then(() => {
+        const groupDropdown = document.getElementById("group-dropdown");
+        const uniqueGroups = Array.from(new Set(ctx.questions.map(q => q.group)));
+
+        uniqueGroups.forEach(group => {
+            const option = document.createElement("option");
+            option.value = group;
+            option.textContent = group;
+            groupDropdown.appendChild(option);
+        });
+
+        groupDropdown.addEventListener("change", function () {
+            const selectedGroup = groupDropdown.value;
+            populateQuestionDropdownByGroup(selectedGroup);
+        });
+    });
+}
+
+// Populate the question dropdown based on the selected group
+export function populateQuestionDropdownByGroup(selectedGroup) {
+    const questionDropdown = document.getElementById("question-dropdown");
+    questionDropdown.innerHTML = ""; // Clear previous options
+
+    // Filter questions based on the selected group
+    const filteredQuestions = ctx.questions.filter(q => q.group === selectedGroup);
+
+    filteredQuestions.forEach(question => {
+        const option = document.createElement("option");
+        option.value = question.id; // Set the question ID as the value
+        option.textContent = question.description; // Display the question description
+        questionDropdown.appendChild(option);
+    });
+}
+
+// Call this function to initialize the group dropdown when the page loads
+export function initializeDropdowns() {
+    populateGroupDropdown();
+}

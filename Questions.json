@@ -888,5 +888,329 @@
       "id": "q172",
       "description": "How close do you feel to ASEAN? (ASEAN countries only)?",
       "group": "W"
-    }]
+    },
+    {
+      "id": "se2",
+      "description": "Gender",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se3_1",
+      "description": "Birth Year",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se3_2",
+      "description": "Age at time of study",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se4",
+      "description": "Marital Status",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se5",
+      "description": "Level of education",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se5a",
+      "description": "How many year of formal education have you received",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se6",
+      "description": "Religion",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se7",
+      "description": "Religiosity",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se7a",
+      "description": "Would you describe yourself as very religious, moderately religious, lightly religious, not religious at all?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se8a",
+      "description": "How many people live in this household?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se8c",
+      "description": "How many people live in this household, INCLUDING servants, transients and boarders?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se8d",
+      "description": "How many people live in this household, EXCLUDING servants, transients and boarders?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se8b",
+      "description": "How many generations of family members live in this household?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se9",
+      "description": "Are you currently employed?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se10_1",
+      "description": "Is the main earner in your household currently employed?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se9a",
+      "description": "Are you currently self-employed, working in a family business or an outside employer?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se10a",
+      "description": "Is the main earner in your household currently self-employed, working in family business or working for an outside employer?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se9b",
+      "description": "How many people does your business employ?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se10b",
+      "description": "How many people does the business of the main earner in your household employ?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se9c",
+      "description": "What is your job title? (ISO Code)",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se10c",
+      "description": "What is the job title of the main earner in your house? (ISO Code)",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se9d",
+      "description": "Are you currently seeking employment?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se10d",
+      "description": "Is the main earner of your household currently seeking employment?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se9e",
+      "description": "Current employment status",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se10e",
+      "description": "Current employment status of main earner in the household",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se10",
+      "description": "Are you the main earner in your household?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se11",
+      "description": "Language spoken the most at home",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1
+    },
+    {
+      "id": "se11a",
+      "description": "Racial or ethnic background",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se12",
+      "description": "Where would you place your family on a scale from 1 to 10, 10 being highest status?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se12a",
+      "description": "Where would you place your family on this scale of social classes?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se13a",
+      "description": "Where would you place yourself on this scale from poorest to richest?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se13b",
+      "description": "Where would you place your parents on this scale from poorest to richest?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se13a",
+      "description": "Where would you place your children on this scale from poorest to richest?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se14",
+      "description": "Annual or monthly household income",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se14a",
+      "description": "Does the total income of your household allow you to satisfactorily cover your needs?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15a",
+      "description": "Do you or your family own a Car/Jeep?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15b",
+      "description": "Do you or your family own a tractor?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15c",
+      "description": "Do you or your family own a color or B/W television?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15d",
+      "description": "Do you or your family own a cable TV?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15e",
+      "description": "Do you or your family own a scooter/motorcycle/moped?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15f",
+      "description": "Do you or your family own a telephone?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15g",
+      "description": "Do you or your family own a mobile phone?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15h",
+      "description": "Do you or your family own a electric fan/cooler?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15i",
+      "description": "Do you or your family own a bicycle?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15j",
+      "description": "Do you or your family own a radio/transistor?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15k",
+      "description": "Do you or your family own a pumping set?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15l",
+      "description": "Do you or your family own a fridge?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15m",
+      "description": "Do you or your family own a camera?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15n",
+      "description": "Do you or your family own goats/sheep?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    },
+    {
+      "id": "se15o",
+      "description": "Do you or your family own cows/buffalo?",
+      "group": "Socio-Economic Background",
+      "missing_mark": -1,
+      "separated_by_country": true
+    }
+  ]
     }
