@@ -233,32 +233,32 @@
     {
       "id": "q47",
       "description": "Do you have Internet access at home?",
-      "group": "G. Internet and Social Media"
+      "group": "G. INTERNET AND SOCIAL MEDIA"
     },
     {
       "id": "q48",
       "description": "Do you have Internet access on a mobile phone?",
-      "group": "G. Internet and Social Media"
+      "group": "G. INTERNET AND SOCIAL MEDIA"
     },
     {
       "id": "q49",
       "description": "How often do you use the internet?",
-      "group": "G. Internet and Social Media"
+      "group": "G. INTERNET AND SOCIAL MEDIA"
     },
     {
       "id": "q50",
       "description": "Do you currently use any of the following social media networks? (provide the three most popular examples in a given country context)",
-      "group": "G. Internet and Social Media"
+      "group": "G. INTERNET AND SOCIAL MEDIA"
     },
     {
       "id": "q51",
       "description": "How often do you use the Internet including social media networks to find information about politics and government? (provide the three most popular examples in a given country context)",
-      "group": "G. Internet and Social Media"
+      "group": "G. INTERNET AND SOCIAL MEDIA"
     },
     {
       "id": "q52",
       "description": ". How often do you use the Internet including social media networks to express your opinion about politics and government?",
-      "group": "G. Internet and Social Media"
+      "group": "G. INTERNET AND SOCIAL MEDIA"
     },
     {
       "id": "q53",
@@ -1213,4 +1213,4 @@
       "separated_by_country": true
     }
   ]
-    }
+}
