@@ -14,8 +14,8 @@ body {
 /* Top Map */
 #map-container-1, #map-container-2 {
     width: 100%;
-    height: 400px;
-    position: relative;
+    /* height: 400px; */
+    /* position: relative; */
 }
 
 /* Container for the two histograms */

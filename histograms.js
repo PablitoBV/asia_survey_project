@@ -1,4 +1,4 @@
-import { ctx } from './parameters.js';  // Import ctx parameters
+import { ctx, sortDataByScale, sortDataAlphabetically } from './parameters.js';  // Import ctx parameters
 
 
 export function Histogram_updates(csvData) {
@@ -32,12 +32,17 @@ export function drawHistogram(csvData, containerId, questionNumber) {
         d => d
     );
 
+
+
     var initData = Array.from(answerCounts, ([answer, count]) => ({ answer, count }));
 
     var sorted_data = initData.sort((a, b) => a.answer.localeCompare(b.answer));
+
+    // var sorted_data =
+
     var data = sorted_data.sort((a, b) => {
-        if (a.answer === 'Missing') return 1;  // Move "Missing" to the end
-        if (b.answer === 'Missing') return -1; // If 'Missing' is already at the end, keep it
+        if (a.answer === 'Missing' || a.answer === 'missing') return 1;  // Move "Missing" to the end
+        if (b.answer === 'Missing' || b.answer === 'missing') return -1; // If 'Missing' is already at the end, keep it
         return 0;
     });
 
@@ -124,7 +129,7 @@ export function countrySpecificHistogram(selectedCountry, csvData, containerId, 
     }
 
     const validAnswers = filteredCountryData
-    .map(row => row[questionColumn] !== undefined && row[questionColumn] !== null ? row[questionColumn] : "ABCDE");
+    .map(row => row[questionColumn] !== undefined && row[questionColumn] !== null ? row[questionColumn] : "No data");
 
     if (validAnswers.length === 0) {
         console.error(`No valid answers found for question ${questionNumber} in country ${selectedCountry}`);
