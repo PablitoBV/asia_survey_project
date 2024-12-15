@@ -13,6 +13,7 @@ export const ctx = {
     respondent_map_bounds: NamedNodeMap, 
     appState: {
         currentQuestion: 1,
+        selectedCountries: [],
         selectedCountry: "China",
         selectedGroup: null,
     },

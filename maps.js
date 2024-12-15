@@ -81,7 +81,7 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
                 .style("top", (event.pageY + 10) + "px")
                 .style("left", (event.pageX + 10) + "px");
 
-            if (!ctx.selectedCountries.includes(countryName)) {
+            if (!ctx.appState.selectedCountries.includes(countryName)) {
                 d3.select(event.target).style("fill", "green"); // Hover color for non-selected
             }
         })
@@ -96,7 +96,7 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
             }
 
             // Reset country color if it's not selected
-            if (!ctx.selectedCountries.includes(countryName)) {
+            if (!ctx.appState.selectedCountries.includes(countryName)) {
                 d3.select(event.target).style("fill", count > 0 ? "DarkCyan" : "#EEE");
             }
         })
@@ -108,17 +108,17 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
                 return;
             }
 
-            if (ctx.selectedCountries.includes(countryNameClicked)) {
+            if (ctx.appState.selectedCountries.includes(countryNameClicked)) {
                 // Deselect country
-                ctx.selectedCountries = ctx.selectedCountries.filter(c => c !== countryNameClicked);
+                ctx.appState.selectedCountries = ctx.appState.selectedCountries.filter(c => c !== countryNameClicked);
                 d3.select(event.target).style("fill", "DarkCyan");
             } else {
                 // Select country
-                ctx.selectedCountries.push(countryNameClicked);
+                ctx.appState.selectedCountries.push(countryNameClicked);
                 d3.select(event.target).style("fill", "DarkOrange");
             }
 
-            console.log("Selected countries:", ctx.selectedCountries);
+            console.log("Selected countries:", ctx.appState.selectedCountries);
         });
 
     const circleData = [
@@ -133,7 +133,7 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
         .attr('cx', (d) => projection(d.coordinates)[0])
         .attr('cy', (d) => projection(d.coordinates)[1])
         .attr('r', 5)
-        .style('fill', (d) => ctx.selectedCountries.includes(d.name) ? 'DarkOrange' : 'blue')
+        .style('fill', (d) => ctx.appState.selectedCountries.includes(d.name) ? 'DarkOrange' : 'blue')
         .on("mouseover", (event, d) => {
             const count = countryCounts[d.name] || 0;
             tooltip.html(`<strong>${d.name}</strong><br>Respondents: ${count}`)
@@ -144,25 +144,25 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
         })
         .on("mouseout", (event, d) => {
             tooltip.style("visibility", "hidden");
-            d3.select(event.target).style("fill", ctx.selectedCountries.includes(d.name) ? "DarkOrange" : "blue");
+            d3.select(event.target).style("fill", ctx.appState.selectedCountries.includes(d.name) ? "DarkOrange" : "blue");
         })
         .on("click", (event, d) => {
-            if (ctx.selectedCountries.includes(d.name)) {
+            if (ctx.appState.selectedCountries.includes(d.name)) {
                 // Deselect
-                ctx.selectedCountries = ctx.selectedCountries.filter(c => c !== d.name);
+                ctx.appState.selectedCountries = ctx.appState.selectedCountries.filter(c => c !== d.name);
                 d3.select(event.target).style("fill", "blue");
             } else {
                 // Select
-                ctx.selectedCountries.push(d.name);
+                ctx.appState.selectedCountries.push(d.name);
                 d3.select(event.target).style("fill", "DarkOrange");
             }
 
-            console.log("Selected countries:", ctx.selectedCountries);
+            console.log("Selected countries:", ctx.appState.selectedCountries);
         });
 
     const unselectButton = d3.select("#unselectButton");
     unselectButton.on("click", () => {
-        ctx.selectedCountries = [];
+        ctx.appState.selectedCountries = [];
 
         d3.selectAll('.country')
             .style('fill', (d) => {
