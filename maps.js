@@ -12,6 +12,9 @@ export function countCountries(data) {
     return countryCounts;
 }
 
+
+
+
 export function drawMap(geoData, containerId, countryCounts, singleCountry = false) {
     const svgWidth = ctx.MAP_W;
     const svgHeight = ctx.MAP_H;
@@ -19,14 +22,14 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
     const projection = d3.geoMercator();
     const geoPathGen = d3.geoPath().projection(projection);
 
-    const bounds = d3.geoBounds(geoData);
+    ctx.respondent_map_bounds = d3.geoBounds(geoData); // GeoJSON bounding box
     const center = [
-        (bounds[0][0] + bounds[1][0]) / 2,
-        (bounds[0][1] + bounds[1][1]) / 2,
+        (ctx.respondent_map_bounds[0][0] + ctx.respondent_map_bounds[1][0]) / 2,
+        (ctx.respondent_map_bounds[0][1] + ctx.respondent_map_bounds[1][1]) / 2,
     ];
 
-    const geoWidth = bounds[1][0] - bounds[0][0];
-    const geoHeight = bounds[1][1] - bounds[0][1];
+    const geoWidth = ctx.respondent_map_bounds[1][0] - ctx.respondent_map_bounds[0][0];
+    const geoHeight = ctx.respondent_map_bounds[1][1] - ctx.respondent_map_bounds[0][1];
 
     const scale = Math.min(svgWidth / geoWidth, svgHeight / geoHeight) * (singleCountry ? 35 : 50);
 
