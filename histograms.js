@@ -9,7 +9,6 @@ export function Histogram_updates(csvData) {
     // Initialization phase
     drawHistogram(csvData, mainHistogramDiv, ctx.appState.currentQuestion);
     ctx.appState.selectedCountry = countrySelector.value || "China";
-    console.log(ctx.appState.selectedCountry);
     countrySpecificHistogram(ctx.appState.selectedCountry, csvData, countryHistogramDiv, ctx.appState.currentQuestion);
 
     // Update country-specific histogram on country change
