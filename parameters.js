@@ -8,7 +8,8 @@ export const ctx = {
     TOP_MARGIN: 20,
     // smallHIST_W: 800,         
     // smallHIST_H: 400,
-    questions: []
+    questions: [],
+    selectedCountries: [],
 };
 
 // Parse the Questions.json file

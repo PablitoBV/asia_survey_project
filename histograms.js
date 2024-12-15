@@ -1,8 +1,6 @@
 import { ctx, loadQuestions } from './parameters.js';  // Import ctx parameters
 
 
-
-
 // trigger histogram updates when a question or a country is selected
 export function Histogram_updates(csvData) {
     const inputBox = document.getElementById("question-number");
@@ -147,13 +145,17 @@ export function drawHistogram(csvData,questionNumber) {
 
 // Build another histogram at the side, specific to the country selected and the question selected
 export function countrySpecificHistogram(selectedCountry, csvData, questionNumber) {
-    if (!selectedCountry || !csvData) {
-        console.error("Invalid country or CSV data");
-        return; // Exit the function if selectedCountry or csvData is invalid
-    }
 
     const questionColumn = `q${questionNumber}`;
-
+    const countrySet = new Set(); // A Set automatically handles uniqueness
+    csvData.forEach(row => {
+        if (row.country) {
+            countrySet.add(row.country); // Add country to the set
+        }
+    });
+    
+    // Convert the Set to an array and log the unique countries
+    console.log([...countrySet]);
     // Filter data for the selected country
     const filteredCountryData = csvData.filter(row => row.country === selectedCountry);
     if (filteredCountryData.length === 0) {

@@ -92,11 +92,27 @@ function createViz() {
             values: csvData.map(row => row[col])
         }));
 
-        console.log(TimeSpace);
-        console.log(Questions);
-        console.log(SocioEconomicIndicators);
-        console.log(InterviewRecords);
-        console.log(Weights);
+        // console.log(TimeSpace);
+        // Loop over each question in the Questions object
+        for (const key in Questions) {
+            if (Questions.hasOwnProperty(key)) {
+            // Get the values array for the current question
+            const values = Questions[key].values;
+            
+            // Get distinct values using a Set
+            const distinctValues = [...new Set(values)];
+            
+            // Check if the number of distinct values is greater than 10
+            if (distinctValues.length > 10) {
+                // Log the distinct values for this question if there are more than 10
+                console.log(`${key} distinct values:`, distinctValues);
+            }
+            }
+        }
+  
+        // console.log(SocioEconomicIndicators);
+        // console.log(InterviewRecords);
+        // console.log(Weights);
     
 
 
