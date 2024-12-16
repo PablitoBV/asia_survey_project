@@ -66,25 +66,50 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         console.error("No data available for the selected question. Cannot render heatmap.", questionColumn);
         return;
       }
-    // Initialize a response matrix and store original country names
-    const matrix = {};
-    // const countryMappings = {}; // Store mappings between country abbreviations and full names
 
+    const matrix = {};
+
+    // init matrix with zero values
     countries.forEach(country1 => {
         matrix[country1] = {};
-        countryMappings[country1] = country1;  // Store original names in the mapping
         answerOptions.forEach(country2 => {
             matrix[country1][country2] = 0;
         });
     });
 
-    // Populate the matrix
     filteredData.forEach(row => {
         const respondentCountry = row.country;
         const selectedCountry = row[questionColumn];
-        if (respondentCountry && selectedCountry && matrix[respondentCountry][selectedCountry] !== undefined) {
+
+        // check validity
+        if (respondentCountry && selectedCountry && matrix[respondentCountry] && matrix[respondentCountry][selectedCountry] !== undefined) {
             matrix[respondentCountry][selectedCountry]++;
         }
+    });
+
+    // Row totals for normalization
+    const rowTotals = countries.reduce((totals, country) => {
+        if (matrix[country]) {
+            totals[country] = Object.values(matrix[country]).reduce((sum, val) => sum + val, 0);
+        } else {
+            totals[country] = 0; // Default to zero if no data
+        }
+        return totals;
+    }, {});
+
+    // const maxCount = Math.max(
+    //     ...countries.flatMap(country1 =>
+    //         answerOptions.map(country2 => matrix[country1][country2])
+    //     )
+    // );
+
+    // Normalize matrix values to percentages
+    countries.forEach(country1 => {
+        answerOptions.forEach(country2 => {
+            if (rowTotals[country1] > 0) {
+                matrix[country1][country2] = (matrix[country1][country2] / rowTotals[country1]) * 100;
+            }
+        });
     });
 
     // Set up SVG dimensions and margins
@@ -102,10 +127,28 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         .attr("width", svgWidth)
         .attr("height", svgHeight);
 
-    const maxCount = d3.max(countries.map(row => d3.max(answerOptions.map(col => matrix[row][col]))));
+
+    // Add a dark grey bounding box with rounded corners
+    svg.append("rect")
+        .attr("x", margin.left - 10) 
+        .attr("y", margin.top - 45)  
+        .attr("width", svgWidth - margin.left - margin.right + 20)  
+        .attr("height", svgHeight - margin.top - margin.bottom + 40)  
+        .attr("rx", 10)  
+        .attr("ry", 10)  // Rounded corners
+        .attr("fill", "darkgrey") 
+        .attr("stroke", "none");  
+
+    const allValues = countries.flatMap(rowCountry => 
+        Object.values(matrix[rowCountry] || {}).filter(value => !isNaN(value))
+    );
+    
+    const maxPercentage = (allValues.length > 0 ? Math.max(...allValues) : 0).toFixed(1);
+
+    console.log("max val;", maxPercentage);
     const colorScale = d3.scaleLinear()
-        .domain([0, maxCount / 2, maxCount])
-        .range(["rgb(220, 234, 214)", "rgb(39, 190, 67)", "rgb(12, 121, 199)"]);
+        .domain([0, maxPercentage/2, maxPercentage])
+        .range(["rgb(220, 234, 214)", "rgb(68, 162, 85)", "rgb(8, 101, 168)"]);
 
     const xScale = d3.scaleBand()
         .domain(answerOptions)
@@ -135,19 +178,13 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         .attr("y", d => d.y)
         .attr("width", cellSize)
         .attr("height", cellSize)
-        .attr("fill", d => d.value > 0 ? colorScale(d.value) : "none")
-        .attr("stroke", "none") // Border for non-zero values only
+        .attr("fill", d => d.value > 0 ? colorScale(d.value) : ctx.background_color) // Use background color for zero
+        .attr("stroke", "none")
         .on("mouseover", function(event, d) {
-            if (d && d.row && d.col && d.value !== undefined) {
-                handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, countries, answerOptions);
-            } else {
-                console.error("Invalid data in mouseover event: ", d);
-            }
+            handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, countries, answerOptions);
         })
         .on("mouseout", function(event, d) {
-            if (d && d.row && d.col && d.value !== undefined) {
-                handleHoverOut(svg, d);
-            }
+            handleHoverOut(svg, d);
         });
 
     // X axis labels
@@ -192,11 +229,11 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         .attr("transform", `translate(${(svgWidth - legendWidth) / 2}, ${svgHeight - margin.bottom + 20})`);
 
     const legendScale = d3.scaleLinear()
-        .domain([0, maxCount])
+        .domain([0, maxPercentage])
         .range([0, legendWidth]);
 
     legend.selectAll("rect")
-        .data(d3.range(0, maxCount, maxCount / 10))
+        .data(d3.range(0, maxPercentage, maxPercentage / 10))
         .enter()
         .append("rect")
         .attr("x", d => legendScale(d))
@@ -215,7 +252,7 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         .attr("x", legendWidth)
         .attr("y", legendHeight + 15)
         .attr("text-anchor", "end")
-        .text(maxCount);
+        .text(maxPercentage);
 
 }
 
@@ -237,10 +274,18 @@ function handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, count
 
     // bolden the name of the countries involved
     svg.selectAll(`.x-axis-label-${sanitizeName(d.col)}`)
-        .attr("font-weight", "bold");
+        .attr("font-weight", "bold")
+        .style("font-size", function() { // increase font size by 30%
+            const currentFontSize = parseFloat(d3.select(this).style("font-size")) || 10;
+            return `${currentFontSize * 1.3}px`;  
+        });
 
     svg.selectAll(`.y-axis-label-${sanitizeName(d.row)}`)
-        .attr("font-weight", "bold");
+        .attr("font-weight", "bold")
+        .style("font-size", function() { // increase font size by 30%
+            const currentFontSize = parseFloat(d3.select(this).style("font-size")) || 10;
+            return `${currentFontSize * 1.3}px`;  
+        });
 
     // Show numbers on row and column
     countries.forEach((rowCountry) => {
@@ -256,7 +301,7 @@ function handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, count
                     .style("font-size", "10px")
                     .style("font-weight", "bold")
                     .style("fill", "black") 
-                    .text(value === 0 ? "0" : value); 
+                    .text(value === 0 ? "0" : value.toFixed(1)); 
                 
             }
         });
@@ -277,9 +322,9 @@ function handleHoverOut(svg, d) {
     svg.selectAll(`.col-${sanitizeName(d.col)}`)
         .attr("stroke", "none");
 
-    // Remove bolden name of the row and column labels
-    svg.selectAll(".x-axis-label").attr("font-weight", "normal"); // Reset others
-    svg.selectAll(".y-axis-label").attr("font-weight", "normal"); // Reset others
+    // Remove bolden name of the row and column labels, and the increased font size
+    svg.selectAll(".x-axis-label").attr("font-weight", "normal").style("font-size", "10px");;
+    svg.selectAll(".y-axis-label").attr("font-weight", "normal").style("font-size", "10px");; 
 
     // Remove the hover value text
     svg.selectAll(".hover-value").remove();

@@ -53,13 +53,15 @@ import { drawMissingPercentageHistogram, missing_dropdown_updates } from './miss
         1 wcross
 
 ------------------------------------------------------------------------------------------------------------------------------*/
-// document.addEventListener("DOMContentLoaded", createViz); // wait for the page to have loaded before launching createViz()
+
+document.body.style.backgroundColor = ctx.background_color; // set background color on all pages
 
 document.addEventListener("DOMContentLoaded", () => { // check which page is loaded to call the proper createViz_ function
     const pageType = document.body.getAttribute("page"); 
 
     if (pageType === "main_page") {
         createViz_mainPage();
+ 
     } else if (pageType === "page2") {
         createViz_Page2();
     }

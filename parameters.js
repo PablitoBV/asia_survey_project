@@ -21,6 +21,7 @@ export const ctx = {
         selectedGroup: null,
         selectedQuestionMatrix: "q163",
     },
+    background_color: "rgb(190,190,190"
 };
 
 // Parse the Questions.json file
