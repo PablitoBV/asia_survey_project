@@ -3,7 +3,7 @@ import { ctx, loadQuestions } from './parameters.js';  // Import ctx parameters
 import { drawMap, countCountries } from './maps.js';
 import { Histogram_updates, populateCountryDropdown, drawHistogram } from './histograms.js';
 import { create_question_table, update_table, populateGroupDropdown } from './display_questions_groups.js';
-import { plotCountryVsCountryMatrix, populateSmallDropdown } from './matrix.js';
+import { plotCountryVsCountryMatrix } from './matrix.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => { // check which page is loa
     if (pageType === "main_page") {
         createViz_mainPage();
     } else if (pageType === "page2") {
-        createViz_Page2();
+        createViz_scatterplotsPage();
     }
 });
 
@@ -155,19 +155,12 @@ function createViz_mainPage() {
     });
 }
 
-function createViz_Page2() {
-    if (ctx.CSVDATA.length === 0) {
-        Promise.all([csvDataPromise, loadQuestions()]).then(([csvData]) => {
-            ctx.CSVDATA = csvData;
-            populateSmallDropdown(); // populate dropdown and draw matrix page 2
-            plotCountryVsCountryMatrix(ctx.CSVDATA, 'q163');
-            //create_question_table("#group-select-page2"); // create and display a table of questions according to groups, for page 2
-            
-        })
-    }
-    else {
-        populateSmallDropdown(); // populate dropdown and draw matrix page 2
-        plotCountryVsCountryMatrix(ctx.CSVDATA, 'q163');
-    }
-
+function createViz_scatterplotsPage() {
+    Promise.all([csvDataPromise, loadQuestions()]).then(([csvData]) => {
+    //create_question_table("#group-select-page2"); // create and display a table of questions according to groups, for page 2
+    plotCountryVsCountryMatrix(csvData);
+    console
+    // Call the function with your CSV file path, X column, Y column, and Country column
+    // createScatterplot(csvData, "GDP", "LifeExpectancy", "Country", "#scatterplot-container");
+})
 };

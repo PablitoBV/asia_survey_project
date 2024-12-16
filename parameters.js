@@ -1,6 +1,5 @@
 // Global parameters for our visualization
 export const ctx = {
-    CSVDATA: [],
     MAP_W: 750,
     MAP_H: 900,
     HIST_H: 500,
@@ -19,7 +18,6 @@ export const ctx = {
         selectedCountries: [],
         selectedCountry: "China",
         selectedGroup: null,
-        selectedQuestionMatrix: "q163",
     },
 };
 
