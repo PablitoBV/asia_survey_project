@@ -50,7 +50,6 @@ export function populateSmallDropdown() {
 
 // Function to plot the country vs country heatmap for questions 163,166,167
 export function plotCountryVsCountryMatrix(csvData, questionColumn) {
-    console.log("q number:", questionColumn);
     // Filter out invalid responses
     const filteredData = csvData.filter(row =>
         row[questionColumn] !== "Do not understand the question" &&
@@ -59,16 +58,10 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         row[questionColumn] !== "Can't choose" &&
         row[questionColumn] !== "Other [please name]"
     );
-
-    console.log("Filtered data:", filteredData);
-    console.log("Number of rows after filtering:", filteredData.length);
-
     // Extract unique countries and answer options
     const countries = Array.from(new Set(filteredData.map(d => d.country))).filter(Boolean);
     const answerOptions = Array.from(new Set(filteredData.map(d => d[questionColumn]))).filter(Boolean);
 
-    console.log("Unique countries:", countries);
-    console.log("Answer options:", answerOptions);
     if (!filteredData.length || !countries.length || !answerOptions.length) {
         console.error("No data available for the selected question. Cannot render heatmap.", questionColumn);
         return;
