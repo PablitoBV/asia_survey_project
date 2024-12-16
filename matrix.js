@@ -158,7 +158,7 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         .append("text")
         .attr("class", d => `x-axis-label x-axis-label-${sanitizeName(d)}`)
         .attr("x", d => xScale(d) + cellSize / 2)
-        .attr("y", margin.top - 10)
+        .attr("y", margin.top -15)
         .attr("text-anchor", "middle")
         .text(d => {
             // Use the abbreviation from the countryMappings, fallback to the full name if not mapped
@@ -166,7 +166,7 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
             return truncateName(displayName);
         })
         .style("font-size", "10px")
-        .attr("transform", d => `rotate(-60, ${xScale(d) + cellSize / 2}, ${margin.top - 10})`);
+        .attr("transform", d => `rotate(-60, ${xScale(d) + cellSize / 2}, ${margin.top -15})`);
 
     // Y axis labels
     svg.append("g")
