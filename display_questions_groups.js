@@ -1,5 +1,5 @@
 import { ctx } from './parameters.js'; // Import ctx and loadQuestions
-import { drawHistogram, countrySpecificHistogram } from './histograms.js';
+import { createHistogram } from './histograms.js';
 
 export function create_question_table(location) {
     const dropdown = d3.select(location);
@@ -48,11 +48,7 @@ export function update_table(selectedGroup) {
             // Update the app state and trigger updates
             ctx.appState.currentQuestion = d.id.replace(/^q+/, '').trim();
 
-            const countrySelector = document.getElementById("country-select");
-            ctx.appState.selectedCountry = countrySelector.value || "China";
-
-            drawHistogram(ctx.CSVDATA, "#histogram", ctx.appState.currentQuestion);
-            countrySpecificHistogram(ctx.appState.selectedCountry, ctx.CSVDATA, "#country-specific-histogram", ctx.appState.currentQuestion);
+            createHistogram(ctx.CSVDATA);
 
             getQuestionDescription(ctx.appState.currentQuestion).then(description => {
                 document.getElementById("question-description").innerHTML = description;
@@ -108,8 +104,7 @@ export function populateGroupDropdown() {
         const firstQuestion = ctx.questions.find(q => q.group === ctx.appState.selectedGroup)?.id;
         if (firstQuestion) {
             ctx.appState.currentQuestion = firstQuestion;
-            drawHistogram(ctx.CSVDATA, "#histogram", ctx.appState.currentQuestion);
-            countrySpecificHistogram(ctx.appState.selectedCountry, ctx.CSVDATA, "#country-specific-histogram", ctx.appState.currentQuestion);
+            createHistogram(ctx.CSVDATA);
         }
     });
 }

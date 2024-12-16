@@ -23,17 +23,10 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: flex-start; /* Align histograms to the top */
-    width: 100%;
+    width: 50%;
     margin: 0px 0;
     padding: 0; 
     flex-wrap: wrap; 
-}
-
-#histogram-1, #histogram-2 {
-    /* flex: 1; 
-    max-width: 45%;
-    text-align: center; */
-    margin: 0 10px; /* Space between histograms */
 }
 
 /* svg {
@@ -53,7 +46,7 @@ body {
 }
 
 /* Optional: Style the selectors for better alignment */
-#question-number, #country-select {
+#question-number {
     padding: 5px;
     width: 200px;
 }

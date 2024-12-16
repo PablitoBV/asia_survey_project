@@ -1,7 +1,7 @@
 import { ctx, loadQuestions } from './parameters.js';  // Import ctx parameters
 // import functions from other files
 import { drawMap, countCountries } from './maps.js';
-import { Histogram_updates, populateCountryDropdown, drawHistogram } from './histograms.js';
+import { Histogram_updates } from './histograms.js';
 import { create_question_table, update_table, populateGroupDropdown } from './display_questions_groups.js';
 import { plotCountryVsCountryMatrix, populateSmallDropdown } from './matrix.js';
 import { drawMissingPercentageHistogram, missing_dropdown_updates } from './missing_values.js';
@@ -113,23 +113,7 @@ function createViz_mainPage() {
         }));
 
         // console.log(TimeSpace);
-        // Loop over each question in the Questions object
-        for (const key in Questions) {
-            if (Questions.hasOwnProperty(key)) {
-            // Get the values array for the current question
-            const values = Questions[key].values;
-            
-            // Get distinct values using a Set
-            const distinctValues = [...new Set(values)];
-            
-            // Check if the number of distinct values is greater than 10
-            if (distinctValues.length > 10) {
-                // Log the distinct values for this question if there are more than 10
-                console.log(`${key} distinct values:`, distinctValues);
-            }
-            }
-        }
-  
+        // console.log(Questions);  
         // console.log(SocioEconomicIndicators);
         // console.log(InterviewRecords);
         // console.log(Weights);
@@ -139,12 +123,8 @@ function createViz_mainPage() {
         drawMap(respondents, "#respondentMap", countryCounts);
         // drawMap(indivCountry, "#individualMap", countryCounts, true); // Note that countryCounts is useless for single-countries
 
-        populateCountryDropdown(csvData);
-        // populateGroupDropdown();
-
         create_question_table("#group-select-page1");
         Histogram_updates(csvData);
-
 
         // scroll back up when all has loaded
         window.scrollTo({ top: 0, behavior: 'smooth' });      
