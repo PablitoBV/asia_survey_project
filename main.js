@@ -4,6 +4,7 @@ import { drawMap, countCountries } from './maps.js';
 import { Histogram_updates, populateCountryDropdown, drawHistogram } from './histograms.js';
 import { create_question_table, update_table, populateGroupDropdown } from './display_questions_groups.js';
 import { plotCountryVsCountryMatrix, populateSmallDropdown } from './matrix.js';
+import { drawMissingPercentageHistogram, missing_dropdown_updates } from './missing_values.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
@@ -161,6 +162,8 @@ function createViz_Page2() {
             ctx.CSVDATA = csvData;
             populateSmallDropdown(); // populate dropdown and draw matrix page 2
             plotCountryVsCountryMatrix(ctx.CSVDATA, 'q163');
+            drawMissingPercentageHistogram(ctx.CSVDATA, "#bad_values_histogram", "Missing")
+            missing_dropdown_updates();
             //create_question_table("#group-select-page2"); // create and display a table of questions according to groups, for page 2
             
         })
@@ -168,6 +171,8 @@ function createViz_Page2() {
     else {
         populateSmallDropdown(); // populate dropdown and draw matrix page 2
         plotCountryVsCountryMatrix(ctx.CSVDATA, 'q163');
+        drawMissingPercentageHistogram(ctx.CSVDATA, "#bad_values_histogram", "Missing")
+        missing_dropdown_updates();
     }
 
 };
