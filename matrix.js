@@ -5,15 +5,52 @@ import { ctx } from "./parameters.js";
 const countryMappings = {
     "United States": "USA",
     "United Arab Emirates/Middle Eastern countries": "UAE/Middle East",
+    "United Arab Emirates/Middle Esatern countries": "UAE/Middle East",
     "European Union": "EU",
+    "China and Japan": "China & Japan",
+    "US and Japan": "USA & Japan",
+    "United States and Japan": "USA & Japan",
+    "We should follow our country's own model": "Our country's model",
+    "United States, Japan and Singapore": "USA, Japan, Singapore",
+    "European countries": "Europe",
+    "US and Japan": "USA & Japan",
+    "United Kingdom": "UK",
+    "China and Singapore":"China & Singapore",
+    "Japan and Singapore": "Japan & Singapore",
     "Association of Southeast Asian Nations, ASEAN": "ASEAN",
-    // Add other countries as needed
 };
 
-// Function to plot the country vs country heatmap for question 163
-export function plotCountryVsCountryMatrix(csvData) {
-    const questionColumn = 'q163'; // Pick question
 
+export function populateSmallDropdown() {
+    const smallDropdown = document.getElementById("group-select-page2");
+    let questions_used = [
+        { id: "q163", label: "Which country has the most influence in Asia?" },
+        { id: "q166", label: "In ten years, which country will have the most influence in Asia?" },
+        { id: "q167", label: "Which country should be a model for our own country’s future development?" }
+    ];
+
+    // Populate dropdown with options
+    questions_used.forEach(element => {
+        const option = document.createElement("option");
+        option.value = element.id; // Set value to `id`, as this identifies the question column
+        option.textContent = element.label; // Display the label to the user
+        smallDropdown.appendChild(option);
+    });
+
+    // Set default selected value for questionColumn
+    let questionColumn = questions_used[0].id; // Default to the first question
+
+    smallDropdown.addEventListener("change", function () {
+        questionColumn = smallDropdown.value;
+        // Update app state and plot matrix
+        ctx.appState.selectedQuestionMatrix = questionColumn;
+        plotCountryVsCountryMatrix(ctx.CSVDATA, questionColumn);
+    });
+}
+
+// Function to plot the country vs country heatmap for questions 163,166,167
+export function plotCountryVsCountryMatrix(csvData, questionColumn) {
+    console.log("q number:", questionColumn);
     // Filter out invalid responses
     const filteredData = csvData.filter(row =>
         row[questionColumn] !== "Do not understand the question" &&
@@ -23,10 +60,19 @@ export function plotCountryVsCountryMatrix(csvData) {
         row[questionColumn] !== "Other [please name]"
     );
 
+    console.log("Filtered data:", filteredData);
+    console.log("Number of rows after filtering:", filteredData.length);
+
     // Extract unique countries and answer options
     const countries = Array.from(new Set(filteredData.map(d => d.country))).filter(Boolean);
     const answerOptions = Array.from(new Set(filteredData.map(d => d[questionColumn]))).filter(Boolean);
 
+    console.log("Unique countries:", countries);
+    console.log("Answer options:", answerOptions);
+    if (!filteredData.length || !countries.length || !answerOptions.length) {
+        console.error("No data available for the selected question. Cannot render heatmap.", questionColumn);
+        return;
+      }
     // Initialize a response matrix and store original country names
     const matrix = {};
     // const countryMappings = {}; // Store mappings between country abbreviations and full names
@@ -55,6 +101,9 @@ export function plotCountryVsCountryMatrix(csvData) {
     const margin = { top: 80, right: 20, bottom: 80, left: 100 };
     const cellSize = Math.floor((svgWidth - margin.left - margin.right) / answerOptions.length);
 
+    // Remove any existing SVG before creating a new one
+    d3.select(containerId).selectAll("svg").remove();   
+    
     const svg = d3.select(containerId)
         .append("svg")
         .attr("width", svgWidth)
@@ -63,7 +112,7 @@ export function plotCountryVsCountryMatrix(csvData) {
     const maxCount = d3.max(countries.map(row => d3.max(answerOptions.map(col => matrix[row][col]))));
     const colorScale = d3.scaleLinear()
         .domain([0, maxCount / 2, maxCount])
-        .range(["#ffffcc", "#1f78b4", "#081d58"]);
+        .range(["rgb(220, 234, 214)", "rgb(39, 190, 67)", "rgb(12, 121, 199)"]);
 
     const xScale = d3.scaleBand()
         .domain(answerOptions)
@@ -120,7 +169,8 @@ export function plotCountryVsCountryMatrix(csvData) {
         .attr("text-anchor", "middle")
         .text(d => {
             // Use the abbreviation from the countryMappings, fallback to the full name if not mapped
-            return countryMappings[d] || d;
+            const displayName = countryMappings[d] || d;
+            return truncateName(displayName);
         })
         .style("font-size", "10px")
         .attr("transform", d => `rotate(-60, ${xScale(d) + cellSize / 2}, ${margin.top - 10})`);
@@ -143,8 +193,8 @@ export function plotCountryVsCountryMatrix(csvData) {
 
 
     
-    const legendWidth = 200;
-    const legendHeight = 10;
+    const legendWidth = 400;
+    const legendHeight = 30;
     const legend = svg.append("g")
         .attr("transform", `translate(${(svgWidth - legendWidth) / 2}, ${svgHeight - margin.bottom + 20})`);
 
@@ -164,13 +214,13 @@ export function plotCountryVsCountryMatrix(csvData) {
 
     legend.append("text")
         .attr("x", 0)
-        .attr("y", legendHeight + 10)
+        .attr("y", legendHeight + 15)
         .attr("text-anchor", "start")
         .text("0");
 
     legend.append("text")
         .attr("x", legendWidth)
-        .attr("y", legendHeight + 10)
+        .attr("y", legendHeight + 15)
         .attr("text-anchor", "end")
         .text(maxCount);
 
@@ -192,6 +242,13 @@ function handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, count
         .attr("stroke", "gray")
         .attr("stroke-width", 1);
 
+    // bolden the name of the countries involved
+    svg.selectAll(`.x-axis-label-${sanitizeName(d.col)}`)
+        .attr("font-weight", "bold");
+
+    svg.selectAll(`.y-axis-label-${sanitizeName(d.row)}`)
+        .attr("font-weight", "bold");
+
     // Show numbers on row and column
     countries.forEach((rowCountry) => {
         answerOptions.forEach((colCountry) => {
@@ -207,6 +264,7 @@ function handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, count
                     .style("font-weight", "bold")
                     .style("fill", "black") 
                     .text(value === 0 ? "0" : value); 
+                
             }
         });
     });
@@ -226,6 +284,10 @@ function handleHoverOut(svg, d) {
     svg.selectAll(`.col-${sanitizeName(d.col)}`)
         .attr("stroke", "none");
 
+    // Remove bolden name of the row and column labels
+    svg.selectAll(".x-axis-label").attr("font-weight", "normal"); // Reset others
+    svg.selectAll(".y-axis-label").attr("font-weight", "normal"); // Reset others
+
     // Remove the hover value text
     svg.selectAll(".hover-value").remove();
 }
@@ -233,4 +295,12 @@ function handleHoverOut(svg, d) {
 // Helper function to clean up country names
 function sanitizeName(name) {
     return name.replace(/\s+/g, '-').replace(/[^\w\-]/g, ''); // Replace spaces with hyphens and remove special characters
+}
+
+// Helper function to limit country names to 12 characters
+function truncateName(name, maxLength = 12) {
+    if (name.length > maxLength) {
+        return name.substring(0, maxLength) + '...';
+    }
+    return name;
 }

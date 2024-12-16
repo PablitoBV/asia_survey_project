@@ -1,0 +1,2146 @@
+[
+    {
+        "value": -1,
+        "job_title": "'Missing'"
+    },
+    {
+        "value": 1000,
+        "job_title": "'LEGISLATORS, SENIOR OFFICIALS & MANAGERS'"
+    },
+    {
+        "value": 1100,
+        "job_title": "'LEGISLATORS & SENIOR OFFICIALS'"
+    },
+    {
+        "value": 1110,
+        "job_title": "'LEGISLATORS [incl. Member of Parliament, Member of Local Council]'"
+    },
+    {
+        "value": 1120,
+        "job_title": "'SENIOR [NATIONAL] GOVERNMENT OFFICIALS [incl. Minister, Ambassador]'"
+    },
+    {
+        "value": 1130,
+        "job_title": "'[SENIOR LOCAL GOVERNMENT OFFICIALS] [incl. Local Government Senior Officials, Mayor]'"
+    },
+    {
+        "value": 1140,
+        "job_title": "'SENIOR OFFICIALS SPECIAL-INTEREST ORGANIZATIONS'"
+    },
+    {
+        "value": 1141,
+        "job_title": "'Senior officials political-party organizations [incl. Politician]'"
+    },
+    {
+        "value": 1142,
+        "job_title": "'Senior officials economic-interest organizations [incl. Union Leader, Director Employers\\A1\\A6 Organization]'"
+    },
+    {
+        "value": 1143,
+        "job_title": "'Senior officials special-interest organizations [incl. Lodge Official, Official Red Cross]'"
+    },
+    {
+        "value": 1200,
+        "job_title": "'CORPORATE MANAGERS [LARGE ENTERPRISES]'"
+    },
+    {
+        "value": 1210,
+        "job_title": "'[LARGE ENTERPRISES] DIRECTORS & CHIEF EXECUTIVES'"
+    },
+    {
+        "value": 1220,
+        "job_title": "'[LARGE ENTERPRISE OPERATION] DEPARTMENT MANAGERS'"
+    },
+    {
+        "value": 1221,
+        "job_title": "'Production department managers agriculture & fishing'"
+    },
+    {
+        "value": 1222,
+        "job_title": "'Production department managers manufacturing'"
+    },
+    {
+        "value": 1223,
+        "job_title": "'Production department managers construction'"
+    },
+    {
+        "value": 1224,
+        "job_title": "'Production department managers wholesale & retail trade'"
+    },
+    {
+        "value": 1225,
+        "job_title": "'Production department managers restaurants & hotels'"
+    },
+    {
+        "value": 1226,
+        "job_title": "'Production department managers transportation, storage & communications ]'"
+    },
+    {
+        "value": 1227,
+        "job_title": "'Production department managers business services'"
+    },
+    {
+        "value": 1228,
+        "job_title": "'Production department managers personal care, cleaning, etc.'"
+    },
+    {
+        "value": 1229,
+        "job_title": "'Production department managers nec'"
+    },
+    {
+        "value": 1230,
+        "job_title": "'[LARGE ENTERPRISES] OTHER DEPARTMENT MANAGERS'"
+    },
+    {
+        "value": 1231,
+        "job_title": "'Finance & administration department managers'"
+    },
+    {
+        "value": 1232,
+        "job_title": "'Personnel & industrial relations department managers'"
+    },
+    {
+        "value": 1233,
+        "job_title": "'Sales & marketing department managers'"
+    },
+    {
+        "value": 1234,
+        "job_title": "'Advertising & public relations department managers'"
+    },
+    {
+        "value": 1235,
+        "job_title": "'Supply & distribution department managers'"
+    },
+    {
+        "value": 1236,
+        "job_title": "'Computing services department managers'"
+    },
+    {
+        "value": 1237,
+        "job_title": "'Research & development department managers'"
+    },
+    {
+        "value": 1239,
+        "job_title": "'Other department managers nec'"
+    },
+    {
+        "value": 1240,
+        "job_title": "'OFFICE MANAGERS'"
+    },
+    {
+        "value": 1250,
+        "job_title": "'MILITARY OFFICERS'"
+    },
+    {
+        "value": 1251,
+        "job_title": "'Higher military officers [Captain and above]'"
+    },
+    {
+        "value": 1252,
+        "job_title": "'Lower-grade commissioned officers [incl. Army Lieutenant]'"
+    },
+    {
+        "value": 1300,
+        "job_title": "'[SMALL ENTERPRISE] GENERAL MANAGERS'"
+    },
+    {
+        "value": 1310,
+        "job_title": "'[SMALL ENTERPRISE] GENERAL MANAGERS'"
+    },
+    {
+        "value": 1311,
+        "job_title": "'[Small enterprise] General managers agriculture, forestry & fishing'"
+    },
+    {
+        "value": 1312,
+        "job_title": "'[Small enterprise] General managers manufacturing'"
+    },
+    {
+        "value": 1313,
+        "job_title": "'[Small enterprise] General managers construction'"
+    },
+    {
+        "value": 1314,
+        "job_title": "'[Small enterprise] General managers wholesale & retail trade'"
+    },
+    {
+        "value": 1315,
+        "job_title": "'[Small enterprise] General managers restaurants & hotels'"
+    },
+    {
+        "value": 1316,
+        "job_title": "'[Small enterprise] General managers transp., storage & communications'"
+    },
+    {
+        "value": 1317,
+        "job_title": "'[Small enterprise] General managers business services'"
+    },
+    {
+        "value": 1318,
+        "job_title": "'[Small enterprise] General managers personal care, cleaning, etc.services'"
+    },
+    {
+        "value": 1319,
+        "job_title": "'[Small enterprise] General managers nec'"
+    },
+    {
+        "value": 2000,
+        "job_title": "'PROFESSIONALS'"
+    },
+    {
+        "value": 2100,
+        "job_title": "'PHYSICAL, MATHEMATICAL & ENGINEERING SCIENCE PROFESSIONALS'"
+    },
+    {
+        "value": 2110,
+        "job_title": "'PHYSICISTS, CHEMISTS & RELATED PROFESSIONALS'"
+    },
+    {
+        "value": 2111,
+        "job_title": "'Physicists & astronomers'"
+    },
+    {
+        "value": 2112,
+        "job_title": "'Meteorologists'"
+    },
+    {
+        "value": 2113,
+        "job_title": "'Chemists'"
+    },
+    {
+        "value": 2114,
+        "job_title": "'Geologists & geophysicists'"
+    },
+    {
+        "value": 2120,
+        "job_title": "'MATHEMATICIANS, STATISTICIANS, ETC. PROFESSIONALS'"
+    },
+    {
+        "value": 2121,
+        "job_title": "'Mathematicians, etc. professionals'"
+    },
+    {
+        "value": 2122,
+        "job_title": "'Statisticians'"
+    },
+    {
+        "value": 2130,
+        "job_title": "'COMPUTING PROFESSIONALS'"
+    },
+    {
+        "value": 2131,
+        "job_title": "'Computer systems designers & analysts'"
+    },
+    {
+        "value": 2132,
+        "job_title": "'Computer programmers'"
+    },
+    {
+        "value": 2139,
+        "job_title": "'Computing professionals nec'"
+    },
+    {
+        "value": 2140,
+        "job_title": "'ARCHITECTS, ENGINEERS, ETC. PROFESSIONALS'"
+    },
+    {
+        "value": 2141,
+        "job_title": "'Architects town & traffic planners'"
+    },
+    {
+        "value": 2142,
+        "job_title": "'Civil engineers'"
+    },
+    {
+        "value": 2143,
+        "job_title": "'Electrical engineers'"
+    },
+    {
+        "value": 2144,
+        "job_title": "'Electronics & telecommunications engineers'"
+    },
+    {
+        "value": 2145,
+        "job_title": "'Mechanical engineers'"
+    },
+    {
+        "value": 2146,
+        "job_title": "'Chemical engineers'"
+    },
+    {
+        "value": 2147,
+        "job_title": "'Mining engineers, metallurgists, etc. professionals'"
+    },
+    {
+        "value": 2148,
+        "job_title": "'Cartographers & surveyors'"
+    },
+    {
+        "value": 2149,
+        "job_title": "'Architects, engineers, etc. professionals'"
+    },
+    {
+        "value": 2200,
+        "job_title": "'LIFE SCIENCE & HEALTH PROFESSIONALS'"
+    },
+    {
+        "value": 2210,
+        "job_title": "'LIFE SCIENCE PROFESSIONALS'"
+    },
+    {
+        "value": 2211,
+        "job_title": "'Biologists, botanists, zoologists, etc. professionals'"
+    },
+    {
+        "value": 2212,
+        "job_title": "'Pharmacologists, pathologists, etc. professionals'"
+    },
+    {
+        "value": 2213,
+        "job_title": "'Agronomists, etc. professionals'"
+    },
+    {
+        "value": 2220,
+        "job_title": "'HEALTH PROFESSIONALS (EXCEPT NURSING)'"
+    },
+    {
+        "value": 2221,
+        "job_title": "'Medical doctors'"
+    },
+    {
+        "value": 2222,
+        "job_title": "'Dentists'"
+    },
+    {
+        "value": 2223,
+        "job_title": "'Veterinarians'"
+    },
+    {
+        "value": 2224,
+        "job_title": "'Pharmacists'"
+    },
+    {
+        "value": 2229,
+        "job_title": "'Health professionals except nursing nec'"
+    },
+    {
+        "value": 2230,
+        "job_title": "'NURSING & MIDWIFERY PROFESSIONALS'"
+    },
+    {
+        "value": 2300,
+        "job_title": "'TEACHING PROFESSIONALS'"
+    },
+    {
+        "value": 2310,
+        "job_title": "'HIGHER EDUCATION TEACHING PROFESSIONALS'"
+    },
+    {
+        "value": 2320,
+        "job_title": "'SECONDARY EDUCATION TEACHING PROFESSIONALS'"
+    },
+    {
+        "value": 2321,
+        "job_title": "'[Secondary teachers, academic track]'"
+    },
+    {
+        "value": 2322,
+        "job_title": "'[Secondary teachers, vocational track]'"
+    },
+    {
+        "value": 2330,
+        "job_title": "'PRIMARY & PRE-PRIMARY EDUCATION TEACHING PROFESSIONALS'"
+    },
+    {
+        "value": 2331,
+        "job_title": "'Primary education teaching professionals'"
+    },
+    {
+        "value": 2332,
+        "job_title": "'Pre-primary education teaching professionals'"
+    },
+    {
+        "value": 2340,
+        "job_title": "'SPECIAL EDUCATION TEACHING PROFESSIONALS [incl. Remedial Teacher, Teacher of the Blind]'"
+    },
+    {
+        "value": 2350,
+        "job_title": "'OTHER TEACHING PROFESSIONALS'"
+    },
+    {
+        "value": 2351,
+        "job_title": "'Education methods specialists [incl. Curricula Developer]'"
+    },
+    {
+        "value": 2352,
+        "job_title": "'School inspectors'"
+    },
+    {
+        "value": 2359,
+        "job_title": "'Other teaching professionals nec'"
+    },
+    {
+        "value": 2400,
+        "job_title": "'OTHER PROFESSIONALS [incl. Professional nfs, Administrative Professional]'"
+    },
+    {
+        "value": 2410,
+        "job_title": "'BUSINESS PROFESSIONALS'"
+    },
+    {
+        "value": 2411,
+        "job_title": "'Accountants [incl. Auditor]'"
+    },
+    {
+        "value": 2412,
+        "job_title": "'Personnel & careers professionals [incl. Job Analyst, Student Counselor]'"
+    },
+    {
+        "value": 2419,
+        "job_title": "'Business professionals nec [incl. Publicity Agent, Patent Agent, Home Economist, Market  Researcher]'"
+    },
+    {
+        "value": 2420,
+        "job_title": "'LEGAL PROFESSIONALS'"
+    },
+    {
+        "value": 2421,
+        "job_title": "'Lawyers'"
+    },
+    {
+        "value": 2422,
+        "job_title": "'Judges'"
+    },
+    {
+        "value": 2429,
+        "job_title": "'Legal professionals nec [incl. Notary, Notary Public]'"
+    },
+    {
+        "value": 2430,
+        "job_title": "'ARCHIVISTS, LIBRARIANS, ETC. INFORMATION PROFESSIONALS'"
+    },
+    {
+        "value": 2431,
+        "job_title": "'Archivists & curators'"
+    },
+    {
+        "value": 2432,
+        "job_title": "'Librarians, etc. information professionals [incl. Documentalist, Health Records Technician]'"
+    },
+    {
+        "value": 2440,
+        "job_title": "'SOCIAL SCIENCE, ETC. PROFESSIONALS'"
+    },
+    {
+        "value": 2441,
+        "job_title": "'Economists'"
+    },
+    {
+        "value": 2442,
+        "job_title": "'Sociologists, anthropologists, etc. professionals'"
+    },
+    {
+        "value": 2443,
+        "job_title": "'Philosophers, historians & political scientists'"
+    },
+    {
+        "value": 2444,
+        "job_title": "'Philologists, translators & interpreters'"
+    },
+    {
+        "value": 2445,
+        "job_title": "'Psychologists'"
+    },
+    {
+        "value": 2446,
+        "job_title": "'Social work professionals [incl. Welfare Worker]'"
+    },
+    {
+        "value": 2450,
+        "job_title": "'WRITERS & CREATIVE OR PERFORMING ARTISTS'"
+    },
+    {
+        "value": 2451,
+        "job_title": "'Authors, journalists & other writers [incl. Editor, Technical Writer]'"
+    },
+    {
+        "value": 2452,
+        "job_title": "'Sculptors, painters, etc. artists'"
+    },
+    {
+        "value": 2453,
+        "job_title": "'Composers, musicians & singers'"
+    },
+    {
+        "value": 2454,
+        "job_title": "'Choreographers & dancers'"
+    },
+    {
+        "value": 2455,
+        "job_title": "'Film, stage, etc. actors & directors'"
+    },
+    {
+        "value": 2460,
+        "job_title": "'RELIGIOUS PROFESSIONALS [incl. Priest, Chaplain, Theologian, Professional Nun]'"
+    },
+    {
+        "value": 3000,
+        "job_title": "'TECHNICIANS AND ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3100,
+        "job_title": "'PHYSICAL & ENGINEERING SCIENCE ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3110,
+        "job_title": "'PHYSICAL & ENGINEERING SCIENCE TECHNICIANS'"
+    },
+    {
+        "value": 3111,
+        "job_title": "'Chemical & physical science technicians'"
+    },
+    {
+        "value": 3112,
+        "job_title": "'Civil engineering technicians'"
+    },
+    {
+        "value": 3113,
+        "job_title": "'Electrical engineering technicians'"
+    },
+    {
+        "value": 3114,
+        "job_title": "'Electronics & telecommunications engineering technicians'"
+    },
+    {
+        "value": 3115,
+        "job_title": "'Mechanical engineering technicians'"
+    },
+    {
+        "value": 3116,
+        "job_title": "'Chemical engineering technicians'"
+    },
+    {
+        "value": 3117,
+        "job_title": "'Mining & metallurgical technicians'"
+    },
+    {
+        "value": 3118,
+        "job_title": "'Draftspersons [incl. Technical Illustrator]'"
+    },
+    {
+        "value": 3119,
+        "job_title": "'Physical & engineering science technicians nec [incl. Quantity Surveyor]'"
+    },
+    {
+        "value": 3120,
+        "job_title": "'COMPUTER ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3121,
+        "job_title": "'Computer assistants  [incl. Assistant Users\\A1\\A6 Services]'"
+    },
+    {
+        "value": 3122,
+        "job_title": "'Computer equipment operators[incl. Computer Printer Equipment Operator]'"
+    },
+    {
+        "value": 3123,
+        "job_title": "'Industrial robot controllers'"
+    },
+    {
+        "value": 3130,
+        "job_title": "'OPTICAL & ELECTRONIC EQUIPMENT OPERATORS'"
+    },
+    {
+        "value": 3131,
+        "job_title": "'Photographers & electronic equipment operators [incl. Cameraman, Sound Mixer]'"
+    },
+    {
+        "value": 3132,
+        "job_title": "'Broadcasting & telecommunications equipment operators'"
+    },
+    {
+        "value": 3133,
+        "job_title": "'Medical equipment operators [incl. X-ray Technician]'"
+    },
+    {
+        "value": 3139,
+        "job_title": "'Optical & electronic equipment operators nec [incl. Cinema Projectionist, Telegrapher]'"
+    },
+    {
+        "value": 3140,
+        "job_title": "'SHIP & AIRCRAFT CONTROLLERS & TECHNICIANS'"
+    },
+    {
+        "value": 3141,
+        "job_title": "'Ships engineers'"
+    },
+    {
+        "value": 3142,
+        "job_title": "'Ships deck officers & pilots [incl. River Boat Captain]'"
+    },
+    {
+        "value": 3143,
+        "job_title": "'Aircraft pilots, etc. associate professionals'"
+    },
+    {
+        "value": 3144,
+        "job_title": "'Air traffic controllers'"
+    },
+    {
+        "value": 3145,
+        "job_title": "'Air traffic safety technicians'"
+    },
+    {
+        "value": 3150,
+        "job_title": "'SAFETY & QUALITY INSPECTORS'"
+    },
+    {
+        "value": 3151,
+        "job_title": "'Building & ?re inspectors'"
+    },
+    {
+        "value": 3152,
+        "job_title": "'Safety, health & quality inspectors [incl. Occupational Safety Inspector, Inspector nfs]'"
+    },
+    {
+        "value": 3200,
+        "job_title": "'LIFE SCIENCE & HEALTH ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3210,
+        "job_title": "'LIFE SCIENCE TECHNICIANS, ETC. ASSOCIATE PROFES  SIONALS'"
+    },
+    {
+        "value": 3211,
+        "job_title": "'Life science technicians [incl. Medical Laboratory Assistant, Medical Technician nfs, Physicaland Life Science '+"
+    },
+    {
+        "value": 3212,
+        "job_title": "'Agronomy & forestry technicians'"
+    },
+    {
+        "value": 3213,
+        "job_title": "'Farming & forestry advisers'"
+    },
+    {
+        "value": 3220,
+        "job_title": "'MODERN HEALTH ASSOCIATE PROFESSIONALS EXCEPT NURSING'"
+    },
+    {
+        "value": 3221,
+        "job_title": "'Medical assistants'"
+    },
+    {
+        "value": 3222,
+        "job_title": "'Sanitarians'"
+    },
+    {
+        "value": 3223,
+        "job_title": "'Dieticians & nutritionists'"
+    },
+    {
+        "value": 3224,
+        "job_title": "'Optometrists & opticians [incl. Dispensing Optician]'"
+    },
+    {
+        "value": 3225,
+        "job_title": "'Dental assistants [incl. Oral Hygienist]'"
+    },
+    {
+        "value": 3226,
+        "job_title": "'Physiotherapsits, etc. associate professionals [incl. Chiropractor, Masseur, Osteopath]'"
+    },
+    {
+        "value": 3227,
+        "job_title": "'Veterinary assistants [incl. Veterinarian Vaccinator]'"
+    },
+    {
+        "value": 3228,
+        "job_title": "'Pharmaceutical assistants'"
+    },
+    {
+        "value": 3229,
+        "job_title": "'Modern health associate professionals except nursing nec [incl. Homeopath, Speech Therapist, Occupational Therapist]'"
+    },
+    {
+        "value": 3230,
+        "job_title": "'NURSING & MIDWIFERY ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3231,
+        "job_title": "'Nursing associate professionals [incl. Trainee Nurses]'"
+    },
+    {
+        "value": 3232,
+        "job_title": "'Midwifery associate professionals [incl. Trainee Midwife]'"
+    },
+    {
+        "value": 3240,
+        "job_title": "'TRADITIONAL MEDICINE PRACTITIONERS & FAITH HEALERS'"
+    },
+    {
+        "value": 3241,
+        "job_title": "'Traditional medicine practitioners [incl. Herbalist]'"
+    },
+    {
+        "value": 3242,
+        "job_title": "'Faith healers'"
+    },
+    {
+        "value": 3300,
+        "job_title": "'TEACHING ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3310,
+        "job_title": "'PRIMARY EDUCATION TEACHING ASSOCIATE PROFESSIONALS [incl. Teacher\\A1\\A6s Aid]'"
+    },
+    {
+        "value": 3320,
+        "job_title": "'PRE-PRIMARY EDUCATION TEACHING ASSOCIATE PROFESSIONALS [incl. Kindergarten Teacher\\A1\\A6s Aid]'"
+    },
+    {
+        "value": 3330,
+        "job_title": "'SPECIAL EDUCATION TEACHING ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3340,
+        "job_title": "'OTHER TEACHING ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3400,
+        "job_title": "'OTHER ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3410,
+        "job_title": "'FINANCE & SALES ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3411,
+        "job_title": "'Securities & ?nance dealers & brokers'"
+    },
+    {
+        "value": 3412,
+        "job_title": "'Insurance representative [incl. Insurance Agent, Underwriter]'"
+    },
+    {
+        "value": 3413,
+        "job_title": "'[Real] estate agents [incl. Real Estate Broker]'"
+    },
+    {
+        "value": 3414,
+        "job_title": "'Travel consultants & organizers'"
+    },
+    {
+        "value": 3415,
+        "job_title": "'Technical & commercial sales representatives [incl. Traveling Salesman, Technical Salesman]'"
+    },
+    {
+        "value": 3416,
+        "job_title": "'Buyers'"
+    },
+    {
+        "value": 3417,
+        "job_title": "'Appraisers, valuers & auctioneers [incl. Claims Adjuster]'"
+    },
+    {
+        "value": 3419,
+        "job_title": "'Finance & sales associate professionals nec'"
+    },
+    {
+        "value": 3420,
+        "job_title": "'BUSINESS SERVICES AGENTS AND TRADE BROKERS'"
+    },
+    {
+        "value": 3421,
+        "job_title": "'Trade brokers'"
+    },
+    {
+        "value": 3422,
+        "job_title": "'Clearing & forwarding agents'"
+    },
+    {
+        "value": 3423,
+        "job_title": "'Employment agents & labor contractors'"
+    },
+    {
+        "value": 3429,
+        "job_title": "'Business services agents & trade brokers nec [incl. Literary Agent, Sports Promoter, Salesman Advertisements]'"
+    },
+    {
+        "value": 3430,
+        "job_title": "'ADMINISTRATIVE ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3431,
+        "job_title": "'Administrative secretaries, etc. associate professionals'"
+    },
+    {
+        "value": 3432,
+        "job_title": "'Legal, etc. business associate professionals [incl. Bailiff, Law Clerk]'"
+    },
+    {
+        "value": 3433,
+        "job_title": "'Bookkeepers'"
+    },
+    {
+        "value": 3434,
+        "job_title": "'Statistical, mathematical, etc. associate professionals'"
+    },
+    {
+        "value": 3439,
+        "job_title": "'Administrative associate professionals nec [incl. Management Assistant]'"
+    },
+    {
+        "value": 3440,
+        "job_title": "'CUSTOMS, TAX, ETC. GOVERNMENT ASSOCIATE PROFESSIONALS[incl. Administrative Associate Professional, Executive '+"
+    },
+    {
+        "value": 3441,
+        "job_title": "'Customs & border inspectors'"
+    },
+    {
+        "value": 3442,
+        "job_title": "'Government tax & excise officials'"
+    },
+    {
+        "value": 3443,
+        "job_title": "'Government social bene?ts officials'"
+    },
+    {
+        "value": 3449,
+        "job_title": "'Government licensing officials'"
+    },
+    {
+        "value": 3450,
+        "job_title": "'POLICE INSPECTORS & DETECTIVES/[ARMY]'"
+    },
+    {
+        "value": 3451,
+        "job_title": "'Police inspectors & detectives [incl. Police Investigator, Private Detective]'"
+    },
+    {
+        "value": 3452,
+        "job_title": "'[Armed forces non commissioned officers] [incl. Sergeant]'"
+    },
+    {
+        "value": 3460,
+        "job_title": "'SOCIAL WORK ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3470,
+        "job_title": "'ARTISTIC, ENTERTAINMENT & SPORTS ASSOCIATE PROFESSIONALS'"
+    },
+    {
+        "value": 3471,
+        "job_title": "'Decorators & commercial designers [incl. Window Dresser, Interior Decorator, Furniture Designer, BookIllustrator, '+"
+    },
+    {
+        "value": 3472,
+        "job_title": "'Radio, television & other announcers'"
+    },
+    {
+        "value": 3473,
+        "job_title": "'Street nightclub, etc. musicians, singers & dancers  [incl. Band Leader, Chorus Dancer, Nightclub Singer]'"
+    },
+    {
+        "value": 3474,
+        "job_title": "'Clowns, magicians, acrobats, etc. associate professionals [incl. Striptease Artist, Juggler]'"
+    },
+    {
+        "value": 3475,
+        "job_title": "'Athletes, sports persons, etc. associate professionals[incl. Trainer, Umpire]'"
+    },
+    {
+        "value": 3480,
+        "job_title": "'RELIGIOUS ASSOCIATE PROFESSIONALS [incl. Evangelist, Lay Preacher, Salvationist]'"
+    },
+    {
+        "value": 4000,
+        "job_title": "'CLERKS'"
+    },
+    {
+        "value": 4100,
+        "job_title": "'OFFICE CLERKS [incl. Clerk nfs, Government Office Clerk nfs]'"
+    },
+    {
+        "value": 4110,
+        "job_title": "'SECRETARIES & KEYBOARD-OPERATING CLERKS'"
+    },
+    {
+        "value": 4111,
+        "job_title": "'Stenographers & typists'"
+    },
+    {
+        "value": 4112,
+        "job_title": "'Word-processor, etc. operators [incl. Teletypist]'"
+    },
+    {
+        "value": 4113,
+        "job_title": "'Data-entry operators [incl. Key Puncher]'"
+    },
+    {
+        "value": 4114,
+        "job_title": "'Calculating-machine operators [incl. Bookkeeping Machine Operator]'"
+    },
+    {
+        "value": 4115,
+        "job_title": "'Secretaries'"
+    },
+    {
+        "value": 4120,
+        "job_title": "'NUMERICAL CLERKS'"
+    },
+    {
+        "value": 4121,
+        "job_title": "'Accounting & bookkeeping clerks [incl. Payroll Clerk]'"
+    },
+    {
+        "value": 4122,
+        "job_title": "'Statistical & ?nance clerks [incl. Credit Clerk]'"
+    },
+    {
+        "value": 4130,
+        "job_title": "'MATERIAL-RECORDING & TRANSPORT CLERKS'"
+    },
+    {
+        "value": 4131,
+        "job_title": "'Stock clerks [incl. Weighing Clerk, Storehouse Clerk]'"
+    },
+    {
+        "value": 4132,
+        "job_title": "'Production clerks [incl. Planning Clerks]'"
+    },
+    {
+        "value": 4133,
+        "job_title": "'Transport clerks [incl. Dispatcher, Expeditor]'"
+    },
+    {
+        "value": 4140,
+        "job_title": "'LIBRARY, MAIL, ETC. CLERKS'"
+    },
+    {
+        "value": 4141,
+        "job_title": "'Library & ?ling clerks'"
+    },
+    {
+        "value": 4142,
+        "job_title": "'Mail carriers & sorting clerks'"
+    },
+    {
+        "value": 4143,
+        "job_title": "'Coding proofreading, etc. clerks'"
+    },
+    {
+        "value": 4144,
+        "job_title": "'Scribes, etc. workers [incl. Form Filling Assistance Clerk]'"
+    },
+    {
+        "value": 4190,
+        "job_title": "'OTHER OFFICE CLERKS [incl. Address Clerk, Timekeeper, Office Boy, Photocopy Machine Operator]'"
+    },
+    {
+        "value": 4200,
+        "job_title": "'CUSTOMER SERVICES CLERKS [incl. Customer Service Clerk nfs]'"
+    },
+    {
+        "value": 4210,
+        "job_title": "'CASHIERS, TELLERS, ETC. CLERKS'"
+    },
+    {
+        "value": 4211,
+        "job_title": "'Cashiers & ticket clerks [incl. Bank Cashier, Store Cashier, Toll Collector]'"
+    },
+    {
+        "value": 4212,
+        "job_title": "'Tellers & other counter clerks [incl. Bank Teller, Post Office Clerk]'"
+    },
+    {
+        "value": 4213,
+        "job_title": "'Bookmakers & croupiers'"
+    },
+    {
+        "value": 4214,
+        "job_title": "'Pawnbrokers & money-lenders'"
+    },
+    {
+        "value": 4215,
+        "job_title": "'Debt-collectors, etc. workers'"
+    },
+    {
+        "value": 4220,
+        "job_title": "'CLIENT INFORMATION CLERKS'"
+    },
+    {
+        "value": 4221,
+        "job_title": "'Travel agency, etc. clerks'"
+    },
+    {
+        "value": 4222,
+        "job_title": "'Receptionists & information clerks [incl. Medical Receptionist]'"
+    },
+    {
+        "value": 4223,
+        "job_title": "'Telephone switchboard operators [incl. Telephone Operator]'"
+    },
+    {
+        "value": 5000,
+        "job_title": "'SERVICE WORKERS & SHOP & MARKET SALES WORKERS'"
+    },
+    {
+        "value": 5100,
+        "job_title": "'PERSONAL & PROTECTIVE SERVICES WORKERS'"
+    },
+    {
+        "value": 5110,
+        "job_title": "'TRAVEL ATTENDANTS, ETC.'"
+    },
+    {
+        "value": 5111,
+        "job_title": "'Travel attendants & travel stewards [incl. Airplane Steward, Airplane Purser]'"
+    },
+    {
+        "value": 5112,
+        "job_title": "'Transport conductors [incl. Train Conductor]'"
+    },
+    {
+        "value": 5113,
+        "job_title": "'Travel, museum guides'"
+    },
+    {
+        "value": 5120,
+        "job_title": "'HOUSEKEEPING & RESTAURANT SERVICES WORKERS'"
+    },
+    {
+        "value": 5121,
+        "job_title": "'Housekeepers, etc. workers [incl. Butler, Matron, Dormitory Warden, Estate Manager, Property Manager, Building '+"
+    },
+    {
+        "value": 5122,
+        "job_title": "'Cooks'"
+    },
+    {
+        "value": 5123,
+        "job_title": "'Waiters, waitresses & bartenders'"
+    },
+    {
+        "value": 5130,
+        "job_title": "'PERSONAL CARE, ETC. WORK'"
+    },
+    {
+        "value": 5131,
+        "job_title": "'Child-care workers [incl. Nursemaid, Governess]'"
+    },
+    {
+        "value": 5132,
+        "job_title": "'Institution-based personal care workers [incl. Ambulance Man, Hospital Orderly]'"
+    },
+    {
+        "value": 5133,
+        "job_title": "'Home-based personal care workers [incl. Attendant]'"
+    },
+    {
+        "value": 5139,
+        "job_title": "'[Other] care, etc. workers nec [incl. Animal Feeder]'"
+    },
+    {
+        "value": 5140,
+        "job_title": "'OTHER PERSONAL SERVICES WORKERS'"
+    },
+    {
+        "value": 5141,
+        "job_title": "'Hairdressers, barbers, beauticians, etc. workers'"
+    },
+    {
+        "value": 5142,
+        "job_title": "'Companions & valets [incl. Personal Maid]'"
+    },
+    {
+        "value": 5143,
+        "job_title": "'Undertakers & embalmers [incl. Funeral Director]'"
+    },
+    {
+        "value": 5149,
+        "job_title": "'Other personal services workers nec [incl. Escort, Dancing Partner, Prostitute]'"
+    },
+    {
+        "value": 5150,
+        "job_title": "'ASTROLOGERS, FORTUNE-TELLERS, ETC. WORKERS'"
+    },
+    {
+        "value": 5151,
+        "job_title": "'Astrologers, etc. workers'"
+    },
+    {
+        "value": 5152,
+        "job_title": "'Fortune-tellers, palmists, etc. workers'"
+    },
+    {
+        "value": 5160,
+        "job_title": "'PROTECTIVE SERVICES WORKERS'"
+    },
+    {
+        "value": 5161,
+        "job_title": "'Fire?ghters'"
+    },
+    {
+        "value": 5162,
+        "job_title": "'Police officers [incl. Policeman, Constable, Marshal]'"
+    },
+    {
+        "value": 5163,
+        "job_title": "'Prison guards'"
+    },
+    {
+        "value": 5164,
+        "job_title": "'[Armed forces, soldiers] [incl. Enlisted Man]'"
+    },
+    {
+        "value": 5169,
+        "job_title": "'Protective services workers nec [incl. Night Guard, Bodyguard, Coast Guard]'"
+    },
+    {
+        "value": 5200,
+        "job_title": "'[SALESPERSONS, MODELS & DEMONSTRATORS]'"
+    },
+    {
+        "value": 5210,
+        "job_title": "'FASHION & OTHER MODELS [incl. Mannequin, Artist\\A1\\A6s Model]'"
+    },
+    {
+        "value": 5220,
+        "job_title": "'SHOP SALESPERSONS & DEMONSTRATORS [incl. Shop Assistant, Gas Station Attendant, Retail Assistant]'"
+    },
+    {
+        "value": 5230,
+        "job_title": "'STALL & MARKET SALESPERSONS'"
+    },
+    {
+        "value": 6000,
+        "job_title": "'SKILLED AGRICULTURAL & FISHERY WORKERS'"
+    },
+    {
+        "value": 6100,
+        "job_title": "'MARKET-ORIENTED SKILLED AGRICULTURAL & FISHERY WORKERS [This category includes skilled farm workers and '+"
+    },
+    {
+        "value": 6110,
+        "job_title": "'MARKET GARDENERS & CROP GROWERS'"
+    },
+    {
+        "value": 6111,
+        "job_title": "'Field crop & vegetable growers [incl. Specialized Crop Farmers, Specialized Crop Farm Workers]'"
+    },
+    {
+        "value": 6112,
+        "job_title": "'Tree & shrub crop growers [incl. Skilled Rubber Worker, Coffee Farmer, Tea Grower, Fruit Tree  Pruner]'"
+    },
+    {
+        "value": 6113,
+        "job_title": "'Gardeners, horticultural & nursery growers   [incl. Bulb Grower, Market Gardener]'"
+    },
+    {
+        "value": 6114,
+        "job_title": "'Mixed-crop growers [incl. Share Cropper]'"
+    },
+    {
+        "value": 6120,
+        "job_title": "'MARKET-ORIENTED ANIMAL PRODUCERS, ETC. WORKERS'"
+    },
+    {
+        "value": 6121,
+        "job_title": "'Dairy & livestock producers  [incl. Cattle Breeder, Dairy Farmer, Grazier, Shepherd]'"
+    },
+    {
+        "value": 6122,
+        "job_title": "'Poultry producers [incl. Chicken Farmer, Skilled Hatchery Worker]'"
+    },
+    {
+        "value": 6123,
+        "job_title": "'Apiarists & sericulturists [incl. Beekeeper, Silkworm Raiser]'"
+    },
+    {
+        "value": 6124,
+        "job_title": "'Mixed-animal producers'"
+    },
+    {
+        "value": 6129,
+        "job_title": "'Market-oriented animal producers, etc. workers nec [incl. Bird Breeder, Gamekeeper, Kennel Keeper, Dog Trainer, '+"
+    },
+    {
+        "value": 6130,
+        "job_title": "'MARKET-ORIENTED CROP & ANIMAL PRODUCERS'"
+    },
+    {
+        "value": 6131,
+        "job_title": "'[Mixed farmers]'"
+    },
+    {
+        "value": 6132,
+        "job_title": "'[Farm foremen/supervisor]'"
+    },
+    {
+        "value": 6133,
+        "job_title": "'[Farmers nfs]'"
+    },
+    {
+        "value": 6134,
+        "job_title": "'[Skilled farm workers nfs]'"
+    },
+    {
+        "value": 6140,
+        "job_title": "'FORESTRY, ETC. WORKERS'"
+    },
+    {
+        "value": 6141,
+        "job_title": "'Forestry workers & loggers [incl. Forestery, Rafter, Timber Cruiser]'"
+    },
+    {
+        "value": 6142,
+        "job_title": "'Charcoal burners, etc. workers'"
+    },
+    {
+        "value": 6150,
+        "job_title": "'FISHERY WORKERS, HUNTERS & TRAPPERS'"
+    },
+    {
+        "value": 6151,
+        "job_title": "'Aquatic-life cultivation workers [incl. Oyster Farmer, Pearl Cultivator, Fish Hatcher]'"
+    },
+    {
+        "value": 6152,
+        "job_title": "'Inland & coastal waters ?shery workers [incl. Sponge Diver, Fisherman]'"
+    },
+    {
+        "value": 6153,
+        "job_title": "'Deep-sea ?shery workers [incl. Fisherman nfs, Trawler Crewman]'"
+    },
+    {
+        "value": 6154,
+        "job_title": "'Hunters & trappers [incl. Whaler]'"
+    },
+    {
+        "value": 6200,
+        "job_title": "'SUBSISTENCE AGRICULTURAL & FISHERY WORKERS'"
+    },
+    {
+        "value": 6210,
+        "job_title": "'SUBSISTENCE AGRICULTURAL & FISHERY WORKERS'"
+    },
+    {
+        "value": 7000,
+        "job_title": "'CRAFT, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7100,
+        "job_title": "'EXTRACTION & BUILDING TRADES WORKERS'"
+    },
+    {
+        "value": 7110,
+        "job_title": "'MINERS, SHOTFIRERS, STONE CUTTERS & CARVERS'"
+    },
+    {
+        "value": 7111,
+        "job_title": "'Miners & quarry workers [incl. Miner nfs]'"
+    },
+    {
+        "value": 7112,
+        "job_title": "'Shot?rers & blasters'"
+    },
+    {
+        "value": 7113,
+        "job_title": "'Stone splitters, cutters & carvers [incl. Tombstone Carver]'"
+    },
+    {
+        "value": 7120,
+        "job_title": "'BUILDING FRAME, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7121,
+        "job_title": "'Builders traditional materials'"
+    },
+    {
+        "value": 7122,
+        "job_title": "'Bricklayers & stonemasons  [incl. Pavior]'"
+    },
+    {
+        "value": 7123,
+        "job_title": "'Concrete placers, concrete ?nishers, etc. workers [incl. Terrazzo Worker]'"
+    },
+    {
+        "value": 7124,
+        "job_title": "'Carpenters & joiners'"
+    },
+    {
+        "value": 7129,
+        "job_title": "'Building frame, etc. trades workers nec [incl. Construction Worker nfs, Billboard Erector, Demolition '+"
+    },
+    {
+        "value": 7130,
+        "job_title": "'BUILDING FINISHERS, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7131,
+        "job_title": "'Roofers'"
+    },
+    {
+        "value": 7132,
+        "job_title": "'Floor layers & tile setters [incl. Parquetry Worker]'"
+    },
+    {
+        "value": 7133,
+        "job_title": "'Plasterers [incl. Stucco Mason]'"
+    },
+    {
+        "value": 7134,
+        "job_title": "'Insulation workers'"
+    },
+    {
+        "value": 7135,
+        "job_title": "'Glaziers'"
+    },
+    {
+        "value": 7136,
+        "job_title": "'Plumbers & pipe ?tters [incl. Well Digger]'"
+    },
+    {
+        "value": 7137,
+        "job_title": "'Building, etc. electricians'"
+    },
+    {
+        "value": 7140,
+        "job_title": "'PAINTERS, BUILDING STRUCTURE CLEANERS, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7141,
+        "job_title": "'Painters, etc. workers [incl. Construction Painter, Paperhanger]'"
+    },
+    {
+        "value": 7142,
+        "job_title": "'Varnishers, etc. painters [incl. Automobile Painter]'"
+    },
+    {
+        "value": 7143,
+        "job_title": "'Building structure cleaners [incl. Chimney Sweep, Sandblaster, Boiler Engine Cleaner]'"
+    },
+    {
+        "value": 7200,
+        "job_title": "'METAL, MACHINERY, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7210,
+        "job_title": "'METAL MOLDERS, WELDERS, SHEETMETAL WORKERS STRUCTURAL METAL'"
+    },
+    {
+        "value": 7211,
+        "job_title": "'Metal molders & coremakers'"
+    },
+    {
+        "value": 7212,
+        "job_title": "'Welders & ?amecutters [incl. Brazier, Solderer]'"
+    },
+    {
+        "value": 7213,
+        "job_title": "'Sheet-metal workers [incl. Panel Beater, Coppersmith, Tinsmith]'"
+    },
+    {
+        "value": 7214,
+        "job_title": "'Structural-metal preparers & erectors [incl. Ship Plater, Riveter, Shipwright]'"
+    },
+    {
+        "value": 7215,
+        "job_title": "'Riggers & cable splicers'"
+    },
+    {
+        "value": 7216,
+        "job_title": "'Underwater workers [incl. Frogman]'"
+    },
+    {
+        "value": 7220,
+        "job_title": "'BLACKSMITHS, TOOL-MAKERS, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7221,
+        "job_title": "'Blacksmiths, hammer-smiths & forging press workers [incl. Toolsmith]'"
+    },
+    {
+        "value": 7222,
+        "job_title": "'Tool-makers, etc. workers  [incl. Locksmith]'"
+    },
+    {
+        "value": 7223,
+        "job_title": "'Machine-tool setters & setter-operators [incl. Metal driller, Turner]'"
+    },
+    {
+        "value": 7224,
+        "job_title": "'Metal wheel-grinders, polishers & tool sharpeners'"
+    },
+    {
+        "value": 7230,
+        "job_title": "'MACHINERY MECHANICS & FITTERS'"
+    },
+    {
+        "value": 7231,
+        "job_title": "'Motor vehicle mechanics & ?tters [incl. Bicycle Repairman]'"
+    },
+    {
+        "value": 7232,
+        "job_title": "'Aircraft engine mechanics & ?tters'"
+    },
+    {
+        "value": 7233,
+        "job_title": "'[Industrial & agricultural] machinery mechanics & ?tters [incl. Mechanic Heavy Equipment, Millwright]'"
+    },
+    {
+        "value": 7234,
+        "job_title": "'[Unskilled garage worker] [incl. Oiler-Greaser]'"
+    },
+    {
+        "value": 7240,
+        "job_title": "'ELECTRICAL & ELECTRONIC EQUIPMENT MECHANICS & FIT-TERS'"
+    },
+    {
+        "value": 7241,
+        "job_title": "'Electrical mechanics & ?tters [incl. Office Machine Repairman]'"
+    },
+    {
+        "value": 7242,
+        "job_title": "'Electronics ?tters'"
+    },
+    {
+        "value": 7243,
+        "job_title": "'Electronics mechanics & servicers'"
+    },
+    {
+        "value": 7244,
+        "job_title": "'Telegraph & telephone installers & servicers'"
+    },
+    {
+        "value": 7245,
+        "job_title": "'Electrical line installers, repairers & cable jointers'"
+    },
+    {
+        "value": 7300,
+        "job_title": "'PRECISION, HANDICRAFT, PRINTING, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7310,
+        "job_title": "'PRECISION WORKERS IN METAL, ETC. MATERIALS'"
+    },
+    {
+        "value": 7311,
+        "job_title": "'Precision-instrument makers & repairers [incl. Dental Mechanic, Watch Maker]'"
+    },
+    {
+        "value": 7312,
+        "job_title": "'Musical-instrument makers & tuners'"
+    },
+    {
+        "value": 7313,
+        "job_title": "'Jewelry & precious-metal workers [incl. Diamond Cutter, Goldsmith]'"
+    },
+    {
+        "value": 7320,
+        "job_title": "'POTTERS, GLASS-MAKERS, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7321,
+        "job_title": "'Abrasive wheel formers, potters, etc. workers'"
+    },
+    {
+        "value": 7322,
+        "job_title": "'Glass-makers, cutters, grinders & ?nishers'"
+    },
+    {
+        "value": 7323,
+        "job_title": "'Glass engravers & etchers'"
+    },
+    {
+        "value": 7324,
+        "job_title": "'Glass ceramics, etc. decorative painters [incl. Decorative Painter, Signpainter]'"
+    },
+    {
+        "value": 7330,
+        "job_title": "'HANDICRAFT WORKERS IN WOOD, TEXTILE, LEATHER, ETC.'"
+    },
+    {
+        "value": 7331,
+        "job_title": "'Handicraft workers in wood, etc. materials [incl. Candle Maker, Straw-Hat Maker]'"
+    },
+    {
+        "value": 7332,
+        "job_title": "'Handicraft workers in textile, leather, etc. materials [incl. Carpet Weaver]'"
+    },
+    {
+        "value": 7340,
+        "job_title": "'PRINTING, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7341,
+        "job_title": "'Compositors, typesetters, etc. workers'"
+    },
+    {
+        "value": 7342,
+        "job_title": "'Stereotypers & electrotypers'"
+    },
+    {
+        "value": 7343,
+        "job_title": "'Printing engravers & etchers'"
+    },
+    {
+        "value": 7344,
+        "job_title": "'Photographic, etc. workers [incl. Darkroom worker]'"
+    },
+    {
+        "value": 7345,
+        "job_title": "'Bookbinders, etc. workers'"
+    },
+    {
+        "value": 7346,
+        "job_title": "'Silkscreen, block & textile printers'"
+    },
+    {
+        "value": 7400,
+        "job_title": "'OTHER CRAFT, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7410,
+        "job_title": "'FOOD PROCESSING, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7411,
+        "job_title": "'Butchers, ?shmongers, etc. food preparers'"
+    },
+    {
+        "value": 7412,
+        "job_title": "'Bakers, pastry-cooks & confectionery makers'"
+    },
+    {
+        "value": 7413,
+        "job_title": "'Dairy-products makers'"
+    },
+    {
+        "value": 7414,
+        "job_title": "'Fruit, vegetable, etc. preservers'"
+    },
+    {
+        "value": 7415,
+        "job_title": "'Food & beverage tasters & graders'"
+    },
+    {
+        "value": 7416,
+        "job_title": "'Tobacco preparers & tobacco products makers'"
+    },
+    {
+        "value": 7420,
+        "job_title": "'WOOD TREATERS, CABINET-MAKERS, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7421,
+        "job_title": "'Wood treaters [incl. Wood Grader, Wood Impregnator]'"
+    },
+    {
+        "value": 7422,
+        "job_title": "'Cabinet-makers, etc. workers [incl. Cartwright, Cooper]'"
+    },
+    {
+        "value": 7423,
+        "job_title": "'Woodworking-machine setters & setter-operators [incl. Wood-Turner]'"
+    },
+    {
+        "value": 7424,
+        "job_title": "'Basketry weavers, brush makers, etc. workers [incl. Broom Maker]'"
+    },
+    {
+        "value": 7430,
+        "job_title": "'TEXTILE, GARMENT, ETC. TRADES WORKERS'"
+    },
+    {
+        "value": 7431,
+        "job_title": "'Fiber preparers'"
+    },
+    {
+        "value": 7432,
+        "job_title": "'Weavers, knitters, etc. workers'"
+    },
+    {
+        "value": 7433,
+        "job_title": "'Tailors, dressmakers & hatters [incl. Milliner]'"
+    },
+    {
+        "value": 7434,
+        "job_title": "'Furriers, etc. workers'"
+    },
+    {
+        "value": 7435,
+        "job_title": "'Textile, leather, etc. pattern-makers & cutters'"
+    },
+    {
+        "value": 7436,
+        "job_title": "'Sewers, embroiderers, etc. workers'"
+    },
+    {
+        "value": 7437,
+        "job_title": "'Upholsterers, etc. workers'"
+    },
+    {
+        "value": 7440,
+        "job_title": "'PELT, LEATHER & SHOEMAKING TRADES WORKERS'"
+    },
+    {
+        "value": 7441,
+        "job_title": "'Pelt dressers, tanners & fellmongers'"
+    },
+    {
+        "value": 7442,
+        "job_title": "'Shoe-makers, etc. workers'"
+    },
+    {
+        "value": 7500,
+        "job_title": "'[SKILLED WORKERS NFS]'"
+    },
+    {
+        "value": 7510,
+        "job_title": "'[MANUAL FOREMEN NFS\\A1XNON-FARM]'"
+    },
+    {
+        "value": 7520,
+        "job_title": "'[SKILLED WORKERS NFS] [incl. Craftsman, Artisan, Tradesman]'"
+    },
+    {
+        "value": 7530,
+        "job_title": "'[APPRENTICE SKILLED WORK NFS]'"
+    },
+    {
+        "value": 8000,
+        "job_title": "'PLANT & MACHINE OPERATORS & ASSEMBLERS'"
+    },
+    {
+        "value": 8100,
+        "job_title": "'STATIONARY-PLANT, ETC. OPERATORS'"
+    },
+    {
+        "value": 8110,
+        "job_title": "'MINING- & MINERAL-PROCESSING PLANT OPERATORS'"
+    },
+    {
+        "value": 8111,
+        "job_title": "'Mining-plant operators'"
+    },
+    {
+        "value": 8112,
+        "job_title": "'Mineral-ore- & stone-processing plant operators'"
+    },
+    {
+        "value": 8113,
+        "job_title": "'Well-drillers & borers, etc. workers'"
+    },
+    {
+        "value": 8120,
+        "job_title": "'METAL-PROCESSING PLANT OPERATORS'"
+    },
+    {
+        "value": 8121,
+        "job_title": "'Ore & metal furnace operators'"
+    },
+    {
+        "value": 8122,
+        "job_title": "'Metal melters, casters & rolling-mill operators'"
+    },
+    {
+        "value": 8123,
+        "job_title": "'Metal heat-treating plant operators'"
+    },
+    {
+        "value": 8124,
+        "job_title": "'Metal drawers & extruders'"
+    },
+    {
+        "value": 8130,
+        "job_title": "'GLASS, CERAMICS, ETC. PLANT OPERATORS'"
+    },
+    {
+        "value": 8131,
+        "job_title": "'Glass & ceramics kiln, etc. machine operators'"
+    },
+    {
+        "value": 8139,
+        "job_title": "'Glass, ceramics, etc. plant operators nec'"
+    },
+    {
+        "value": 8140,
+        "job_title": "'WOOD-PROCESSING & PAPERMAKING PLANT OPERATORS'"
+    },
+    {
+        "value": 8141,
+        "job_title": "'Wood-processing plant operators [incl. Sawyer]'"
+    },
+    {
+        "value": 8142,
+        "job_title": "'Paper-pulp plant operators'"
+    },
+    {
+        "value": 8143,
+        "job_title": "'Papermaking plant operators'"
+    },
+    {
+        "value": 8150,
+        "job_title": "'CHEMICAL-PROCESSING PLANT OPERATORS'"
+    },
+    {
+        "value": 8151,
+        "job_title": "'Crushing grinding & chemical-mixing machinery operators'"
+    },
+    {
+        "value": 8152,
+        "job_title": "'Chemical heat-treating plant operators'"
+    },
+    {
+        "value": 8153,
+        "job_title": "'Chemical-?ltering & separating-equipment operators'"
+    },
+    {
+        "value": 8154,
+        "job_title": "'Chemical-still & reactor operators'"
+    },
+    {
+        "value": 8155,
+        "job_title": "'Petroleum & natural-gas re?ning plant operators'"
+    },
+    {
+        "value": 8159,
+        "job_title": "'Chemical-processing plant operators nec'"
+    },
+    {
+        "value": 8160,
+        "job_title": "'POWER-PRODUCTION, ETC. PLANT OPERATORS'"
+    },
+    {
+        "value": 8161,
+        "job_title": "'Power-production plant operators'"
+    },
+    {
+        "value": 8162,
+        "job_title": "'Steam-engine & boiler operators [incl. Stoker, Ship Engine Room Ratings]'"
+    },
+    {
+        "value": 8163,
+        "job_title": "'Incinerator water-treatment, etc. plant operators [incl. Sewage Plant Operator]'"
+    },
+    {
+        "value": 8170,
+        "job_title": "'AUTOMATED ASSEMBLY-LINE & INDUSTRIAL-ROBOT OPER-TORS'"
+    },
+    {
+        "value": 8171,
+        "job_title": "'Automated assembly-line operators'"
+    },
+    {
+        "value": 8172,
+        "job_title": "'Industrial-robot operators'"
+    },
+    {
+        "value": 8200,
+        "job_title": "'MACHINE OPERATORS & ASSEMBLERS'"
+    },
+    {
+        "value": 8210,
+        "job_title": "'METAL- & MINERAL-PRODUCTS MACHINE OPERATORS'"
+    },
+    {
+        "value": 8211,
+        "job_title": "'Machine-tool operators [incl. Machine Operator nfs]'"
+    },
+    {
+        "value": 8212,
+        "job_title": "'Cement & other mineral products machine operators'"
+    },
+    {
+        "value": 8220,
+        "job_title": "'CHEMICAL-PRODUCTS MACHINE OPERATORS'"
+    },
+    {
+        "value": 8221,
+        "job_title": "'Pharmaceutical & toiletry products machine operators'"
+    },
+    {
+        "value": 8222,
+        "job_title": "'Ammunition & explosive-products machine operators'"
+    },
+    {
+        "value": 8223,
+        "job_title": "'Metal-?nishing, -plating, & -coating machine operators [incl. Electroplater, Fettler]'"
+    },
+    {
+        "value": 8224,
+        "job_title": "'Photographic-products machine operators'"
+    },
+    {
+        "value": 8229,
+        "job_title": "'Chemical-products machine operators nec'"
+    },
+    {
+        "value": 8230,
+        "job_title": "'RUBBER- & PLASTIC-PRODUCTS MACHINE OPERATORS'"
+    },
+    {
+        "value": 8231,
+        "job_title": "'Rubber-products machine operators'"
+    },
+    {
+        "value": 8232,
+        "job_title": "'Plastic-products machine operators'"
+    },
+    {
+        "value": 8240,
+        "job_title": "'WOOD-PRODUCTS MACHINE OPERATORS'"
+    },
+    {
+        "value": 8250,
+        "job_title": "'PRINTING, BINDING & PAPER-PRODUCTS MACHINE OPERA-TORS'"
+    },
+    {
+        "value": 8251,
+        "job_title": "'Printing-machine operators'"
+    },
+    {
+        "value": 8252,
+        "job_title": "'Bookbinding-machine operators'"
+    },
+    {
+        "value": 8253,
+        "job_title": "'Paper-products machine operators'"
+    },
+    {
+        "value": 8260,
+        "job_title": "'TEXTILE, FUR & LEATHER-PRODUCTS MACHINE OPERATORS'"
+    },
+    {
+        "value": 8261,
+        "job_title": "'Fiber-preparing, spinning & winding machine operators'"
+    },
+    {
+        "value": 8262,
+        "job_title": "'Weaving- & knitting-machine operators'"
+    },
+    {
+        "value": 8263,
+        "job_title": "'Sewing-machine operators'"
+    },
+    {
+        "value": 8264,
+        "job_title": "'Bleaching-, dyeing- & cleaning-machine operators [incl. Launderer]'"
+    },
+    {
+        "value": 8265,
+        "job_title": "'Fur- & leather-preparing-maching operators'"
+    },
+    {
+        "value": 8266,
+        "job_title": "'Shoemaking-, etc. machine operators'"
+    },
+    {
+        "value": 8269,
+        "job_title": "'Textile, fur & leather-products machine operators nec'"
+    },
+    {
+        "value": 8270,
+        "job_title": "'FOOD, ETC. PRODUCTS MACHINE OPERATORS'"
+    },
+    {
+        "value": 8271,
+        "job_title": "'Meat- & ?sh-processing machine operators'"
+    },
+    {
+        "value": 8272,
+        "job_title": "'Dairy-products machine operators'"
+    },
+    {
+        "value": 8273,
+        "job_title": "'Grain- & spice-milling machine operators'"
+    },
+    {
+        "value": 8274,
+        "job_title": "'Baked-goods cereal & chocolate products machine operators'"
+    },
+    {
+        "value": 8275,
+        "job_title": "'Fruit-, vegetable- & nut-processing machine operators'"
+    },
+    {
+        "value": 8276,
+        "job_title": "'Sugar-production machine operators'"
+    },
+    {
+        "value": 8277,
+        "job_title": "'Tea-, coffee- & cocoa-processing machine operators'"
+    },
+    {
+        "value": 8278,
+        "job_title": "'Brewers-, wine & other beverage machine operators'"
+    },
+    {
+        "value": 8279,
+        "job_title": "'Tobacco-production machine operators'"
+    },
+    {
+        "value": 8280,
+        "job_title": "'ASSEMBLERS'"
+    },
+    {
+        "value": 8281,
+        "job_title": "'Mechanical-machinery assemblers [incl. Car Assembly-Line Worker]'"
+    },
+    {
+        "value": 8282,
+        "job_title": "'Electrical-equipment assemblers'"
+    },
+    {
+        "value": 8283,
+        "job_title": "'Electronic-equipment assemblers'"
+    },
+    {
+        "value": 8284,
+        "job_title": "'Metal, rubber & plastic products assemblers'"
+    },
+    {
+        "value": 8285,
+        "job_title": "'Wood, etc. products assemblers'"
+    },
+    {
+        "value": 8286,
+        "job_title": "'Paperboard, textile, etc. products assemblers'"
+    },
+    {
+        "value": 8290,
+        "job_title": "'OTHER MACHINE OPERATORS & ASSEMBLERS'"
+    },
+    {
+        "value": 8300,
+        "job_title": "'DRIVERS & MOBILE-PLANT OPERATORS'"
+    },
+    {
+        "value": 8310,
+        "job_title": "'LOCOMOTIVE-ENGINE DRIVERS, ETC. WORKERS'"
+    },
+    {
+        "value": 8311,
+        "job_title": "'Locomotive-engine drivers'"
+    },
+    {
+        "value": 8312,
+        "job_title": "'Railway brakers signalers & shunters'"
+    },
+    {
+        "value": 8320,
+        "job_title": "'MOTOR-VEHICLE DRIVERS [incl. Driver nfs]'"
+    },
+    {
+        "value": 8321,
+        "job_title": "'Motorcycle drivers'"
+    },
+    {
+        "value": 8322,
+        "job_title": "'Car, taxi & van drivers [incl. Taxi Owner nfs]'"
+    },
+    {
+        "value": 8323,
+        "job_title": "'Bus & tram drivers'"
+    },
+    {
+        "value": 8324,
+        "job_title": "'Heavy truck & lorry drivers'"
+    },
+    {
+        "value": 8330,
+        "job_title": "'AGRICULTURAL & OTHER MOBILE PLANT OPERATORS'"
+    },
+    {
+        "value": 8331,
+        "job_title": "'Motorized farm & forestry plant operators [incl. Tractor Driver, Combine Harvester Operator]'"
+    },
+    {
+        "value": 8332,
+        "job_title": "'Earth-moving, etc. plant operators [incl. Bulldozer Driver, Dredge Operator, Road-Roller Driver]'"
+    },
+    {
+        "value": 8333,
+        "job_title": "'Crane, hoist, etc. plant operators'"
+    },
+    {
+        "value": 8334,
+        "job_title": "'Lifting-truck operators'"
+    },
+    {
+        "value": 8340,
+        "job_title": "'SHIPS DECK CREWS, ETC. WORKERS [incl. Boatman, Deck Hand, Sailor, Ship Deck Ratings]'"
+    },
+    {
+        "value": 8400,
+        "job_title": "'SEMISKILLED WORKERS NFS [incl. Production Process Worker nfs, Factory Worker nfs]'"
+    },
+    {
+        "value": 9000,
+        "job_title": "'ELEMENTARY OCCUPATIONS'"
+    },
+    {
+        "value": 9100,
+        "job_title": "'SALES & SERVICES ELEMENTARY OCCUPATIONS'"
+    },
+    {
+        "value": 9110,
+        "job_title": "'STREET VENDORS, ETC. WORKERS'"
+    },
+    {
+        "value": 9111,
+        "job_title": "'Street food vendors'"
+    },
+    {
+        "value": 9112,
+        "job_title": "'Street vendors nonfood products [incl. Hawker, Peddler, Newsvendor, Rag Picker, Scavenger]'"
+    },
+    {
+        "value": 9113,
+        "job_title": "'Door-to-door & telephone salespersons [incl. Solicitor, Canvasser]'"
+    },
+    {
+        "value": 9120,
+        "job_title": "'STREET SERVICES ELEMENTARY OCCUPATIONS [incl. Billposter, Shoeshiner, Car Window Washer]'"
+    },
+    {
+        "value": 9130,
+        "job_title": "'DOMESTIC, ETC. HELPERS, CLEANERS & LAUNDERERS'"
+    },
+    {
+        "value": 9131,
+        "job_title": "'Domestic helpers & cleaners [incl. Housemaid, Housekeeper nfs]'"
+    },
+    {
+        "value": 9132,
+        "job_title": "'Helpers & cleaners in establishments [Kitchen Hand, Chambermaid]'"
+    },
+    {
+        "value": 9133,
+        "job_title": "'Hand-launderers & pressers'"
+    },
+    {
+        "value": 9140,
+        "job_title": "'BUILDING CARETAKERS, WINDOW, ETC. CLEANERS'"
+    },
+    {
+        "value": 9141,
+        "job_title": "'Building caretakers [incl. Janitor, Sexton, Verger]'"
+    },
+    {
+        "value": 9142,
+        "job_title": "'Vehicle, window, etc. cleaners'"
+    },
+    {
+        "value": 9150,
+        "job_title": "'MESSENGERS, PORTERS, DOORKEEPERS, ETC. WORKERS'"
+    },
+    {
+        "value": 9151,
+        "job_title": "'Messengers, package & luggage porters & deliverers [incl. Elevator Attendant, Bellboy, Messenger]'"
+    },
+    {
+        "value": 9152,
+        "job_title": "'Doorkeepers, watchpersons, etc. workers [incl. Amusement Park Attendant, Ticket Collector, Usher, Watchman nfs, '+"
+    },
+    {
+        "value": 9153,
+        "job_title": "'Vending-maching money collectors, meter readers, etc. workers'"
+    },
+    {
+        "value": 9160,
+        "job_title": "'GARBAGE COLLECTORS, ETC. LABORERS'"
+    },
+    {
+        "value": 9161,
+        "job_title": "'Garbage collectors [incl. Dustman]'"
+    },
+    {
+        "value": 9162,
+        "job_title": "'Sweepers, etc. laborers [incl. Odd-Job Worker]'"
+    },
+    {
+        "value": 9200,
+        "job_title": "'AGRICULTURAL, FISHERY, ETC. LABORERS'"
+    },
+    {
+        "value": 9210,
+        "job_title": "'AGRICULTURAL, FISHERY, ETC. LABORERS'"
+    },
+    {
+        "value": 9211,
+        "job_title": "'Farm-hands & laborers [incl. Cow Herd, Farm Helper, Fruit Picker]'"
+    },
+    {
+        "value": 9212,
+        "job_title": "'Forestry laborers'"
+    },
+    {
+        "value": 9213,
+        "job_title": "'Fishery, hunting & trapping laborers'"
+    },
+    {
+        "value": 9300,
+        "job_title": "'LABORERS IN MINING, CONSTRUCTION, MANUFACTURING & TRANSPORT [incl. Unskilled Worker nfs]'"
+    },
+    {
+        "value": 9310,
+        "job_title": "'MINING & CONSTRUCTION LABORERS'"
+    },
+    {
+        "value": 9311,
+        "job_title": "'Mining & quarrying laborers'"
+    },
+    {
+        "value": 9312,
+        "job_title": "'Construction & maintenance laborers: roads, dams, etc. [incl. Navvy, Shoveller, Railway Trackworker]'"
+    },
+    {
+        "value": 9313,
+        "job_title": "'Building construction laborers [incl. Handyman, Hod Carrier]'"
+    },
+    {
+        "value": 9320,
+        "job_title": "'MANUFACTURING LABORERS'"
+    },
+    {
+        "value": 9321,
+        "job_title": "'Assembling laborers [incl. Sorter, Bottle Sorter, Winder, Checker nfs, Grader nfs]'"
+    },
+    {
+        "value": 9322,
+        "job_title": "'Handpackers & other manufacturing laborers  [incl. Crater, Labeler]'"
+    },
+    {
+        "value": 9330,
+        "job_title": "'TRANSPORT LABORERS & FREIGHT HANDLERS'"
+    },
+    {
+        "value": 9331,
+        "job_title": "'Hand or pedal vehicle drivers [incl. Rickshaw Driver]'"
+    },
+    {
+        "value": 9332,
+        "job_title": "'Drivers of animal-drawn vehicles & machinery'"
+    },
+    {
+        "value": 9333,
+        "job_title": "'Freight handlers [incl. Docker, Loader, Longshoreman, Remover, Stevedore]'"
+    },
+    {
+        "value": 9990,
+        "job_title": "'Not applicable'"
+    },
+    {
+        "value": 9998,
+        "job_title": "\"Can't choose\""
+    },
+    {
+        "value": 9999,
+        "job_title": "'Decline to answer' /."
+    }
+]
