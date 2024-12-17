@@ -7,6 +7,7 @@ import { plotCountryVsCountryMatrix, populateSmallDropdown } from './matrix.js';
 import { drawMissingPercentageHistogram, missing_dropdown_updates } from './missing_values.js';
 import { questionCorrelation, SECorrelation } from './correlation.js';
 import { createDates } from './date.js';
+import { linksToTemplates } from './template_links.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
@@ -121,6 +122,10 @@ function createViz_mainPage() {
         createDates();
         Questions();
         createButtonSelection();
+        linksToTemplates();
+
+
+        
         centralisedDisplay();
 
         

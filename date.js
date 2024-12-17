@@ -6,13 +6,17 @@ export function createDates() {
     // Clear any existing content
     parentDiv.html("");
 
-    // Title at the top-left of the parent division
+    // Title at the top-left of the parent division with left padding
+    const titleHeight = 0.5 * parentDiv.node().clientHeight; // 50% of the height for the title
     parentDiv.append("h3")
         .text("Considered Time")
-        .style("margin", "10px 0 20px 10px") // Add spacing
+        .style("margin", "0")  // Remove margin to fit the 50% height
         .style("font-family", "Arial, sans-serif")
         .style("color", "#333")
-        .style("font-size", "18px");
+        .style("font-size", "16px")
+        .style("height", `${titleHeight}px`)  // Set height to 50% of the container's height
+        .style("line-height", `${titleHeight}px`)  // Center the text vertically
+        .style("padding-left", "20px");  // Add padding to the left of the heading
 
     // Find distinct years
     const yearObject = ctx.csvTimeSpace.find(d => d.header === "year");
@@ -25,13 +29,27 @@ export function createDates() {
     // Add "all" to the list of buttons
     const allYears = ["all", ...distinctYears];
 
+    // Get the width and height of the parent container
+    const containerWidth = parentDiv.node().clientWidth;
+    const containerHeight = parentDiv.node().clientHeight;
+
+    // Calculate button width (15% of the container width) and height (50% of the container height minus padding)
+    const buttonWidth = containerWidth * 0.15;
+    const buttonHeight = (containerHeight * 0.5) - (containerHeight * 0.1); // 50% of height minus padding
+
+    // Calculate the space (8% of the container width and 10% of the container height)
+    const spaceWidth = containerWidth * 0.08;
+    const spaceHeight = containerHeight * 0.1;
+
     // Button container for equal spacing
     const buttonContainer = parentDiv.append("div")
         .style("display", "flex")
         .style("justify-content", "space-evenly") // Equal spacing
         .style("align-items", "center")
         .style("flex-wrap", "wrap") // Wrap if the buttons overflow
-        .style("margin", "10px");
+        .style("height", `${containerHeight * 0.4}px`)  // 50% height for buttons
+        .style("padding", `0 ${spaceWidth}px`)  // Padding on left and right
+        .style("box-sizing", "border-box"); // Prevent overflow of content
 
     // Add buttons
     const buttons = buttonContainer.selectAll("button")
@@ -51,6 +69,8 @@ export function createDates() {
         .style("transition", "all 0.1s ease-in-out")
         .style("box-shadow", "0 2px 4px rgba(0, 0, 0, 0.3)") // Default shadow
         .style("transform", "translateY(0)") // Default position
+        .style("width", `${buttonWidth}px`)  // Set button width dynamically
+        .style("height", `${buttonHeight}px`)  // Set button height dynamically
         .on("click", function(event, d) {
             buttons
                 .style("box-shadow", "0 2px 4px rgba(0, 0, 0, 0.3)") // Reset shadow
