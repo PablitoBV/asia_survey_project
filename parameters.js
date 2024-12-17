@@ -21,6 +21,7 @@ export const ctx = {
         currentFactors: [''],
         currentDate: 'all',
     },
+    background_color: "rgb(190,190,190"
 };
 
 export function loadQuestions() {

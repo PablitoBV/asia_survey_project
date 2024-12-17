@@ -14,3 +14,61 @@ th, td {
 th {
     background-color: #f4f4f4;
 } */
+
+/* Style for the select element (dropdown) */
+#group-select-page2,
+#select_bad_type {
+    appearance: none; /* Remove default dropdown arrow in most browsers */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid #ccc; /* Light gray border */
+    border-radius: 8px;
+    background-color: #909fc3; 
+    color: #333; 
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#select_bad_type {
+    width: 250px
+}
+
+#group-select-page2{
+    width: 610px
+}
+
+
+#group-select-page2:hover,
+#select_bad_type:hover {
+    border-color: #888; /* Darker border on hover */
+}
+
+#group-select-page2:focus,
+#select_bad_type:focus {
+    border-color: #008CBA; /* Blue border on focus */
+    outline: none;
+}
+
+/* Custom dropdown arrow */
+#group-select-page2::-ms-expand,
+#select_bad_type::-ms-expand {
+    display: none; /* Remove default dropdown arrow in IE */
+}
+
+
+#group-select-page2 option,
+#select_bad_type option {
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background for options */
+    color: #333;
+    font-size: 16px;
+}
+
+/* Hover effect for options */
+#group-select-page2 option:hover,
+#select_bad_type option:hover {
+    background-color: #dcdcdc; /* Slightly darker gray on hover */
+}
