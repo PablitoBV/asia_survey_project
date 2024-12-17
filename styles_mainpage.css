@@ -2,89 +2,103 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
+/* Container for the entire page */
 #main-container {
+    display: flex;        /* Use flexbox layout */
+    height: 100vh;        /* Make the height of main_page equal to the viewport height */
+}
+
+/* Left section (Selection) */
+#selection {
+    width: 40%;           /* 40% of the width */
+    height: 100%;         /* Full height of main_page */
+    background-color: lightgray;  /* Optional: Add background color for visibility */
+}
+
+#respondentMap {
+    width: 100%;
+    height: 60%;
+    background-color: lightgray;
+}
+
+#dates {
+    width: 100%;
+    height: 10%;
+}
+
+#linksToTemplates {
+    width: 100%;
+    height: 30%;
+}
+
+/* Right section (Visualization) */
+#visualization {
+    width: 60%;           /* 60% of the width */
+    height: 100%;         /* Full height of main_page */
+    background-color: antiquewhite;  /* Optional: Add background color for visibility */
+}
+
+#visualizationSelection {
+    width: 100%;
+    height: 5%;
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
+    gap: 4%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+#visualizationMain {
+    width: 100%;
+    height: 95%;
+    background-color: antiquewhite;
+}
+
+#unselectButton:hover {
+    background-color: #00796B; /* Darker teal for hover effect */
+}
+
+/* Button Styles */
+/* Button Styles */
+.selection-button {
+    display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: center;
+    background-color: #d3d3d3;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 17%;
+    height: 100%; /* You can adjust this value to control the height */
 }
 
-/* Top Map */
-#map-container-1, #map-container-2 {
-    width: 100%;
-    /* height: 400px; */
-    /* position: relative; */
+/* Button Hover Effect */
+.selection-button:hover {
+    background-color: #b0b0b0;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Container for the two histograms */
-#histograms-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start; /* Align histograms to the top */
-    width: 50%;
-    margin: 0px 0;
-    padding: 0; 
-    flex-wrap: wrap; 
+/* Icon Styles */
+.button-icon {
+    margin-right: 8px;
+    font-size: 18px; /* Control the size of the icons */
 }
 
-/* svg {
-    width: 100%;
-    height: auto; 
-} */
-
-/* Adjust selectors container spacing */
-#selectors-container {
-    margin-top: 0px; 
-    text-align: center;
+/* Additional Styles for Text */
+.selection-button span {
+    font-weight: bold;
+    display: inline-block;
 }
 
-/* Adjust spacing inside the input container */
-#input-container, #country-select-container {
-    margin: 5px auto; 
-}
-
-/* Optional: Style the selectors for better alignment */
-#question-number {
-    padding: 5px;
-    width: 200px;
-}
-/* Style for the buttons for other pages*/
-nav {
-background-color: #f4f4f4;
-padding: 10px;
-font-size: 16px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #333;
-    margin: 0 10px;
-}
-
-nav a:hover {
-    color: #007bff;
-}
-
-/* Reduce warning message spacing */
-#warning-message {
-    margin-top: 5px;
-    color: red;
-    display: none;
-}
-
-table {
-    border-collapse: collapse;
-    margin-top: 20px;
-    max-width: 60%;
-    align-self: center;
-}
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-th {
-    background-color: #f4f4f4;
+.selection-button.pushed {
+    background-color: #a0a0a0; /* A darker color for the "pushed in" effect */
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px); /* Create a pressed effect by shifting the button down */
 }

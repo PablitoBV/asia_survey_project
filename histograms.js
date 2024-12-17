@@ -1,42 +1,24 @@
-import { ctx, sortDataByScale, sortDataAlphabetically } from './parameters.js';  // Import ctx parameters
+import { ctx } from './parameters.js';  // Import ctx parameters
 
 
-export function Histogram_updates(csvData) {
-    const countryHistogramDiv = document.getElementById("basicHistogram");
-    // Initialization phase
-    createHistogram(csvData);
+export function createHistogram() {
 
-    // Update country-specific histogram on country change
-    document.getElementById("respondentMap").addEventListener("click", (event) => {
-        createHistogram(csvData)
-        });
-    }
-
-
-/////////////////////
-
-// Build another histogram at the side, specific to the country selected and the question selected
-export function createHistogram(csvData) {
-
-    const questionColumn = `q${ctx.appState.currentQuestion}`;
-    const HistogramDiv = document.getElementById("basicHistogram");
+    const questionColumn = ctx.appState.currentQuestion;
 
     let selectedCountries = ctx.appState.selectedCountries;
-
     if (selectedCountries.length === 0) {
         selectedCountries = ["China", "Japan", "Myanmar", "Thailand", "Vietnam", "Cambodia", "Indonesia", "Malaysia", "Hong Kong", "South Korea", "Taiwan", "Singapore", "Mongolia", "Philippines"];
     }
-
-    // Filter data for the selected country
-    const filteredCountryData = csvData.filter(row => selectedCountries.includes(row.country));
-    if (filteredCountryData.length === 0) {
-        console.error(`No data found for country: ${selectedCountry}`);
-        return;
+    const filteredCountryData = ctx.CSVDATA.filter(row => selectedCountries.includes(row.country));
+    console.log(filteredCountryData)
+    let filteredDateData = filteredCountryData;
+    if (ctx.appState.currentDate != 'all'){
+        filteredDateData = filteredCountryData.filter(row => row.year === ctx.appState.currentDate);
     }
 
-    const validAnswers = filteredCountryData
-    .map(row => row[questionColumn] !== undefined && row[questionColumn] !== null ? row[questionColumn] : "No data");
 
+    const validAnswers = filteredDateData
+        .map(row => row[questionColumn] !== undefined && row[questionColumn] !== null ? row[questionColumn] : "No data");
 
     // Count the occurrences of each answer
     const countryAnswerCounts = d3.rollup(validAnswers, v => v.length, d => d);
@@ -46,43 +28,54 @@ export function createHistogram(csvData) {
 
     // Sort the data alphabetically (with 'Missing' at the end)
     const countryData = initData.sort((a, b) => {
-        if (a.answer === 'Missing') return 1;  // Move "Missing" to the end
-        if (b.answer === 'Missing') return -1; // If 'Missing' is already at the end, keep it
-        return a.answer.localeCompare(b.answer); // Sort alphabetically
+        if (a.answer === 'Missing') return 1;
+        if (b.answer === 'Missing') return -1;
+        return a.answer.localeCompare(b.answer);
     });
 
-    // Define the dimensions for the histogram and label areas
-    const topMargin = ctx.HIST_H / 20; // Extra space above the histogram
-    const histWidth = (4 / 5) * ctx.HIST_W; // 4/5 for the histogram
-    const histHeight = (2 / 3) * ctx.HIST_H - topMargin; // 2/3 for the histogram minus top margin
-    const yLabelWidth = (1 / 5) * ctx.HIST_W; // 1/5 for y-axis labels
+    // Clear the container of any existing SVG
+    const visualizationDiv = document.getElementById("visualizationMain");
+    d3.select(visualizationDiv).select("svg").remove();
+
+    // Get parent dimensions
+    const parentWidth = visualizationDiv.clientWidth;
+    const parentHeight = visualizationDiv.clientHeight;
+
+    // Calculate dimensions with 5% padding
+    const paddingPercent = 0.05;
+    const svgWidth = parentWidth * (1 - 2 * paddingPercent); // 90% width
+    const svgHeight = parentHeight * (1 - 2 * paddingPercent); // 90% height
+    const marginLeft = parentWidth * paddingPercent; // Left padding
+    const marginTop = parentHeight * paddingPercent; // Top padding
+
+    // Position axes
+    const yAxisWidth = svgWidth * 0.2;    // 20% of the width for y-axis
+    const histWidth = svgWidth * 0.7;     // 70% width for the histogram bars
+    const histHeight = svgHeight * 0.7;   // Push x-axis to 60% of the SVG height
+
+    const countrySvg = d3.select(visualizationDiv)
+        .append("svg")
+        .attr("width", svgWidth)
+        .attr("height", svgHeight)
+        .style("margin-left", `${marginLeft}px`)
+        .style("margin-top", `${marginTop}px`);
+
+    // Group containing the histogram
+    const countryGroup = countrySvg.append("g")
+        .attr("transform", `translate(${yAxisWidth}, 0)`); // Shift group rightwards by 20%
 
     // Define scales
     const xScaleCountry = d3.scaleBand()
         .domain(countryData.map(d => d.answer))
-        .range([0, histWidth]) // Scale only within the histogram width
+        .range([0, histWidth]) // Bars start after the y-axis
         .padding(0.1);
 
     const yScaleCountry = d3.scaleLinear()
         .domain([0, d3.max(countryData, d => d.count)])
         .nice()
-        .range([histHeight, 0]); // Scale only within the histogram height
+        .range([histHeight, 0]); // Bars go upward from the 60% mark
 
-    // Clear the container of any existing SVG
-    d3.select(HistogramDiv).select("svg").remove();
-
-    // Create a new SVG element
-    const countrySvg = d3.select(HistogramDiv)
-        .append("svg")
-        .attr("width", ctx.HIST_W)
-        .attr("height", ctx.HIST_H);
-
-    const countryGroup = countrySvg.append("g")
-        .attr("width", ctx.HIST_W)
-        .attr("height", ctx.HIST_H)
-        .attr("transform", `translate(${yLabelWidth}, ${topMargin})`); // Shift to leave space for y-axis labels and top margin
-
-    // Add bars + hoverbox behavior
+    // Add bars
     countryGroup.selectAll("rect")
         .data(countryData)
         .enter()
@@ -91,25 +84,34 @@ export function createHistogram(csvData) {
         .attr("y", d => yScaleCountry(d.count))
         .attr("width", xScaleCountry.bandwidth())
         .attr("height", d => histHeight - yScaleCountry(d.count))
-        .attr("fill", "steelblue");
+        .attr("fill", "steelblue")
+        .on("mouseover", function(event, d) {
+            // Call histHoverAndHighlight when hovering over a bar
+            histHoverAndHighlight(d3.select(this), "rgb(127,205,187)"); // You can change the color here if needed
+        })
+        .on("mouseout", function(event, d) {
+            // Remove highlight when the mouse leaves the bar
+            histHoverAndHighlight(d3.select(this), "steelblue"); // Reset to original color
+        });
 
-    histHoverAndHighlight(countryGroup.selectAll('rect')); // function to make the histogram hoverbox and the highlighting
-
-    // Add x-axis
+    // Add x-axis (rotated labels beneath the bars)
     countryGroup.append("g")
-        .attr("transform", `translate(0, ${histHeight})`) // Place at the bottom of the histogram
+        .attr("transform", `translate(0, ${histHeight})`) // Place x-axis at 60% of height
         .call(d3.axisBottom(xScaleCountry)
-            .tickFormat(d => d.length > 30 ? d.slice(0, 30) + "..." : d)) // Ensure long answers are truncated
+            .tickFormat(d => d.length > 30 ? d.slice(0, 30) + "..." : d)) // Truncate long labels
         .selectAll("text")
         .style("text-anchor", "end")
         .attr("dx", "-0.8em")
         .attr("dy", "0.15em")
-        .attr("transform", "rotate(-45)"); // Rotate x-axis labels for better readability
+        .attr("transform", "rotate(-45)"); // Diagonal labels for readability
 
-    // Add y-axis
+    // Add y-axis (labels to the left of the histogram)
     countryGroup.append("g")
-        .call(d3.axisLeft(yScaleCountry));
+    .call(d3.axisLeft(yScaleCountry)
+        .tickValues(yScaleCountry.ticks().slice(0, -1)) // Remove the last (top) tick
+    );
 }
+
 
 // End of main part
 
@@ -180,4 +182,8 @@ async function getQuestionDescription() {
     } else {
         return "No description available.";  // Return a fallback message
     }
+}
+
+export function createSEHistogram(){
+
 }

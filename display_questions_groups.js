@@ -1,137 +1,244 @@
 import { ctx } from './parameters.js'; // Import ctx and loadQuestions
-import { createHistogram } from './histograms.js';
 
-export function create_question_table(location) {
-    const dropdown = d3.select(location);
 
-    // Populate the dropdown menu with groups
-    dropdown.selectAll("option")
-        .data(ctx.groups_of_questions)
-        .enter()
-        .append("option")
-        .text(d => d)
-        .attr("value", d => d);
+export function Questions() {
+    questionSection()
+}
 
-    // Initialize the table with the first group
-    const firstGroup = ctx.groups_of_questions[0];
-    ctx.appState.selectedGroup = firstGroup;
+function questionSection() {
+    const container = d3.select("#visualizationMain");
 
-    update_table(firstGroup);
+    // Remove any previous instances of the side page or pull tab
+    container.select("#sidePage").remove();
+    container.select("#pullTab").remove();
 
-    // Add event listener to the dropdown
-    dropdown.on("change", function () {
-        const selectedGroup = this.value;
-        ctx.appState.selectedGroup = selectedGroup;
-        update_table(selectedGroup);
+    // Get the dimensions of the visualizationMain container
+    const containerWidth = container.node().clientWidth;
+    const containerHeight = container.node().clientHeight;
+
+    const pullTabWidth = 40; // Width of the pull tab
+    const animationDuration = 500; // Duration of the slide animation in ms
+
+    // Create the sliding side page container
+    const sidePage = container.append("div")
+        .attr("id", "sidePage")
+        .style("position", "absolute")
+        .style("top", "0px")
+        .style("right", `-${containerWidth}px`) // Initially hidden to the right
+        .style("width", `${containerWidth}px`) // Match visualizationMain width
+        .style("height", `${containerHeight}px`) // Match visualizationMain height
+        .style("background", "#f9f9f9")
+        .style("border", "1px solid #ccc")
+        .style("box-shadow", "-2px 0px 5px rgba(0,0,0,0.3)")
+        .style("transition", `right ${animationDuration}ms ease`); // Smooth sliding animation
+
+    // Remove the content inside the side page (now empty)
+    // No longer adding the HTML with the details panel text
+
+    createGroupButtons();
+
+    // Create the pull tab
+    const pullTab = container.append("div")
+        .attr("id", "pullTab")
+        .style("position", "absolute")
+        .style("top", `${containerHeight / 2 - 40}px`) // Vertically centered
+        .style("right", "0px")
+        .style("width", `${pullTabWidth}px`)
+        .style("height", "80px")
+        .style("background", "#007BFF")
+        .style("border-top-left-radius", "10px")
+        .style("border-bottom-left-radius", "10px")
+        .style("cursor", "pointer")
+        .style("box-shadow", "-2px 0px 5px rgba(0,0,0,0.3)");
+
+    // Add an arrow indicator inside the pull tab
+    pullTab.append("div")
+        .style("width", "0")
+        .style("height", "0")
+        .style("margin", "auto")
+        .style("border-left", "10px solid transparent")
+        .style("border-right", "10px solid transparent")
+        .style("border-top", "15px solid white")
+        .style("transform", "rotate(90deg)")
+        .style("margin-top", "32px");
+
+    // Add interactivity for opening and closing the side page
+    let isOpen = false;
+
+    pullTab.on("click", function () {
+        if (isOpen) {
+            // Slide out
+            sidePage.style("right", `-${containerWidth}px`);
+            pullTab.style("right", "0px");
+            pullTab.select("div").style("transform", "rotate(90deg)"); // Reset arrow
+        } else {
+            // Slide in
+            sidePage.style("right", "0px");
+            pullTab.style("right", `${containerWidth}px`);
+            pullTab.select("div").style("transform", "rotate(-90deg)"); // Flip arrow
+        }
+        isOpen = !isOpen; // Toggle state
     });
 }
 
-export function update_table(selectedGroup) {
-    const tableBody = d3.select("#questions-table tbody");
+function createGroupButtons() {
+    const groupContainer = d3.select("#sidePage") // This should be the container where you want to add the buttons
+        .html(''); // Clear any previous content
 
-    // Filter questions based on the selected group
-    const filteredQuestions = ctx.questions.filter(item => item.group === selectedGroup);
+    // Extract the distinct group elements from ctx.questions
+    const distinctGroups = Array.from(new Set(ctx.questions.map(q => q.group)))
+    .filter(group => group !== "Socio-Economic Background"); // Remove the specific group
+    
 
-    // Clear previous rows and populate the table
-    tableBody.selectAll("tr").remove();
+    // Set some styling variables
+    const buttonPadding = 10;
+    const buttonMargin = 15;
+    const buttonHeight = 40;
+    const containerWidth = 800; // You can adjust the container size based on your preference
 
-    const rows = tableBody.selectAll("tr")
+    // Style the group container to center the buttons
+    groupContainer
+        .style("display", "flex")
+        .style("flex-wrap", "wrap")
+        .style("justify-content", "center")
+        .style("align-items", "center")
+        .style("padding", "20px"); // Add padding around the buttons for better spacing
+
+    // Create buttons for each distinct group
+    groupContainer.selectAll("button")
+        .data(distinctGroups)
+        .enter()
+        .append("button")
+        .attr("class", "group-button")
+        .style("width", "400px")  // Fixed width for buttons
+        .style("height", `${buttonHeight}px`)
+        .style("margin-right", `${buttonMargin}px`)
+        .style("margin-bottom", `${buttonMargin}px`)
+        .style("border-radius", "12px")
+        .style("background-color", "#0097A7")
+        .style("color", "white")
+        .style("font-size", "14px")
+        .style("border", "none")
+        .style("cursor", "pointer")
+        .text(d => d) // Display the group name
+        .on("click", (event, group) => {
+            displayQuestions(group);
+            d3.select(event.target).style("display", "none");
+        });
+}
+
+
+function displayQuestions(group) {
+    const groupContainer = d3.select("#sidePage");
+
+    groupContainer.selectAll(".group-button").remove();
+
+    const filteredQuestions = ctx.questions.filter(q => q.group === group);
+
+    const buttonHeight = 35;
+    const containerWidth = groupContainer.node().clientWidth;
+    const buttonWidth = containerWidth * 0.9;
+    const buttonMargin = 10;
+
+    if (filteredQuestions.length > 14) {
+        groupContainer
+            .style("overflow-y", "auto") // Enable vertical scrolling
+            .style("max-height", "90vh"); // Limit container height for scroll
+    } else {
+        groupContainer
+            .style("overflow", "hidden") // Reset overflow for fewer buttons
+            .style("max-height", "none");
+    }
+
+    const descriptionContainer = groupContainer.append("div")
+        .attr("class", "description-container");
+
+    descriptionContainer.selectAll("button")
         .data(filteredQuestions)
         .enter()
-        .append("tr")
-        .attr("data-question-id", d => d.id)
-        .on("click", function (event, d) {
-            // Reset all rows and highlight the clicked row
-            tableBody.selectAll("tr").classed("clicked", false).style("background-color", ""); // Reset all rows
-            d3.select(this).classed("clicked", true).style("background-color", "#d0e8f5"); // Highlight clicked row
-
-            // Update the app state and trigger updates
-            ctx.appState.currentQuestion = d.id.replace(/^q+/, '').trim();
-
-            createHistogram(ctx.CSVDATA);
-
-            getQuestionDescription(ctx.appState.currentQuestion).then(description => {
-                document.getElementById("question-description").innerHTML = description;
-            });
+        .append("button")
+        .attr("class", "description-button")
+        .style("width", `${buttonWidth}px`)
+        .style("height", `${buttonHeight}px`)
+        .style("margin-bottom", `${buttonMargin}px`)
+        .style("border-radius", "12px")
+        .style("background-color", "#00BFAE")
+        .style("color", "white")
+        .style("font-size", "14px")
+        .style("border", "none")
+        .style("cursor", "pointer")
+        .style("transition", "all 0.1s ease-in-out")
+        .text(d => d.description)
+        .on("click", (event, d) => {
+            ctx.appState.currentQuestion = d.id; // Assuming id is the field you want
         })
-        .on("mouseover", function () {
-            // Apply hover color only if the row is not clicked
-            if (!d3.select(this).classed("clicked")) {
-                d3.select(this).style("background-color", "#f0f0f0");
-            }
+        .on("mousedown", function() {
+            // Simulate a "pressed" effect on mousedown (when the button is clicked)
+            d3.select(this)
+                .style("box-shadow", "inset 2px 2px 5px rgba(0, 0, 0, 0.3)")  // Inner shadow
+                .style("transform", "translateY(2px)"); // Move the button down a bit
         })
-        .on("mouseout", function () {
-            // Remove hover color only if the row is not clicked
-            if (!d3.select(this).classed("clicked")) {
-                d3.select(this).style("background-color", "");
-            }
+        .on("mouseup", function() {
+            // Remove the "pressed" effect when the mouse button is released
+            d3.select(this)
+                .style("box-shadow", "") // Remove shadow
+                .style("transform", "translateY(0)"); // Reset position
+        })
+        .on("mouseout", function() {
+            // Reset the "pressed" effect if the mouse leaves the button without releasing the click
+            d3.select(this)
+                .style("box-shadow", "") // Remove shadow
+                .style("transform", "translateY(0)"); // Reset position
         });
 
-    // Add data to rows
-    rows.append("td").text(d => d.id);
-    rows.append("td").text(d => d.description);
+    // Step 4: Create the small arrow button to call createGroupButtons
+    groupContainer.append("button")
+        .attr("class", "back-button")
+        .style("width", "30px")
+        .style("height", "30px")
+        .style("background-color", "transparent")
+        .style("border", "none")
+        .style("cursor", "pointer")
+        .style("position", "absolute")
+        .style("top", "10px")
+        .style("left", "10px")
+        .style("font-size", "20px")  // Adjust size of the arrow
+        .style("color", "#007BFF")  // Arrow color
+        .html("←") // Simple left arrow
+        .on("click", function() {
+            // Call the createGroupButtons function when the arrow button is clicked
+            createGroupButtons();
+        })
+        .append("title") // Tooltip text when hovering
+        .text("Go back to the topic selection");
 
-    // click on first question if nothing else clicked (on page load for example)
-    if (filteredQuestions.length > 0) {
-        const firstRow = tableBody.select("tr");
-        if (!firstRow.empty()) {
-            firstRow.dispatch("click"); 
-        }
-    }
-}
-
-// Populate the group dropdown with unique groups from the questions JSON
-export function populateGroupDropdown() {
-    const groupDropdown = document.getElementById("group-dropdown");
-
-    if (!ctx.groups_of_questions || ctx.groups_of_questions.length === 0) {
-        console.log("Groups not available yet.");
-        return;
-    }
-
-    ctx.groups_of_questions.forEach(group => {
-        const option = document.createElement("option");
-        option.value = group;
-        option.textContent = group;
-        groupDropdown.appendChild(option);
+    // Optional: Tooltip text on hover can also be handled via CSS:
+    groupContainer.selectAll(".back-button")
+    .style("position", "relative")  // Ensure the parent element has relative positioning
+    .style("z-index", "1")
+    .append("span")
+    .attr("class", "tooltip")  // Add class for better control
+    .style("position", "absolute")
+    .style("top", "50px")  // Position relative to the button
+    .style("left", "0")
+    .style("background-color", "black")
+    .style("color", "white")
+    .style("padding", "5px")
+    .style("border-radius", "5px")
+    .style("z-index", "2")  // Ensure it's on top of other elements
+    .style("opacity", 0)  // Initially hidden
+    .style("pointer-events", "none")  // Prevent interaction with the tooltip initially
+    .style("transition", "opacity 0.3s ease")  // Smooth transition for opacity
+    .text("Go back to the topic selection")
+    .on("mouseover", function() {
+        d3.select(this).style("opacity", 1)  // Show tooltip on hover
+                      .style("pointer-events", "auto");  // Allow interaction
+    })
+    .on("mouseout", function() {
+        d3.select(this).style("opacity", 0)  // Hide tooltip when mouse leaves
+                      .style("pointer-events", "none");  // Disable interaction
     });
 
-    groupDropdown.addEventListener("change", function () {
-        ctx.appState.selectedGroup = groupDropdown.value;
-        update_table(ctx.appState.selectedGroup);
-
-        // Reset question to the first in the group
-        const firstQuestion = ctx.questions.find(q => q.group === ctx.appState.selectedGroup)?.id;
-        if (firstQuestion) {
-            ctx.appState.currentQuestion = firstQuestion;
-            createHistogram(ctx.CSVDATA);
-        }
-    });
-}
-
-// Populate the question dropdown based on the selected group
-export function populateQuestionDropdownByGroup(selectedGroup) {
-    const questionDropdown = document.getElementById("question-dropdown");
-    questionDropdown.innerHTML = ""; // Clear previous options
-
-    // Filter questions based on the selected group
-    const filteredQuestions = ctx.questions.filter(q => q.group === selectedGroup);
-
-    filteredQuestions.forEach(question => {
-        const option = document.createElement("option");
-        option.value = question.id; // Set the question ID as the value
-        option.textContent = question.description; // Display the question description
-        questionDropdown.appendChild(option);
-    });
 }
 
 
-// function to write out the question under the input box.
-async function getQuestionDescription(questionNumber) {  
-    const question = ctx.questions.find(q => q.id === `q${questionNumber}`);
-    if (question) {
-        return question.description;  // Return the description if found
-    } else {
-        return "No description available.";  // Return a fallback message
-    }
-}

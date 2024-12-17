@@ -1,10 +1,12 @@
 import { ctx, loadQuestions } from './parameters.js';  // Import ctx parameters
 // import functions from other files
 import { drawMap, countCountries } from './maps.js';
-import { Histogram_updates } from './histograms.js';
-import { create_question_table, update_table, populateGroupDropdown } from './display_questions_groups.js';
+import { createHistogram, createSEHistogram } from './histograms.js';
+import { Questions } from './display_questions_groups.js';
 import { plotCountryVsCountryMatrix, populateSmallDropdown } from './matrix.js';
 import { drawMissingPercentageHistogram, missing_dropdown_updates } from './missing_values.js';
+import { questionCorrelation, SECorrelation } from './correlation.js';
+import { createDates } from './date.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
@@ -76,61 +78,53 @@ function createViz_mainPage() {
     const startTime1 = performance.now();
 
     Promise.all([geoDataPromiseAsia, csvDataPromise, loadQuestions()]).then(([respondents, csvData]) => {
+
         // print time taken to load main page
         ctx.CSVDATA = csvData;
         const endTime1 = performance.now(); 
         const loadTime1 = endTime1 - startTime1; // Time in milliseconds
         const starttime2 = performance.now();
         console.log("Data loading took:", loadTime1, "seconds");
-        const countryCounts = countCountries(csvData);
 
         const columns = csvData.columns;
 
         // Group columns into variables
-        const TimeSpace = columns.slice(0, 6).map(col => ({
+        ctx.csvTimeSpace = columns.slice(0, 6).map(col => ({
             header: col,
             values: csvData.map(row => row[col])
         }));
 
-        const Questions = columns.slice(6, 185).map(col => ({
-            header: col,
-            values: csvData.map(row => row[col])
-        }));
-    
-        const SocioEconomicIndicators = columns.slice(185, 244).map(col => ({
+        ctx.csvQuestions = columns.slice(6, 185).map(col => ({
             header: col,
             values: csvData.map(row => row[col])
         }));
     
-        const InterviewRecords = columns.slice(244, 276).map(col => ({
+        ctx.csvSocioEconomicIndicators = columns.slice(185, 244).map(col => ({
             header: col,
             values: csvData.map(row => row[col])
         }));
-
-        const Weights = columns.slice(276, 278).map(col => ({
-            header: col,
-            values: csvData.map(row => row[col])
-        }));
-
-        // console.log(TimeSpace);
-        // console.log(Questions);  
-        // console.log(SocioEconomicIndicators);
-        // console.log(InterviewRecords);
-        // console.log(Weights);
     
+        ctx.csvInterviewRecords = columns.slice(244, 276).map(col => ({
+            header: col,
+            values: csvData.map(row => row[col])
+        }));
 
+        ctx.csvWeights = columns.slice(276, 278).map(col => ({
+            header: col,
+            values: csvData.map(row => row[col])
+        }));
 
-        drawMap(respondents, "#respondentMap", countryCounts);
-        // drawMap(indivCountry, "#individualMap", countryCounts, true); // Note that countryCounts is useless for single-countries
+        const countryCounts = countCountries(csvData);
+        drawMap(respondents, countryCounts);
+        createDates();
+        Questions();
+        createButtonSelection();
+        centralisedDisplay();
 
-        create_question_table("#group-select-page1");
-        Histogram_updates(csvData);
-
+        
         // scroll back up when all has loaded
-        window.scrollTo({ top: 0, behavior: 'smooth' });      
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
 
-        const endtime2 = performance.now();
-        console.log("loading part 2 took", endtime2-starttime2, "seconds");
     }).catch(error => {
         console.error("Error loading data:", error);
     });
@@ -156,3 +150,85 @@ function createViz_Page2() {
     }
 
 };
+
+function centralisedDisplay() {
+
+    d3.selectAll(".selection-button")
+        .on("click", function() {
+            modifyDisplay();
+        });
+
+    document.getElementById("respondentMap").addEventListener("click", (event) => {
+        modifyDisplay();
+        });
+
+    document.getElementById("unselectButton").addEventListener("click", (event) => {
+        modifyDisplay();
+        });
+
+    d3.selectAll(".description-button")
+        .on("click", function() {
+            modifyDisplay();
+        });
+    document.getElementById("dates")
+        .addEventListener("click", function(){
+            modifyDisplay();
+        })
+}
+
+function modifyDisplay(){
+    if (ctx.appState.currentViz === "questionHistogram") {
+        createHistogram();
+    } else if (ctx.appState.currentViz === "factorHistogram") {
+        createSEHistogram_update();
+    } else if (ctx.appState.currentViz === "questionCorrelation") {
+        createCorrelation_update();
+    }
+    else if (ctx.appState.currentViz === "factorCorrelation") {
+        createSECorrelation_update();
+    }
+}
+
+
+function createButtonSelection() {
+    const buttonContainer = document.getElementById("visualizationSelection");
+
+    // Clear any existing buttons in the container
+    buttonContainer.innerHTML = '';
+
+    // Create buttons
+    const buttonNames = [
+        { id: "questionHistogramBtn", label: "Question Histogram", icon: "📊" },
+        { id: "factorHistogramBtn", label: "SE Histogram", icon: "📊" },
+        { id: "questionCorrelationBtn", label: "Question Correlation", icon: "🔗" },
+        { id: "factorCorrelationBtn", label: "SE Correlation", icon: "🔗" }
+    ];
+
+    let lastClickedBtn = null;
+
+    buttonNames.forEach(button => {
+        // Create the button element
+        const btn = document.createElement("button");
+        btn.id = button.id;
+        btn.textContent = button.label;
+        btn.classList.add("selection-button");
+
+        const iconSpan = document.createElement("span");
+        iconSpan.classList.add("button-icon");
+        iconSpan.textContent = button.icon;
+        btn.insertBefore(iconSpan, btn.firstChild);
+
+        // Append the button to the container
+        buttonContainer.appendChild(btn);
+
+        btn.addEventListener("click", () => {
+            if (lastClickedBtn) {
+                lastClickedBtn.classList.remove("pushed");
+            }
+            btn.classList.add("pushed");
+            lastClickedBtn = btn;
+            ctx.appState.currentViz = btn.id.slice(0, -3);
+        });
+        buttonContainer.appendChild(btn);
+    });
+}

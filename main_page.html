@@ -6,82 +6,27 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles_mainpage.css">
     <script type="text/javascript" src="data/d3.v7.min.js"></script>
-    <script type="module" src="main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 </head>
 <body page="main_page">
-
-    <nav style="text-align: center; margin: 10px;">
-        <a href="page2.html">Other page</a>
-        
-    </nav>
-    <!-- <body onload="createViz()"> -->
     <div id="main-container">
 
-
-        <div id="respondentMap"></div> 
-        <button id="unselectButton" style="margin-top: 20px; padding: 10px 15px; background-color: #0097A7; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Unselect All Countries
-        </button>
-        
-        <div id="histograms-container">
-            <!-- All Countries Histogram -->
-            <!-- Single-country Histogram -->
-            <div id="histogram" >
-                <h3 style="text-align: center;">Histogram of responses (single country)</h3>
-                <div id="basicHistogram"></div>
-                </div>
-            </div>
+        <div id="selection">
+            <div id="respondentMap">
+                <button id="unselectButton" style="margin-top: 20px; margin-left: 10px; padding: 10px 15px 10px 25px; background-color: #00BFAE; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Unselect All Countries
+                </button>
+            </div> 
+            <div id = "dates"></div>
+            <div id="linksToTemplates"></div>
         </div>
 
-        <div id="selectors-container">
-            <label for="group-select-page1">Select a Group:</label>
-            <select id="group-select-page1"></select>
-    
-            <table id="questions-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <!-- <div id="input-container">
-                <label for="question-number">Select Question Number (1-172):</label>
-                <input type="number" id="question-number" min="1" max="172" />
-                <div id="warning-message" style="color: red; display: none;"></div>
-            <div> -->
-            <div id="question-description"></div>
-            <!-- Question Selector -->
-            <!-- <div id="input-container">
-                <label for="question-number">Select Question Number (1-172):</label>
-                <input type="number" id="question-number" min="1" max="172" />
-                <div>
-                    <label for="group-dropdown">Select Group:</label>
-                    <select id="group-dropdown">
-                        <option value="">--Select a group--</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label for="question-dropdown">Select Question:</label>
-                    <select id="question-dropdown">
-                        <option value="">--Select a question--</option>
-                    </select>
-                </div>
-                <div id="warning-message" style="color: red; display: none;"></div>
-                
-            </div>
+
+        <div id="visualization">
+            <div id="visualizationSelection" style="padding: 10px;"></div>
+            <div id="visualizationMain"></div>
         </div>
-        <div id="question-description"></div> -->
-       
-
-       
-
-        <!-- Individual Map -->
-        <!-- <div id="individualMap"></div> -->
-
+        <script type="module" src="main.js"></script>
     </div>
 
 </body>

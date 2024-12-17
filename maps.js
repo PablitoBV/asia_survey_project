@@ -15,10 +15,13 @@ export function countCountries(data) {
 
 
 
-export function drawMap(geoData, containerId, countryCounts, singleCountry = false) {
-    const svgWidth = ctx.MAP_W;
-    const svgHeight = ctx.MAP_H;
+export function drawMap(geoData, countryCounts) {
+    // Get the container's width and height dynamically
+    const svgContainer = d3.select("#respondentMap");
+    const svgWidth = svgContainer.node().getBoundingClientRect().width;
+    const svgHeight = svgContainer.node().getBoundingClientRect().height;
 
+    // Projection and path generator setup
     const projection = d3.geoMercator();
     const geoPathGen = d3.geoPath().projection(projection);
 
@@ -31,19 +34,20 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
     const geoWidth = ctx.respondent_map_bounds[1][0] - ctx.respondent_map_bounds[0][0];
     const geoHeight = ctx.respondent_map_bounds[1][1] - ctx.respondent_map_bounds[0][1];
 
-    const scale = Math.min(svgWidth / geoWidth, svgHeight / geoHeight) * (singleCountry ? 35 : 50);
-
+    const scale = Math.min(svgWidth / geoWidth, svgHeight / geoHeight) * 50;
     projection.center(center).translate([svgWidth / 2, svgHeight / 2]).scale(scale);
 
-    const svg = d3.select(containerId)
-        .html('') // Clear any previous SVG elements
+    svgContainer.select("svg").remove();
+    // Clear previous SVG and append new SVG
+    const svg = svgContainer
         .append("svg")
-        .attr("width", svgWidth)
-        .attr("height", svgHeight)
+        .attr("width", "100%")
+        .attr("height", "100%")
         .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
-    
+
     const mapGroup = svg.append("g");
 
+    // Tooltip setup
     const tooltip = d3.select("body").append("div")
         .style("position", "absolute")
         .style("visibility", "hidden")
@@ -54,6 +58,15 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
         .style("font-size", "12px")
         .style("box-shadow", "0px 0px 5px rgba(0,0,0,0.3)");
 
+    // Function to determine fill color based on state
+    function getCountryColor(countryName) {
+        if (ctx.appState.selectedCountries.includes(countryName)) {
+            return "DarkOrange"; // Selected state
+        }
+        return countryCounts[countryName] > 0 ? "DarkCyan" : "#EEE";
+    }
+
+    // Draw countries
     mapGroup.selectAll("path")
         .data(geoData.features)
         .enter()
@@ -62,115 +75,94 @@ export function drawMap(geoData, containerId, countryCounts, singleCountry = fal
         .attr("stroke", "black")
         .attr("stroke-width", 0.2)
         .attr("class", "country")
-        .style("fill", singleCountry ? "rgb(255, 191, 100)" : (d) => {
-            const countryName = d.properties.name;
-            const count = countryCounts[countryName] || 0;
-            return count > 0 ? "DarkCyan" : "#EEE"; // Countries with respondents are cyan, others gray
-        })
+        .style("fill", (d) => getCountryColor(d.properties.name))
         .on("mouseover", (event, d) => {
             const countryName = d.properties.name;
             const count = countryCounts[countryName] || 0;
-            if (d3.select(event.target).style("fill") === "rgb(238, 238, 238)") {
-                return;
-            }
-            tooltip.html(`<strong>${countryName}</strong><br>Respondents: ${count}`)
-                .style("visibility", "visible")
-                .style("top", (event.pageY + 10) + "px")
-                .style("left", (event.pageX + 10) + "px");
 
-            if (!ctx.appState.selectedCountries.includes(countryName)) {
-                d3.select(event.target).style("fill", "green"); // Hover color for non-selected
+            // Show tooltip only for countries with respondents
+            if (count > 0) {
+                tooltip.html(`<strong>${countryName}</strong><br>Respondents: ${count}`)
+                    .style("visibility", "visible")
+                    .style("top", (event.pageY + 10) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+
+                // Change to dark green if not selected
+                if (!ctx.appState.selectedCountries.includes(countryName)) {
+                    d3.select(event.target).style("fill", "DarkGreen");
+                }
             }
         })
         .on("mouseout", (event, d) => {
-            const countryName = d.properties.name;
-            const count = countryCounts[countryName] || 0;
             tooltip.style("visibility", "hidden");
 
-            // Skip resetting color for gray countries
-            if (d3.select(event.target).style("fill") === "rgb(238, 238, 238)") {
-                return;
-            }
-
-            // Reset country color if it's not selected
-            if (!ctx.appState.selectedCountries.includes(countryName)) {
-                d3.select(event.target).style("fill", count > 0 ? "DarkCyan" : "#EEE");
-            }
+            const countryName = d.properties.name;
+            d3.select(event.target).style("fill", getCountryColor(countryName));
         })
         .on("click", (event, d) => {
-            const countryNameClicked = d.properties.name;
+            const countryName = d.properties.name;
 
-            // Prevent selection for gray countries
-            if (d3.select(event.target).style("fill") === "rgb(238, 238, 238)") {
-                return;
+            // Toggle selection
+            if (ctx.appState.selectedCountries.includes(countryName)) {
+                ctx.appState.selectedCountries = ctx.appState.selectedCountries.filter(c => c !== countryName);
+            } else if (countryCounts[countryName] > 0) {
+                ctx.appState.selectedCountries.push(countryName);
             }
 
-            if (ctx.appState.selectedCountries.includes(countryNameClicked)) {
-                // Deselect country
-                ctx.appState.selectedCountries = ctx.appState.selectedCountries.filter(c => c !== countryNameClicked);
-                d3.select(event.target).style("fill", "DarkCyan");
-            } else {
-                // Select country
-                ctx.appState.selectedCountries.push(countryNameClicked);
-                d3.select(event.target).style("fill", "DarkOrange");
-            }
-
+            d3.select(event.target).style("fill", getCountryColor(countryName));
             console.log("Selected countries:", ctx.appState.selectedCountries);
         });
 
+    // Circle data for Singapore and Hong Kong
     const circleData = [
-        {name: "Singapore", coordinates: [103.8198, 1.3521]},
-        {name: "Hong Kong", coordinates: [114.1694, 22.3193]}
+        { name: "Singapore", coordinates: [103.8198, 1.3521] },
+        { name: "Hong Kong", coordinates: [114.1694, 22.3193] }
     ];
 
-    svg.selectAll('circle')
+    svg.selectAll("circle")
         .data(circleData)
         .enter()
-        .append('circle')
-        .attr('cx', (d) => projection(d.coordinates)[0])
-        .attr('cy', (d) => projection(d.coordinates)[1])
-        .attr('r', 5)
-        .style('fill', (d) => ctx.appState.selectedCountries.includes(d.name) ? 'DarkOrange' : 'blue')
+        .append("circle")
+        .attr("cx", (d) => projection(d.coordinates)[0])
+        .attr("cy", (d) => projection(d.coordinates)[1])
+        .attr("r", 5)
+        .style("fill", (d) => ctx.appState.selectedCountries.includes(d.name) ? "DarkOrange" : "blue")
         .on("mouseover", (event, d) => {
             const count = countryCounts[d.name] || 0;
             tooltip.html(`<strong>${d.name}</strong><br>Respondents: ${count}`)
                 .style("visibility", "visible")
                 .style("top", (event.pageY + 10) + "px")
                 .style("left", (event.pageX + 10) + "px");
-            d3.select(event.target).style("fill", "green");
+
+            // Change color to green if not selected
+            if (!ctx.appState.selectedCountries.includes(d.name)) {
+                d3.select(event.target).style("fill", "DarkGreen");
+            }
         })
         .on("mouseout", (event, d) => {
             tooltip.style("visibility", "hidden");
             d3.select(event.target).style("fill", ctx.appState.selectedCountries.includes(d.name) ? "DarkOrange" : "blue");
         })
         .on("click", (event, d) => {
-            if (ctx.appState.selectedCountries.includes(d.name)) {
-                // Deselect
-                ctx.appState.selectedCountries = ctx.appState.selectedCountries.filter(c => c !== d.name);
-                d3.select(event.target).style("fill", "blue");
+            const name = d.name;
+
+            if (ctx.appState.selectedCountries.includes(name)) {
+                ctx.appState.selectedCountries = ctx.appState.selectedCountries.filter(c => c !== name);
             } else {
-                // Select
-                ctx.appState.selectedCountries.push(d.name);
-                d3.select(event.target).style("fill", "DarkOrange");
+                ctx.appState.selectedCountries.push(name);
             }
 
-            console.log("Selected countries:", ctx.appState.selectedCountries);
+            d3.select(event.target).style("fill", ctx.appState.selectedCountries.includes(name) ? "DarkOrange" : "blue");
         });
 
-    const unselectButton = d3.select("#unselectButton");
-    unselectButton.on("click", () => {
+    // Unselect button functionality
+    d3.select("#unselectButton").on("click", () => {
         ctx.appState.selectedCountries = [];
 
-        d3.selectAll('.country')
-            .style('fill', (d) => {
-                const countryName = d.properties.name;
-                const count = countryCounts[countryName] || 0;
-                return count > 0 ? "DarkCyan" : "#EEE"; // Original color
-            });
+        d3.selectAll(".country")
+            .style("fill", (d) => getCountryColor(d.properties.name));
 
-        d3.selectAll('circle')
-            .style('fill', "blue");
-
-        console.log("All countries deselected");
+        d3.selectAll("circle")
+            .style("fill", "blue");
     });
 }
