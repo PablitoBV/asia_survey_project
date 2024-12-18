@@ -13,11 +13,13 @@ export const ctx = {
     respondent_map_bounds: NamedNodeMap, 
     appState: {
         currentQuestion: 'q1',
-        currentQuestions: ['q1','q2'],
+        currentCorrelationSelection: ['q20','q2'],
         selectedCountries: [],
         selectedGroup: null,
         selectedQuestionMatrix: "q163",
         currentViz: '',
+        collapseTab: true,
+        clearTabContent: true,
         currentFactors: [''],
         currentDate: 'all',
         currentSEIndicator: 'se2',
@@ -32,7 +34,6 @@ export function loadQuestions() {
             .then(data => {
                 ctx.scales = data.scales
                 ctx.questions = data.elements;  // Store the entire elements array in ctx.questions
-                console.log(ctx.scales);
                 resolve();
             })
             .catch(error => {

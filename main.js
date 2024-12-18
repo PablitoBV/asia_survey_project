@@ -9,6 +9,7 @@ import { questionCorrelation, SECorrelation } from './correlation.js';
 import { createDates } from './date.js';
 import { linksToTemplates } from './template_links.js';
 import { createQuestionNavigator, createGroupNavigator, createSENavigator} from './navigator.js';
+import { plotCorrelationMatrix } from './Main_Page_Correlation.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
@@ -135,19 +136,23 @@ function centralisedDisplay() {
 
     d3.selectAll(".selection-button")
         .on("click", function() {
+            ctx.appState.collapseTab = true,
             modifyDisplay();
         });
 
     document.getElementById("respondentMap").addEventListener("click", (event) => {
+        ctx.appState.collapseTab = false,
         modifyDisplay();
         });
 
     document.getElementById("unselectButton").addEventListener("click", (event) => {
+        ctx.appState.collapseTab = false,
         modifyDisplay();
         });
 
     document.getElementById("dates")
         .addEventListener("click", function(){
+            ctx.appState.collapseTab = false,
             modifyDisplay();
         })
 
@@ -155,11 +160,11 @@ function centralisedDisplay() {
         .on("click", function (event) {
             const target = event.target;
             if (target.classList.contains("nav-arrow")) {
-                console.log("Arrow clicked:", target.classList.contains("right-arrow") ? "Right arrow" : "Left arrow");
+                ctx.appState.collapseTab = false,
                 modifyDisplay();
             }
             else if (target.classList.contains("description-button")) {
-                console.log("vksjdna");
+                ctx.appState.collapseTab = false,
                 modifyDisplay();
             }
         });
@@ -175,11 +180,10 @@ function modifyDisplay(){
         createSEHistogram();
         questionSection();
         createSENavigator();
-    } else if (ctx.appState.currentViz === "questionCorrelation") {
-        createCorrelation_update();
-    }
-    else if (ctx.appState.currentViz === "factorCorrelation") {
-        createSECorrelation_update();
+    } else if (ctx.appState.currentViz === "correlation") {
+        console.log(ctx.appState.currentCorrelationSelection)
+        if (ctx.appState.collapseTab) {questionSection();}
+        plotCorrelationMatrix();
     }
 }
 
@@ -194,8 +198,7 @@ function createButtonSelection() {
     const buttonNames = [
         { id: "questionHistogramBtn", label: "Question Histogram", icon: "📊" },
         { id: "factorHistogramBtn", label: "SE Histogram", icon: "📊" },
-        { id: "questionCorrelationBtn", label: "Question Correlation", icon: "📈" },
-        { id: "factorCorrelationBtn", label: "SE Correlation", icon: "📈" }
+        { id: "correlationBtn", label: "Correlation", icon: "📈"}
     ];
 
     let lastClickedBtn = null;
@@ -223,6 +226,7 @@ function createButtonSelection() {
             lastClickedBtn = btn;
             ctx.appState.currentViz = btn.id.slice(0, -3);
         });
+
         buttonContainer.appendChild(btn);
     });
 }

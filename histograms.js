@@ -24,11 +24,20 @@ export function createHistogram() {
     // Create an array of answer-count pairs
     const initData = Array.from(countryAnswerCounts, ([answer, count]) => ({ answer, count }));
 
+    // Filter to keep the top 30 answers with the largest counts if the question is 'q34' or 'q53'
+    let countryData = initData;
+    if (questionColumn === 'q34' || questionColumn === 'q53') {
+        // Sort by count and take the top 30
+        countryData = initData
+            .sort((a, b) => b.count - a.count) // Sort by descending count
+            .slice(0, 30); // Keep only the top 30
+    }
+
     const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
     // const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
-    const countryData = sortByScale(initData, scaleName);
-    console.log(countryData);
+    countryData = sortByScale(countryData, scaleName);
+
     // Clear the container of any existing SVG
     const visualizationDiv = document.getElementById("visualizationMain");
     d3.select(visualizationDiv).select("svg").remove();
@@ -124,9 +133,9 @@ export function createHistogram() {
 }
 
 
+
 export function createSEHistogram() {
     const questionColumn = ctx.appState.currentSEIndicator;
-    console.log(questionColumn);
 
     let selectedCountries = ctx.appState.selectedCountries;
     if (selectedCountries.length === 0) {
@@ -185,10 +194,8 @@ export function createSEHistogram() {
 
     const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
-    console.log("question:", actualQuestion, "scaleName:", scaleName);
 
     const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
-    console.log("Scale used for sorting:", scale);
 
     const countryData = sortByScale(initData, scaleName);
 

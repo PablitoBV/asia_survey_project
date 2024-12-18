@@ -1,3 +1,14 @@
+:root {
+    --light-gray: #d3d3d3;
+    --gray: #ccc;
+    --dark-teal: #00796B;
+    --bolder-teal: #b0b0b0;
+    --antiquewhite: antiquewhite;
+    --black: rgba(0, 0, 0, 1);
+    --semi-transparent-black: rgba(0, 0, 0, 0.5);
+}
+
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;

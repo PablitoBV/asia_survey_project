@@ -271,13 +271,11 @@ export function createSENavigator() {
 
     // Helper function to navigate between questions
     function navigateQuestion(direction) {
-        console.log(ctx.questions)
         const currentIndex = ctx.questions.findIndex(q => q.id === ctx.appState.currentSEIndicator);
         const newIndex = currentIndex + direction;
 
         if (newIndex >= 0 && newIndex < ctx.questions.length) {
             ctx.appState.currentSEIndicator = ctx.questions[newIndex].id;  // Update to next question
-            ctx.appState.currentQuestion = ctx.questions[newIndex].id;  // Ensure current question is updated
             updateNavigator();  // Update navigator display
         }
     }

@@ -20,7 +20,7 @@ export function drawMap(geoData, countryCounts) {
     const lightGray = "#EEE";
     const restColour = "rgb(253, 199, 235)";
     const hoverColour = "rgb(0, 87, 12)";
-    const selectedColour = "rgb(125, 0, 197)";
+    const selectedColour = "rgb(41, 0, 64)";
     const smallcountryColour = "rgba(255, 73, 194, 0.88)";
 
     d3.select("#respondentMap")
