@@ -123,8 +123,10 @@ export function createHistogram() {
         .style("font-size", "12px");
 }
 
+
 export function createSEHistogram() {
     const questionColumn = ctx.appState.currentSEIndicator;
+    console.log(questionColumn);
 
     let selectedCountries = ctx.appState.selectedCountries;
     if (selectedCountries.length === 0) {
@@ -137,33 +139,41 @@ export function createSEHistogram() {
         filteredDateData = filteredCountryData.filter(row => row.year === ctx.appState.currentDate);
     }
 
+    // Preprocess answers
     let validAnswers = filteredDateData
         .map(row => row[questionColumn] !== undefined && row[questionColumn] !== null ? row[questionColumn] : "No data");
 
-    // Filter or group the data based on the specific indicator
-    if (questionColumn === 'se11a' || questionColumn === 'se10c' || questionColumn === 'se9c') {
-        // Filter out answers with count below 20 for these specific indicators
-        validAnswers = validAnswers.filter(answer => {
-            const count = validAnswers.filter(a => a === answer).length;
-            return count >= 20;
-        });
-    } else if (questionColumn === 'se3_2') {
-        // Group ages by 4 years
-        validAnswers = validAnswers.map(age => {
-            if (typeof age === 'number') {
-                const group = Math.floor(age / 4) * 4;
-                return `${group} - ${group + 3}`;
+    // Apply specific filtering for some indicators (se11a, se10c, se9c)
+    if (["se11a", "se10c", "se9c"].includes(questionColumn)) {
+        // Count the occurrences of each answer
+        const answerCounts = d3.rollup(validAnswers, v => v.length, d => d);
+        
+        // Sort the answers by count in descending order and retain the top 30
+        const topAnswers = Array.from(answerCounts)
+            .sort((a, b) => b[1] - a[1]) // Sort by count
+            .slice(0, 30) // Keep top 30
+            .map(d => d[0]); // Extract the answers
+        
+        // Filter valid answers to keep only those that are in the top 30
+        validAnswers = validAnswers.filter(answer => topAnswers.includes(answer));
+    }
+
+    // Grouping logic for se3_2 (ages) and se3_1 (birth years)
+    if (questionColumn === "se3_2" || questionColumn === "se3_1") {
+        validAnswers = validAnswers.map(answer => {
+            const value = Number(answer);  // Try to convert to a number
+
+            if (isNaN(value)) {
+                // If the value is not a number, retain the original value
+                return answer;
             }
-            return age;
-        });
-    } else if (questionColumn === 'se3_1') {
-        // Group birth years by 5 years
-        validAnswers = validAnswers.map(year => {
-            if (typeof year === 'number') {
-                const group = Math.floor(year / 5) * 5;
-                return `${group} - ${group + 4}`;
+
+            // Apply grouping logic only if the value is numeric
+            if (questionColumn === "se3_2") {
+                return Math.floor(value / 4) * 4;  // Grouping ages by 4 years
+            } else if (questionColumn === "se3_1") {
+                return Math.floor(value / 5) * 5;  // Grouping birth years by 5 years
             }
-            return year;
         });
     }
 
@@ -174,10 +184,11 @@ export function createSEHistogram() {
     const initData = Array.from(countryAnswerCounts, ([answer, count]) => ({ answer, count }));
 
     const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
-   
     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
+    console.log("question:", actualQuestion, "scaleName:", scaleName);
 
-    // const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found 
+    const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
+    console.log("Scale used for sorting:", scale);
 
     const countryData = sortByScale(initData, scaleName);
 
@@ -233,14 +244,27 @@ export function createSEHistogram() {
         .attr("width", xScaleCountry.bandwidth())
         .attr("height", d => histHeight - yScaleCountry(d.count))
         .attr("fill", "tomato"); // Bars colored tomato
-
+        
     histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
 
     // Add x-axis (rotated labels beneath the bars)
     countryGroup.append("g")
         .attr("transform", `translate(0, ${histHeight})`) // Place x-axis at 60% of height
         .call(d3.axisBottom(xScaleCountry)
-            .tickFormat(d => d.length > 30 ? d.slice(0, 30) + "..." : d)) // Truncate long labels
+            .tickFormat(d => {
+                // Create explicit labels for grouped sections (e.g., 1970-1974)
+                if (questionColumn === "se3_2") {
+                    if (Number.isInteger(d)){
+                        const startYear = parseInt(d);
+                        return `${startYear}-${startYear + 4}`;
+                    }
+                } else if (questionColumn === "se3_1") {
+                    if (Number.isInteger(d)){
+                        const startYear = parseInt(d);
+                        return `${startYear}-${startYear + 4}`;}
+                }
+                return d;
+            }))
         .selectAll("text")
         .style("text-anchor", "end")
         .attr("dx", "-0.8em")
@@ -273,6 +297,7 @@ export function createSEHistogram() {
         .attr("fill", "blue")
         .style("font-size", "12px");
 }
+
 
 
 

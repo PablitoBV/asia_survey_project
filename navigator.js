@@ -5,6 +5,7 @@ export function createQuestionNavigator() {
 
     // Remove any previous navigator elements
     mainDiv.selectAll(".question-navigator").remove();
+    mainDiv.selectAll(".SE-navigator").remove();
 
     // Create a container for the navigation
     const navigatorContainer = mainDiv.append("div")
@@ -85,7 +86,6 @@ export function createQuestionNavigator() {
         }
     }
 }
-
 
 export function createGroupNavigator() {
     const mainDiv = d3.select("#visualizationMain");
@@ -199,6 +199,8 @@ export function createSENavigator() {
 
     // Remove any previous navigator elements
     mainDiv.selectAll(".SE-navigator").remove();
+    mainDiv.selectAll(".group-navigator").remove();
+    mainDiv.selectAll(".question-navigator").remove();
 
     // Create a container for the navigation
     const navigatorContainer = mainDiv.append("div")
