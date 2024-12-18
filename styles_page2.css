@@ -14,6 +14,34 @@ th, td {
 th {
     background-color: #f4f4f4;
 } */
+ 
+#back_homepage_button {
+    background-color: #0360c4; /* Blue background */
+    color: white; /* White text color */
+    font-size: 16px; /* Font size */
+    padding: 12px 24px; /* Padding around the text */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+#back_homepage_button:hover {
+    background-color: #002853; /* Darker blue when hovered */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+#back_homepage_button:active {
+    background-color: #004085; /* Even darker blue when pressed */
+    transform: translateY(0); /* Reset lift effect */
+}
+
+#back_homepage_button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Custom focus ring */
+}
+
 
 /* Style for the select element (dropdown) */
 #group-select-page2,

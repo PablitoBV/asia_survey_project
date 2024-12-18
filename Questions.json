@@ -30,12 +30,8 @@
       
       "likely_scale": ["Very likely", "Likely", "Not very likely", "Not likely at all", "Decline to answer", "Can't choose", "Do not understand the question", "Missing", "missing"]
 
-      
-
-
-
-
   },
+  
   "elements": [
     {
       "id": "q1",
