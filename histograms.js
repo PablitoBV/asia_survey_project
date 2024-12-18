@@ -24,24 +24,10 @@ export function createHistogram() {
     // Create an array of answer-count pairs
     const initData = Array.from(countryAnswerCounts, ([answer, count]) => ({ answer, count }));
 
-    // Sort the data alphabetically (with 'Missing' at the end)
-    // const countryData = initData.sort((a, b) => {
-    //     if (a.answer === 'Missing') return 1;
-    //     if (b.answer === 'Missing') return -1;
-    //     return a.answer.localeCompare(b.answer);
-    // });
-
     const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
-   
     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
-    console.log("question:", actualQuestion, "scaleName:", scaleName);
-
-    const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
-    console.log("Scale used for sorting:", scale);
-
-
-   const countryData = sortByScale(initData, scaleName);
-
+    // const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
+    const countryData = sortByScale(initData, scaleName);
 
     // Clear the container of any existing SVG
     const visualizationDiv = document.getElementById("visualizationMain");
@@ -94,13 +80,10 @@ export function createHistogram() {
         .attr("y", d => yScaleCountry(d.count))
         .attr("width", xScaleCountry.bandwidth())
         .attr("height", d => histHeight - yScaleCountry(d.count))
-        .attr("fill", "tomato") // Bars colored tomato
-        .on("mouseenter", function (event, d) {
-            histHoverAndHighlight(d3.select(this), "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
-        })
-        .on("mouseleave", function (event, d) {
-            histHoverAndHighlight(d3.select(this), "tomato"); // Reset to tomato
-        });
+        .attr("fill", "tomato"); // Bars colored tomato
+
+    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
+
 
     // Add x-axis (rotated labels beneath the bars)
     countryGroup.append("g")
@@ -142,7 +125,6 @@ export function createHistogram() {
 
 export function createSEHistogram() {
     const questionColumn = ctx.appState.currentSEIndicator;
-    console.log(questionColumn)
 
     let selectedCountries = ctx.appState.selectedCountries;
     if (selectedCountries.length === 0) {
@@ -192,11 +174,10 @@ export function createSEHistogram() {
     const initData = Array.from(countryAnswerCounts, ([answer, count]) => ({ answer, count }));
 
     const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
+   
     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
-    console.log("question:", actualQuestion, "scaleName:", scaleName);
 
-    const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
-    console.log("Scale used for sorting:", scale);
+    // const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found 
 
     const countryData = sortByScale(initData, scaleName);
 
@@ -251,13 +232,9 @@ export function createSEHistogram() {
         .attr("y", d => yScaleCountry(d.count))
         .attr("width", xScaleCountry.bandwidth())
         .attr("height", d => histHeight - yScaleCountry(d.count))
-        .attr("fill", "tomato") // Bars colored tomato
-        .on("mouseenter", function (event, d) {
-            histHoverAndHighlight(d3.select(this), "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
-        })
-        .on("mouseleave", function (event, d) {
-            histHoverAndHighlight(d3.select(this), "tomato"); // Reset to tomato
-        });
+        .attr("fill", "tomato"); // Bars colored tomato
+
+    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
 
     // Add x-axis (rotated labels beneath the bars)
     countryGroup.append("g")
@@ -316,10 +293,7 @@ export function createSEHistogram() {
 
 
 // On-hover behavior (hoverbox + highlight)
-export function histHoverAndHighlight(bar, highlightColor="rgb(127,205,187)") {
-
-    // have total count of the data, to have the percentages show up
-    const totalCount = d3.sum(bar.data(), d => d.count); 
+export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(127,205,187)") {
     
     const hoverbox = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -334,23 +308,23 @@ export function histHoverAndHighlight(bar, highlightColor="rgb(127,205,187)") {
         .style("z-index", "9999")
         .style("font-family", "'Righteous', sans-serif");
 
-    bar.on("mouseenter", (event, d) => {
-        const percentage = ((d.count / totalCount) * 100).toFixed(1); //get percentage, rounded to 1 decimal
-        // Show hoverbox 
-        hoverbox.html(`${d.answer}:<br> ${d.count} (${percentage}%)`)
+    bar.on("mouseover", (event, d) => {
+        const totalDataCount = d3.sum(countryData, d => d.count); 
+        const cur_count = d.count;
+        const perc = ((cur_count / totalDataCount) * 100).toFixed(1);
+        hoverbox.html(`${d.answer}:<br> ${cur_count} (${perc}%)`)
             .style("visibility", "visible")
             .style("top", (event.pageY + 10) + "px")
             .style("left", (event.pageX + 10) + "px")
             .style("z-index", "9999");
-    
-        // Highlight country in green
+        // Highlight country
         d3.select(event.target).style("fill", highlightColor);
     })
-    .on("mousemove", (event) => { // follow mouse
-        hoverbox.style("top", (event.pageY + 10) + "px")
-            .style("left", (event.pageX + 10) + "px");
-    })
-    .on("mouseleave", (event, d) => {
+    // .on("mousemove", (event) => { // follow mouse
+    //     hoverbox.style("top", (event.pageY + 10) + "px")
+    //         .style("left", (event.pageX + 10) + "px");
+    // })
+    .on("mouseout", (event, d) => {
         // Hide hoverbox
         hoverbox.style("visibility", "hidden");
     
@@ -360,6 +334,41 @@ export function histHoverAndHighlight(bar, highlightColor="rgb(127,205,187)") {
         
     })
 };
+
+// export function histHoverAndHighlight(bar, count, perc, highlightColor="rgb(127,205,187)") {
+//     const hoverbox = d3.select("body").append("div")
+//         .attr("class", "tooltip")
+//         .style("position", "absolute")
+//         .style("z-index", "10")
+//         .style("visibility", "hidden")
+//         .style("background-color", "rgba(0, 0, 0, 0.75)")
+//         .style("color", "#fff")
+//         .style("padding", "5px")
+//         .style("border-radius", "5px")
+//         .style("font-size", "14px")
+//         .style("z-index", "9999")
+//         .style("font-family", "'Righteous', sans-serif");
+
+//     // Display the tooltip
+//     hoverbox.html(`${count} (${perc}%)`)
+//         .style("visibility", "visible")
+//         .style("top", (d3.event.pageY + 10) + "px")
+//         .style("left", (d3.event.pageX + 10) + "px");
+
+//     // Highlight the bar
+//     bar.style("fill", highlightColor);
+// }
+
+// export function hideHoverAndHighlight(bar, d) {
+//     // Hide the tooltip
+//     d3.select(".tooltip").style("visibility", "hidden");
+
+//     // Reset the bar's color
+//     bar.style("fill", d.count > 0 ? "tomato" : "#EEE");
+// }
+
+
+
 
 // function to write out the question under the input box.
 async function getQuestionDescription() {  

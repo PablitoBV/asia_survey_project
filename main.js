@@ -156,7 +156,7 @@ function centralisedDisplay() {
                 modifyDisplay();
             }
             else if (target.classList.contains("description-button")) {
-                console.log("vksjdna")
+                console.log("vksjdna");
                 modifyDisplay();
             }
         });
