@@ -28,7 +28,7 @@ export function createHistogram() {
     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
     // const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
     const countryData = sortByScale(initData, scaleName);
-
+    console.log(countryData);
     // Clear the container of any existing SVG
     const visualizationDiv = document.getElementById("visualizationMain");
     d3.select(visualizationDiv).select("svg").remove();
@@ -264,8 +264,7 @@ export function createSEHistogram() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////////////////
 
 
 ////// Helper functions //
@@ -362,17 +361,29 @@ async function getQuestionDescription() {
 
 function sortByScale(data, scaleName) {
     // Retrieve the scale from ctx.scales using the scaleName
-    const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
+    const scale = ctx.scales[scaleName] || [];
 
-    return data.sort((a, b) => {
-        const indexA = scale.indexOf(a.answer);
-        const indexB = scale.indexOf(b.answer);
+    if (scaleName === 'alphabetical') {
+        // Separate valid answers (not in scale) and invalid answers (in scale)
+        const validAnswers = data.filter(item => !scale.includes(item.answer));
+        const invalidAnswers = data.filter(item => scale.includes(item.answer));
 
-        // Move invalid answers (not found in the scale) to the end
-        if (indexA === -1) return 1;  // Move invalid answers to the end
-        if (indexB === -1) return -1; // Move invalid answers to the end
+        // Sort valid answers alphabetically and keep invalid answers in their original order
+        validAnswers.sort((a, b) => a.answer.localeCompare(b.answer));
 
-        // Otherwise, compare based on the scale's order
-        return indexA - indexB;
-    });
+        // Combine valid answers followed by invalid answers
+        return [...validAnswers, ...invalidAnswers];
+    } else {
+        return data.sort((a, b) => {
+            const indexA = scale.indexOf(a.answer);
+            const indexB = scale.indexOf(b.answer);
+
+            // Move invalid answers (not found in the scale) to the end
+            if (indexA === -1) return 1;  // Move invalid answers to the end
+            if (indexB === -1) return -1; // Move invalid answers to the end
+
+            // Otherwise, compare based on the scale's order
+            return indexA - indexB;
+        });
+    }
 }
