@@ -25,11 +25,23 @@ export function createHistogram() {
     const initData = Array.from(countryAnswerCounts, ([answer, count]) => ({ answer, count }));
 
     // Sort the data alphabetically (with 'Missing' at the end)
-    const countryData = initData.sort((a, b) => {
-        if (a.answer === 'Missing') return 1;
-        if (b.answer === 'Missing') return -1;
-        return a.answer.localeCompare(b.answer);
-    });
+    // const countryData = initData.sort((a, b) => {
+    //     if (a.answer === 'Missing') return 1;
+    //     if (b.answer === 'Missing') return -1;
+    //     return a.answer.localeCompare(b.answer);
+    // });
+
+    const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
+   
+    const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
+    console.log("question:", actualQuestion, "scaleName:", scaleName);
+
+    const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
+    console.log("Scale used for sorting:", scale);
+
+
+   const countryData = sortByScale(initData, scaleName);
+
 
     // Clear the container of any existing SVG
     const visualizationDiv = document.getElementById("visualizationMain");
@@ -341,3 +353,19 @@ async function getQuestionDescription() {
 }
 
 
+function sortByScale(data, scaleName) {
+    // Retrieve the scale from ctx.scales using the scaleName
+    const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
+
+    return data.sort((a, b) => {
+        const indexA = scale.indexOf(a.answer);
+        const indexB = scale.indexOf(b.answer);
+
+        // Move invalid answers (not found in the scale) to the end
+        if (indexA === -1) return 1;  // Move invalid answers to the end
+        if (indexB === -1) return -1; // Move invalid answers to the end
+
+        // Otherwise, compare based on the scale's order
+        return indexA - indexB;
+    });
+}
