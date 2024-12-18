@@ -1,11 +1,6 @@
 import { ctx } from './parameters.js'; // Import ctx and loadQuestions
 
-
-export function Questions() {
-    questionSection()
-}
-
-function questionSection() {
+export function questionSection() {
     const container = d3.select("#visualizationMain");
 
     // Remove any previous instances of the side page or pull tab
@@ -35,7 +30,15 @@ function questionSection() {
     // Remove the content inside the side page (now empty)
     // No longer adding the HTML with the details panel text
 
-    createGroupButtons();
+    if (ctx.appState.currentViz === "questionHistogram") {
+        createGroupButtons();
+    } else if (ctx.appState.currentViz === "factorHistogram") {
+        createSEButtons();
+    } else if (ctx.appState.currentViz === "questionCorrelation") {
+        
+    } else if (ctx.appState.currentViz === "factorCorrelation") {
+    
+    }
 
     // Create the pull tab
     const pullTab = container.append("div")
@@ -241,4 +244,71 @@ function displayQuestions(group) {
 
 }
 
+function createSEButtons() {
+    const groupContainer = d3.select("#sidePage");
 
+    // Remove any previously added buttons
+    groupContainer.selectAll(".group-button").remove();
+
+    const filteredSEIndicators = ctx.questions.filter(q => q.group === 'Socio-Economic Background');
+    console.log(filteredSEIndicators);
+
+    const buttonHeight = 35;
+    const containerWidth = groupContainer.node().clientWidth;
+    const buttonWidth = containerWidth * 0.6;  // 60% of the container width for buttons
+    const buttonMargin = 10;  // Margin between buttons
+
+    // Enable vertical scrolling if more than 14 buttons
+    groupContainer
+        .style("overflow-y", "auto")  // Enable vertical scrolling
+        .style("max-height", "90vh");  // Limit container height for scroll
+
+    // Create a container for the description buttons
+    const descriptionContainer = groupContainer.append("div")
+        .attr("class", "description-container")
+        .style("display", "flex")              // Apply flexbox
+        .style("flex-direction", "column")     // Stack buttons vertically
+        .style("align-items", "center")        // Center buttons horizontally
+        .style("justify-content", "flex-start") // Align buttons at the top, adjust as needed
+        .style("width", "100%")                // Ensure the container takes the full width of parent
+        .style("padding", "10px");             // Optional: add some padding
+
+    // Create buttons for each filtered indicator
+    descriptionContainer.selectAll("button")
+        .data(filteredSEIndicators)
+        .enter()
+        .append("button")
+        .attr("class", "description-button")
+        .style("width", `${buttonWidth}px`)  // Button width
+        .style("height", `${buttonHeight}px`) // Button height
+        .style("margin-bottom", `${buttonMargin}px`) // Space between buttons
+        .style("border-radius", "12px")
+        .style("background-color", "#00BFAE")
+        .style("color", "white")
+        .style("font-size", "14px")
+        .style("border", "none")
+        .style("cursor", "pointer")
+        .style("transition", "all 0.1s ease-in-out")
+        .text(d => d.description)  // Set button text from description
+        .on("click", (event, d) => {
+            ctx.appState.currentSEIndicator = d.id; // Update currentSEIndicator in appState
+        })
+        .on("mousedown", function () {
+            // "Pressed" effect on mousedown
+            d3.select(this)
+                .style("box-shadow", "inset 2px 2px 5px rgba(0, 0, 0, 0.3)")  // Inner shadow
+                .style("transform", "translateY(2px)"); // Move button down
+        })
+        .on("mouseup", function () {
+            // Remove "pressed" effect on mouseup
+            d3.select(this)
+                .style("box-shadow", "")  // Remove shadow
+                .style("transform", "translateY(0)");  // Reset position
+        })
+        .on("mouseout", function () {
+            // Reset "pressed" effect on mouseout
+            d3.select(this)
+                .style("box-shadow", "")  // Remove shadow
+                .style("transform", "translateY(0)");  // Reset position
+        });
+}

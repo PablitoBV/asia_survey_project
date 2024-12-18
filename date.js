@@ -19,12 +19,7 @@ export function createDates() {
         .style("padding-left", "20px");  // Add padding to the left of the heading
 
     // Find distinct years
-    const yearObject = ctx.csvTimeSpace.find(d => d.header === "year");
-    let distinctYears = [];
-
-    if (yearObject && Array.isArray(yearObject.values)) {
-        distinctYears = Array.from(new Set(yearObject.values));
-    }
+    let distinctYears = [...new Set(ctx.CSVDATA.map(d => d.year))];
 
     // Add "all" to the list of buttons
     const allYears = ["all", ...distinctYears];

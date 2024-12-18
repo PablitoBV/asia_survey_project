@@ -22,8 +22,8 @@ export function linksToTemplates() {
 
     const buttonData = [
         { id: "button1", link: "page2.html", image: "images/heatmap.png", description: "Heatmap of questions per countries." },
-        { id: "button2", link: "page2.html", image: "test_image2", description: "description2" },
-        { id: "button3", link: "page2.html", image: "test_image3", description: "description3" }
+        { id: "button2", link: "page2.html", image: "images/heatmap.png", description: "description2" },
+        { id: "button3", link: "page2.html", image: "images/heatmap.png", description: "description3" }
     ];
 
     const containerHeight = linksDiv.node().clientHeight;

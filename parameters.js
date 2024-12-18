@@ -20,6 +20,7 @@ export const ctx = {
         currentViz: '',
         currentFactors: [''],
         currentDate: 'all',
+        currentSEIndicator: 'se2',
     },
     background_color: "rgb(190,190,190"
 };

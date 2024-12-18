@@ -2,12 +2,13 @@ import { ctx, loadQuestions } from './parameters.js';  // Import ctx parameters
 // import functions from other files
 import { drawMap, countCountries } from './maps.js';
 import { createHistogram, createSEHistogram } from './histograms.js';
-import { Questions } from './display_questions_groups.js';
+import { questionSection } from './display_questions_groups.js';
 import { plotCountryVsCountryMatrix, populateSmallDropdown } from './matrix.js';
 import { drawMissingPercentageHistogram, missing_dropdown_updates } from './missing_values.js';
 import { questionCorrelation, SECorrelation } from './correlation.js';
 import { createDates } from './date.js';
 import { linksToTemplates } from './template_links.js';
+import { createQuestionNavigator, createGroupNavigator, createSENavigator} from './navigator.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
@@ -89,43 +90,12 @@ function createViz_mainPage() {
         const starttime2 = performance.now();
         console.log("Data loading took:", loadTime1, "seconds");
 
-        const columns = csvData.columns;
-
-        // Group columns into variables
-        ctx.csvTimeSpace = columns.slice(0, 6).map(col => ({
-            header: col,
-            values: csvData.map(row => row[col])
-        }));
-
-        ctx.csvQuestions = columns.slice(6, 185).map(col => ({
-            header: col,
-            values: csvData.map(row => row[col])
-        }));
-    
-        ctx.csvSocioEconomicIndicators = columns.slice(185, 244).map(col => ({
-            header: col,
-            values: csvData.map(row => row[col])
-        }));
-    
-        ctx.csvInterviewRecords = columns.slice(244, 276).map(col => ({
-            header: col,
-            values: csvData.map(row => row[col])
-        }));
-
-        ctx.csvWeights = columns.slice(276, 278).map(col => ({
-            header: col,
-            values: csvData.map(row => row[col])
-        }));
-
         const countryCounts = countCountries(csvData);
         drawMap(respondents, countryCounts);
         createDates();
-        Questions();
         createButtonSelection();
         linksToTemplates();
 
-
-        
         centralisedDisplay();
 
         
@@ -173,21 +143,35 @@ function centralisedDisplay() {
         modifyDisplay();
         });
 
-    d3.selectAll(".description-button")
-        .on("click", function() {
-            modifyDisplay();
-        });
     document.getElementById("dates")
         .addEventListener("click", function(){
             modifyDisplay();
         })
+
+        d3.select("#visualization")
+        .on("click", function (event) {
+            const target = event.target;
+            if (target.classList.contains("nav-arrow")) {
+                console.log("Arrow clicked:", target.classList.contains("right-arrow") ? "Right arrow" : "Left arrow");
+                modifyDisplay();
+            }
+            else if (target.classList.contains("description-button")) {
+                console.log("vksjdna")
+                modifyDisplay();
+            }
+        });
 }
 
 function modifyDisplay(){
     if (ctx.appState.currentViz === "questionHistogram") {
         createHistogram();
+        questionSection();
+        createQuestionNavigator();
+        createGroupNavigator();
     } else if (ctx.appState.currentViz === "factorHistogram") {
-        createSEHistogram_update();
+        createSEHistogram();
+        questionSection();
+        createSENavigator();
     } else if (ctx.appState.currentViz === "questionCorrelation") {
         createCorrelation_update();
     }
@@ -207,8 +191,8 @@ function createButtonSelection() {
     const buttonNames = [
         { id: "questionHistogramBtn", label: "Question Histogram", icon: "📊" },
         { id: "factorHistogramBtn", label: "SE Histogram", icon: "📊" },
-        { id: "questionCorrelationBtn", label: "Question Correlation", icon: "🔗" },
-        { id: "factorCorrelationBtn", label: "SE Correlation", icon: "🔗" }
+        { id: "questionCorrelationBtn", label: "Question Correlation", icon: "📈" },
+        { id: "factorCorrelationBtn", label: "SE Correlation", icon: "📈" }
     ];
 
     let lastClickedBtn = null;
@@ -239,3 +223,39 @@ function createButtonSelection() {
         buttonContainer.appendChild(btn);
     });
 }
+
+
+
+
+
+
+
+
+
+// const columns = csvData.columns;
+
+// // Group columns into variables
+// ctx.csvTimeSpace = columns.slice(0, 6).map(col => ({
+//     header: col,
+//     values: csvData.map(row => row[col])
+// }));
+
+// ctx.csvQuestions = columns.slice(6, 185).map(col => ({
+//     header: col,
+//     values: csvData.map(row => row[col])
+// }));
+
+// ctx.csvSEIndicators = columns.slice(185, 244).map(col => ({
+//     header: col,
+//     values: csvData.map(row => row[col])
+// }));
+
+// ctx.csvInterviewRecords = columns.slice(244, 276).map(col => ({
+//     header: col,
+//     values: csvData.map(row => row[col])
+// }));
+
+// ctx.csvWeights = columns.slice(276, 278).map(col => ({
+//     header: col,
+//     values: csvData.map(row => row[col])
+// }));
