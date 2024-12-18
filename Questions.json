@@ -30,8 +30,12 @@
       
       "likely_scale": ["Very likely", "Likely", "Not very likely", "Not likely at all", "Decline to answer", "Can't choose", "Do not understand the question", "Missing", "missing"]
 
+      
+
+
+
+
   },
-  
   "elements": [
     {
       "id": "q1",
@@ -1298,7 +1302,7 @@
       "separated_by_country": true
     },
     {
-      "id": "se13a",
+      "id": "se13c",
       "description": "Where would you place your children on this scale from poorest to richest?",
       "group": "Socio-Economic Background",
       "missing_mark": -1,
