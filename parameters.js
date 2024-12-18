@@ -30,7 +30,9 @@ export function loadQuestions() {
         fetch('Questions.json')
             .then(response => response.json())
             .then(data => {
+                ctx.scales = data.scales
                 ctx.questions = data.elements;  // Store the entire elements array in ctx.questions
+                console.log(ctx.scales);
                 resolve();
             })
             .catch(error => {

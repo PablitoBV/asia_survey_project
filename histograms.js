@@ -153,11 +153,22 @@ export function createSEHistogram() {
     const initData = Array.from(countryAnswerCounts, ([answer, count]) => ({ answer, count }));
 
     // Sort the data alphabetically (with 'Missing' at the end)
-    const countryData = initData.sort((a, b) => {
-        if (a.answer === 'Missing') return 1;
-        if (b.answer === 'Missing') return -1;
-        return a.answer.localeCompare(b.answer);
-    });
+    // const countryData = initData.sort((a, b) => {
+    //     if (a.answer === 'Missing') return 1;
+    //     if (b.answer === 'Missing') return -1;
+    //     return a.answer.localeCompare(b.answer);
+    // });
+
+    const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
+   
+     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
+     console.log("question:", actualQuestion, "scaleName:", scaleName);
+ 
+     const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
+     console.log("Scale used for sorting:", scale);
+ 
+
+    const countryData = sortByScale(initData, scaleName);
 
     // Clear the container of any existing SVG
     const visualizationDiv = document.getElementById("visualizationMain");

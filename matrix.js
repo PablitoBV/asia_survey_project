@@ -18,7 +18,7 @@ const countryMappings = {
     "China and Singapore":"China & Singapore",
     "Japan and Singapore": "Japan & Singapore",
     "Association of Southeast Asian Nations, ASEAN": "ASEAN",
-    "Russian": "Russia",
+    "Russian": "Russia",    
 };
 
 
@@ -128,7 +128,7 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         .attr("x", margin.left - 10) 
         .attr("y", margin.top - 60)  
         .attr("width", svgWidth - margin.left - margin.right + 20)  
-        .attr("height", svgHeight - margin.top - margin.bottom + 40)  
+        .attr("height", svgHeight - margin.top - margin.bottom + 55)  
         .attr("rx", 10)  
         .attr("ry", 10)  // Rounded corners
         .attr("fill", "darkgrey") 
@@ -255,6 +255,8 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
         .append("rect")
         .attr("x", d => legendScale(d))
         .attr("y", 0)
+        .attr("stroke", "rgb(67, 67, 67)")
+        .attr("stroke-width", 1) 
         .attr("width", legendWidth / 10)
         .attr("height", legendHeight)
         .attr("fill", d => colorScale(d));
@@ -262,13 +264,19 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
     legend.append("text")
         .attr("x", 0)
         .attr("y", legendHeight + 15)
-        .attr("text-anchor", "start")
+        .attr("text-anchor", "middle")
         .text("0");
+
+    legend.append("text")
+        .attr("x", legendWidth/2)
+        .attr("y", legendHeight + 15)
+        .attr("text-anchor", "middle")
+        .text((maxPercentage/2).toFixed(0));
 
     legend.append("text")
         .attr("x", legendWidth)
         .attr("y", legendHeight + 15)
-        .attr("text-anchor", "end")
+        .attr("text-anchor", "middle")
         .text(maxPercentage);
 }
 
@@ -295,14 +303,14 @@ function handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, count
         .attr("font-weight", "bold")
         .style("font-size", function() { // increase font size by 30%
             const currentFontSize = parseFloat(d3.select(this).style("font-size")) || 10;
-            return `${currentFontSize * 1.15}px`;  
+            return `${currentFontSize * 1.25}px`;  
         });
 
     svg.selectAll(`.y-axis-label-${sanitizeName(d.row)}`)
         .attr("font-weight", "bold")
         .style("font-size", function() { // increase font size by 30%
             const currentFontSize = parseFloat(d3.select(this).style("font-size")) || 10;
-            return `${currentFontSize * 1.15}px`;  
+            return `${currentFontSize * 1.25}px`;  
         });
 
     // Show numbers on row and column
