@@ -78,11 +78,12 @@ function createViz_mainPage() {
     const geoDataPromiseAsia = d3.json("data/asia2.geojson");
     //const geoDataPromiseIndiv = d3.json("data/ph.json"); //map for individual countries
 
+    document.getElementById("loading1").style.display = "block";
     // Start measuring time
     const startTime1 = performance.now();
 
     Promise.all([geoDataPromiseAsia, csvDataPromise, loadQuestions()]).then(([respondents, csvData]) => {
-
+        document.getElementById("loading1").style.display = "none";
         // print time taken to load main page
         ctx.CSVDATA = csvData;
         const endTime1 = performance.now(); 
@@ -108,8 +109,10 @@ function createViz_mainPage() {
 }
 
 function createViz_Page2() {
+    document.getElementById("loading2").style.display = "block";
     if (ctx.CSVDATA.length === 0) {
         Promise.all([csvDataPromise, loadQuestions()]).then(([csvData]) => {
+            document.getElementById("loading2").style.display = "none";
             ctx.CSVDATA = csvData;
             populateSmallDropdown(); // populate dropdown and draw matrix page 2
             plotCountryVsCountryMatrix(ctx.CSVDATA, 'q163');
