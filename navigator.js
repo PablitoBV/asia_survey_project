@@ -269,6 +269,7 @@ export function createSENavigator() {
 
     // Helper function to navigate between questions
     function navigateQuestion(direction) {
+        console.log(ctx.questions)
         const currentIndex = ctx.questions.findIndex(q => q.id === ctx.appState.currentSEIndicator);
         const newIndex = currentIndex + direction;
 

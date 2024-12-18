@@ -137,21 +137,41 @@ export function createSEHistogram() {
         filteredDateData = filteredCountryData.filter(row => row.year === ctx.appState.currentDate);
     }
 
-    const validAnswers = filteredDateData
+    let validAnswers = filteredDateData
         .map(row => row[questionColumn] !== undefined && row[questionColumn] !== null ? row[questionColumn] : "No data");
+
+    // Filter or group the data based on the specific indicator
+    if (questionColumn === 'se11a' || questionColumn === 'se10c' || questionColumn === 'se9c') {
+        // Filter out answers with count below 20 for these specific indicators
+        validAnswers = validAnswers.filter(answer => {
+            const count = validAnswers.filter(a => a === answer).length;
+            return count >= 20;
+        });
+    } else if (questionColumn === 'se3_2') {
+        // Group ages by 4 years
+        validAnswers = validAnswers.map(age => {
+            if (typeof age === 'number') {
+                const group = Math.floor(age / 4) * 4;
+                return `${group} - ${group + 3}`;
+            }
+            return age;
+        });
+    } else if (questionColumn === 'se3_1') {
+        // Group birth years by 5 years
+        validAnswers = validAnswers.map(year => {
+            if (typeof year === 'number') {
+                const group = Math.floor(year / 5) * 5;
+                return `${group} - ${group + 4}`;
+            }
+            return year;
+        });
+    }
 
     // Count the occurrences of each answer
     const countryAnswerCounts = d3.rollup(validAnswers, v => v.length, d => d);
 
     // Create an array of answer-count pairs
     const initData = Array.from(countryAnswerCounts, ([answer, count]) => ({ answer, count }));
-
-    // Sort the data alphabetically (with 'Missing' at the end)
-    // const countryData = initData.sort((a, b) => {
-    //     if (a.answer === 'Missing') return 1;
-    //     if (b.answer === 'Missing') return -1;
-    //     return a.answer.localeCompare(b.answer);
-    // });
 
     const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
    
@@ -253,6 +273,7 @@ export function createSEHistogram() {
         .attr("fill", "blue")
         .style("font-size", "12px");
 }
+
 
 
 

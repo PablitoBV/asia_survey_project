@@ -22,7 +22,7 @@ export const ctx = {
         currentDate: 'all',
         currentSEIndicator: 'se2',
     },
-    background_color: "rgb(190,190,190"
+    background_color: "rgb(190,190,190)"
 };
 
 export function loadQuestions() {

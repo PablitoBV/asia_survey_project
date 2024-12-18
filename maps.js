@@ -18,10 +18,10 @@ export function countCountries(data) {
 export function drawMap(geoData, countryCounts) {
     // Color variables
     const lightGray = "#EEE";
-    const darkCyan = "DarkCyan";
-    const darkGreen = "DarkGreen";
-    const darkOrange = "DarkOrange";
-    const blue = "blue";
+    const restColour = "rgb(253, 199, 235)";
+    const hoverColour = "rgb(0, 87, 12)";
+    const selectedColour = "rgb(125, 0, 197)";
+    const smallcountryColour = "rgba(255, 73, 194, 0.88)";
 
     d3.select("#respondentMap")
         .append("h2")
@@ -77,9 +77,9 @@ export function drawMap(geoData, countryCounts) {
     // Function to determine fill color based on state
     function getCountryColor(countryName) {
         if (ctx.appState.selectedCountries.includes(countryName)) {
-            return darkOrange; // Selected state
+            return selectedColour; // Selected state
         }
-        return countryCounts[countryName] > 0 ? darkCyan : lightGray;
+        return countryCounts[countryName] > 0 ? restColour : lightGray;
     }
 
     // Draw countries
@@ -105,7 +105,7 @@ export function drawMap(geoData, countryCounts) {
 
                 // Change to dark green if not selected
                 if (!ctx.appState.selectedCountries.includes(countryName)) {
-                    d3.select(event.target).style("fill", darkGreen);
+                    d3.select(event.target).style("fill", hoverColour);
                 }
             }
         })
@@ -142,7 +142,7 @@ export function drawMap(geoData, countryCounts) {
         .attr("cx", (d) => projection(d.coordinates)[0])
         .attr("cy", (d) => projection(d.coordinates)[1])
         .attr("r", 5)
-        .style("fill", (d) => ctx.appState.selectedCountries.includes(d.name) ? darkOrange : blue)
+        .style("fill", (d) => ctx.appState.selectedCountries.includes(d.name) ? selectedColour : smallcountryColour)
         .on("mouseover", (event, d) => {
             const count = countryCounts[d.name] || 0;
             tooltip.html(`<strong>${d.name}</strong><br>Respondents: ${count}`)
@@ -152,12 +152,12 @@ export function drawMap(geoData, countryCounts) {
 
             // Change color to green if not selected
             if (!ctx.appState.selectedCountries.includes(d.name)) {
-                d3.select(event.target).style("fill", darkGreen);
+                d3.select(event.target).style("fill", hoverColour);
             }
         })
         .on("mouseout", (event, d) => {
             tooltip.style("visibility", "hidden");
-            d3.select(event.target).style("fill", ctx.appState.selectedCountries.includes(d.name) ? darkOrange : blue);
+            d3.select(event.target).style("fill", ctx.appState.selectedCountries.includes(d.name) ? selectedColour : smallcountryColour);
         })
         .on("click", (event, d) => {
             const name = d.name;
@@ -168,7 +168,7 @@ export function drawMap(geoData, countryCounts) {
                 ctx.appState.selectedCountries.push(name);
             }
 
-            d3.select(event.target).style("fill", ctx.appState.selectedCountries.includes(name) ? darkOrange : blue);
+            d3.select(event.target).style("fill", ctx.appState.selectedCountries.includes(name) ? selectedColour : smallcountryColour);
         });
 
     // Unselect button functionality
@@ -179,6 +179,9 @@ export function drawMap(geoData, countryCounts) {
             .style("fill", (d) => getCountryColor(d.properties.name));
 
         d3.selectAll("circle")
-            .style("fill", blue);
+            .style("fill", smallcountryColour);
     });
 }
+
+
+
