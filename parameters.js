@@ -13,7 +13,7 @@ export const ctx = {
     respondent_map_bounds: NamedNodeMap, 
     appState: {
         currentQuestion: 'q1',
-        currentCorrelationSelection: ['q20','q2'],
+        currentCorrelationSelection: ['se2','q44'],
         selectedCountries: [],
         selectedGroup: null,
         selectedQuestionMatrix: "q163",

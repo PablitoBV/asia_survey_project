@@ -175,7 +175,6 @@ function displayQuestions(group) {
         .style("height", `${buttonHeight}px`)
         .style("margin-bottom", `${buttonMargin}px`)
         .style("border-radius", "12px")
-        .style("background-color", "#00BFAE")
         .style("color", "white")
         .style("font-size", "14px")
         .style("border", "none")
@@ -322,7 +321,6 @@ function createSEButtons() {
         .style("height", `${buttonHeight}px`) // Button height
         .style("margin-bottom", `${buttonMargin}px`) // Space between buttons
         .style("border-radius", "12px")
-        .style("background-color", "#00BFAE")
         .style("color", "white")
         .style("font-size", "14px")
         .style("border", "none")

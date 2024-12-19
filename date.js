@@ -53,7 +53,6 @@ export function createDates() {
         .append("button")
         .text(d => d)
         .attr("class", "time-button")
-        .style("background-color", "#00BFAE")
         .style("color", "white")
         .style("border", "none")
         .style("border-radius", "8px")

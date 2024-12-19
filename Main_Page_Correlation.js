@@ -3,6 +3,7 @@ import { ctx } from './parameters.js';
 export function plotCorrelationMatrix() {
     // Extract feature IDs from current selection
     const [id1, id2] = ctx.appState.currentCorrelationSelection;
+    console.log(ctx.appState.currentCorrelationSelection)
 
     // Filter out invalid responses
     const filteredData = ctx.CSVDATA.filter(row =>
@@ -10,22 +11,53 @@ export function plotCorrelationMatrix() {
         row[id1] !== "Decline to answer" &&
         row[id1] !== "Missing" &&
         row[id1] !== "Can't choose" &&
-        row[id1] !== "Other [please name]" &&
+        row[id1] !== "Not applicable" &&
         row[id2] !== "Do not understand the question" &&
         row[id2] !== "Decline to answer" &&
         row[id2] !== "Missing" &&
         row[id2] !== "Can't choose" &&
-        row[id2] !== "Other [please name]"
+        row[id2] !== "Not applicable"
     );
 
-    // Extract unique answers for id1 and id2
-    const answerOptions1 = Array.from(new Set(filteredData.map(d => d[id1]))).filter(Boolean);
-    const answerOptions2 = Array.from(new Set(filteredData.map(d => d[id2]))).filter(Boolean);
+    // Count occurrences of each answer in id1 and id2
+    const countOccurrences = (data, id) => {
+        const counts = {};
+        data.forEach(row => {
+            const value = row[id];
+            if (value) {
+                counts[value] = (counts[value] || 0) + 1;
+            }
+        });
+        return counts;
+    };
+
+    const counts1 = countOccurrences(filteredData, id1);
+    const counts2 = countOccurrences(filteredData, id2);
+
+    // Sort the answers by count and keep only the top 30 if needed
+    const filterTopAnswers = (counts) => 
+        Object.entries(counts)
+            .sort(([, a], [, b]) => b - a) // Sort descending by count
+            .slice(0, 20)                 // Keep top 30
+            .map(([key]) => key);         // Extract the answer options
+
+    let answerOptions1 = Object.keys(counts1);
+    let answerOptions2 = Object.keys(counts2);
+
+    if (answerOptions1.length > 20) {
+        answerOptions1 = filterTopAnswers(counts1);
+    }
+
+    if (answerOptions2.length > 20) {
+        answerOptions2 = filterTopAnswers(counts2);
+    }
 
     // Identify which dimension has the larger number of distinct answers
     const largerDimension = answerOptions1.length > answerOptions2.length ? 'id1' : 'id2';
     const largerAnswers = largerDimension === 'id1' ? answerOptions1 : answerOptions2;
     const smallerAnswers = largerDimension === 'id1' ? answerOptions2 : answerOptions1;
+    let idlarger = largerDimension === 'id1' ? id1 : id2;
+    let idsmaller = largerDimension === 'id1' ? id2 : id1;
 
     const matrix = {};
 
@@ -39,8 +71,8 @@ export function plotCorrelationMatrix() {
 
     // Populate matrix with counts
     filteredData.forEach(row => {
-        const value1 = row[id1];
-        const value2 = row[id2];
+        const value1 = row[idlarger];
+        const value2 = row[idsmaller];
 
         // Increment matrix value for matching answers
         if (matrix[value1] && matrix[value1][value2] !== undefined) {
@@ -59,8 +91,8 @@ export function plotCorrelationMatrix() {
 
     const svgWidth = document.querySelector(containerId).clientWidth;  // Full width of the parent container
     const svgHeight = document.querySelector(containerId).clientHeight * 0.8;  // 80% of the parent height
-    const margin = { top: svgHeight * 0.2, left: svgWidth * 0.2, bottom: 20, right: 20 };  // 20% margin for labels
-    const heatmapWidth = svgWidth * 0.8;  // 80% of the width for the heatmap itself
+    const margin = { top: svgHeight * 0.2, left: svgWidth * 0.2, bottom: 20, right: svgWidth * 0.1 };  // 20% margin for labels
+    const heatmapWidth = svgWidth * 0.7;  // 80% of the width for the heatmap itself
     const heatmapHeight = svgHeight * 0.8;  // 80% of the height for the heatmap itself
 
     // Define cell size based on the larger dimension, so cells are square

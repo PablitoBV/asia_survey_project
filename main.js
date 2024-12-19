@@ -5,10 +5,9 @@ import { createHistogram, createSEHistogram } from './histograms.js';
 import { questionSection } from './display_questions_groups.js';
 import { plotCountryVsCountryMatrix, populateSmallDropdown } from './matrix.js';
 import { drawMissingPercentageHistogram, missing_dropdown_updates } from './missing_values.js';
-import { questionCorrelation, SECorrelation } from './correlation.js';
 import { createDates } from './date.js';
 import { linksToTemplates } from './template_links.js';
-import { createQuestionNavigator, createGroupNavigator, createSENavigator} from './navigator.js';
+import { createQuestionNavigator, createGroupNavigator, createSENavigator, createCorrelationNavigator} from './navigator.js';
 import { plotCorrelationMatrix } from './Main_Page_Correlation.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
@@ -181,9 +180,12 @@ function modifyDisplay(){
         questionSection();
         createSENavigator();
     } else if (ctx.appState.currentViz === "correlation") {
-        console.log(ctx.appState.currentCorrelationSelection)
-        if (ctx.appState.collapseTab) {questionSection();}
         plotCorrelationMatrix();
+        if (ctx.appState.collapseTab) {
+            questionSection();
+        }
+        createCorrelationNavigator(0);
+        createCorrelationNavigator(1);
     }
 }
 

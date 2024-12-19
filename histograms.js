@@ -366,38 +366,6 @@ export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(127,
     })
 };
 
-// export function histHoverAndHighlight(bar, count, perc, highlightColor="rgb(127,205,187)") {
-//     const hoverbox = d3.select("body").append("div")
-//         .attr("class", "tooltip")
-//         .style("position", "absolute")
-//         .style("z-index", "10")
-//         .style("visibility", "hidden")
-//         .style("background-color", "rgba(0, 0, 0, 0.75)")
-//         .style("color", "#fff")
-//         .style("padding", "5px")
-//         .style("border-radius", "5px")
-//         .style("font-size", "14px")
-//         .style("z-index", "9999")
-//         .style("font-family", "'Righteous', sans-serif");
-
-//     // Display the tooltip
-//     hoverbox.html(`${count} (${perc}%)`)
-//         .style("visibility", "visible")
-//         .style("top", (d3.event.pageY + 10) + "px")
-//         .style("left", (d3.event.pageX + 10) + "px");
-
-//     // Highlight the bar
-//     bar.style("fill", highlightColor);
-// }
-
-// export function hideHoverAndHighlight(bar, d) {
-//     // Hide the tooltip
-//     d3.select(".tooltip").style("visibility", "hidden");
-
-//     // Reset the bar's color
-//     bar.style("fill", d.count > 0 ? "tomato" : "#EEE");
-// }
-
 
 
 
