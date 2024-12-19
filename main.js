@@ -9,6 +9,7 @@ import { questionCorrelation, SECorrelation } from './correlation.js';
 import { createDates } from './date.js';
 import { linksToTemplates } from './template_links.js';
 import { createQuestionNavigator, createGroupNavigator, createSENavigator} from './navigator.js';
+import { createSpiderChart } from './spiderweb.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
@@ -65,9 +66,10 @@ document.addEventListener("DOMContentLoaded", () => { // check which page is loa
 
     if (pageType === "main_page") {
         createViz_mainPage();
- 
     } else if (pageType === "page2") {
         createViz_Page2();
+    } else if (pageType === "page3") {
+        createViz_Page3();
     }
 });
 
@@ -128,7 +130,6 @@ function createViz_Page2() {
         drawMissingPercentageHistogram(ctx.CSVDATA, "#bad_values_histogram", "Missing")
         missing_dropdown_updates();
     }
-
 };
 
 function centralisedDisplay() {
@@ -229,7 +230,19 @@ function createButtonSelection() {
 
 
 
-
+function createViz_Page3() {
+    document.getElementById("loading3").style.display = "block";
+    if (ctx.CSVDATA.length === 0) {
+        Promise.all([csvDataPromise, loadQuestions()]).then(([csvData]) => {
+            document.getElementById("loading3").style.display = "none";
+            ctx.CSVDATA = csvData;  
+            createSpiderChart();         
+        })
+    }
+    else {
+        createSpiderChart();
+    }
+};
 
 
 

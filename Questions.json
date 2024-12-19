@@ -1220,7 +1220,7 @@
     },
     {
       "id": "se9c",
-      "description": "What is your job title? (ISO Code)",
+      "description": "What is your job title?",
       "group": "Socio-Economic Background",
       "missing_mark": -1
     },

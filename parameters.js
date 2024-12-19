@@ -22,7 +22,9 @@ export const ctx = {
         currentDate: 'all',
         currentSEIndicator: 'se2',
     },
-    background_color: "rgb(190,190,190)"
+    background_color: "rgb(190,190,190)",
+    spiderWeb_H : 600,
+    spiderWeb_W: 600,
 };
 
 export function loadQuestions() {
@@ -32,7 +34,6 @@ export function loadQuestions() {
             .then(data => {
                 ctx.scales = data.scales
                 ctx.questions = data.elements;  // Store the entire elements array in ctx.questions
-                console.log(ctx.scales);
                 resolve();
             })
             .catch(error => {
@@ -88,4 +89,7 @@ export function sortDataAlphabetically(data, customOrder) {
         return aValue.localeCompare(bValue);
     });
 }
+
+
+
 
