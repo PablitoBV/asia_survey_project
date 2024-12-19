@@ -89,9 +89,9 @@ export function createHistogram() {
         .attr("y", d => yScaleCountry(d.count))
         .attr("width", xScaleCountry.bandwidth())
         .attr("height", d => histHeight - yScaleCountry(d.count))
-        .attr("fill", "tomato"); // Bars colored tomato
+        .attr("fill", "rgb(177, 119, 37)"); // Bars colored tomato
 
-    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
+    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(213, 169, 108)"); // Highlight slightly lighter tomato
 
 
     // Add x-axis (rotated labels beneath the bars)
@@ -119,7 +119,7 @@ export function createHistogram() {
         .attr("x2", histWidth)
         .attr("y1", yScaleCountry(averageCount))
         .attr("y2", yScaleCountry(averageCount))
-        .attr("stroke", "blue")
+        .attr("stroke", "rgb(0, 8, 255)")
         .attr("stroke-dasharray", "4 4") // Dashed line
         .attr("stroke-width", 2);
 
@@ -250,9 +250,9 @@ export function createSEHistogram() {
         .attr("y", d => yScaleCountry(d.count))
         .attr("width", xScaleCountry.bandwidth())
         .attr("height", d => histHeight - yScaleCountry(d.count))
-        .attr("fill", "tomato"); // Bars colored tomato
+        .attr("fill", "rgb(177, 119, 37)"); // Bars colored tomato
         
-    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
+    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(213, 169, 108)"); // Highlight slightly lighter tomato
 
     // Add x-axis (rotated labels beneath the bars)
     countryGroup.append("g")
@@ -292,7 +292,7 @@ export function createSEHistogram() {
         .attr("x2", histWidth)
         .attr("y1", yScaleCountry(averageCount))
         .attr("y2", yScaleCountry(averageCount))
-        .attr("stroke", "blue")
+        .attr("stroke", "rgb(0, 8, 255)")
         .attr("stroke-dasharray", "4 4") // Dashed line
         .attr("stroke-width", 2);
 
@@ -304,7 +304,6 @@ export function createSEHistogram() {
         .attr("fill", "blue")
         .style("font-size", "12px");
 }
-
 
 
 
@@ -324,7 +323,7 @@ export function createSEHistogram() {
 
 
 // On-hover behavior (hoverbox + highlight)
-export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(127,205,187)") {
+export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(0, 8, 255)") {
     
     const hoverbox = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -360,7 +359,7 @@ export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(127,
         hoverbox.style("visibility", "hidden");
     
         // Reset country color
-        d3.select(event.target).style("fill", d.count > 0 ? "tomato" : "#EEE");
+        d3.select(event.target).style("fill", d.count > 0 ? "rgb(177, 119, 37)" : "#EEE");
 
         
     })

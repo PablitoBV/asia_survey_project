@@ -19,8 +19,8 @@ export function drawMap(geoData, countryCounts) {
     // Color variables
     const lightGray = "#EEE";
     const restColour = "rgb(20, 157, 211)";
-    const hoverColour = "rgb(145, 84, 0)";
-    const selectedColour = "rgb(145, 84, 0)";
+    const hoverColour = "rgb(177, 119, 37)";
+    const selectedColour = "rgb(177, 119, 37)";
     const smallcountryColour = "rgb(29, 65, 224)";
 
     d3.select("#respondentMap")
