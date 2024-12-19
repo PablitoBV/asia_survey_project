@@ -18,10 +18,10 @@ export function countCountries(data) {
 export function drawMap(geoData, countryCounts) {
     // Color variables
     const lightGray = "#EEE";
-    const restColour = "rgb(253, 199, 235)";
-    const hoverColour = "rgb(0, 87, 12)";
-    const selectedColour = "rgb(125, 0, 197)";
-    const smallcountryColour = "rgba(255, 73, 194, 0.88)";
+    const restColour = "rgb(20, 157, 211)";
+    const hoverColour = "rgb(177, 119, 37)";
+    const selectedColour = "rgb(177, 119, 37)";
+    const smallcountryColour = "rgb(29, 65, 224)";
 
     d3.select("#respondentMap")
         .append("h2")

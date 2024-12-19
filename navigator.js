@@ -6,6 +6,7 @@ export function createQuestionNavigator() {
     // Remove any previous navigator elements
     mainDiv.selectAll(".question-navigator").remove();
     mainDiv.selectAll(".SE-navigator").remove();
+    mainDiv.selectAll(".correlation-navigator").remove();
 
     // Create a container for the navigation
     const navigatorContainer = mainDiv.append("div")
@@ -201,6 +202,7 @@ export function createSENavigator() {
     mainDiv.selectAll(".SE-navigator").remove();
     mainDiv.selectAll(".group-navigator").remove();
     mainDiv.selectAll(".question-navigator").remove();
+    mainDiv.selectAll(".correlation-navigator").remove();
 
     // Create a container for the navigation
     const navigatorContainer = mainDiv.append("div")
@@ -271,14 +273,109 @@ export function createSENavigator() {
 
     // Helper function to navigate between questions
     function navigateQuestion(direction) {
-        console.log(ctx.questions)
         const currentIndex = ctx.questions.findIndex(q => q.id === ctx.appState.currentSEIndicator);
         const newIndex = currentIndex + direction;
 
         if (newIndex >= 0 && newIndex < ctx.questions.length) {
             ctx.appState.currentSEIndicator = ctx.questions[newIndex].id;  // Update to next question
-            ctx.appState.currentQuestion = ctx.questions[newIndex].id;  // Ensure current question is updated
             updateNavigator();  // Update navigator display
+        }
+    }
+}
+
+export function createCorrelationNavigator(i) {
+    const mainDiv = d3.select("#visualizationMain");
+
+    // Remove any previous navigator elements
+    mainDiv.selectAll(".question-navigator").remove();
+    mainDiv.selectAll(".SE-navigator").remove();
+    if (i === 0) {
+        mainDiv.selectAll(".correlation-navigator").remove();
+    }
+
+    // Create a container for the navigation
+    const navigatorContainer = mainDiv.append("div")
+    .attr("class", "correlation-navigator")
+    .style("display", "flex")
+    .style("align-items", "center")
+    .style("justify-content", "center")
+    .style("gap", "8px")  // Slightly reduce the gap
+    .style("margin", "15px 50px 15px 15px");  // Reduce margin on the right
+
+
+    // Left arrow button
+    const leftArrow = navigatorContainer.append("button")
+        .attr("class", "nav-arrow left-arrow")
+        .html("&#9664;")  // Left-facing triangle
+        .style("font-size", "16px")  // Reduced font size
+        .style("padding", "5px")     // Add padding for better clickability
+        .style("margin", "0")        // No additional margin
+        .style("opacity", ctx.appState.currentCorrelationSelection[i] === 'q1' ? 0.5 : 1)
+        .style("cursor", ctx.appState.currentCorrelationSelection[i] === 'q1' ? "not-allowed" : "pointer")
+        .on("click", () => {
+            if (ctx.appState.currentCorrelationSelection[i] !== 'q1') {
+                navigateQuestion(-1); // Navigate to the previous question
+            }
+        });
+
+    // Text display for the current question description
+    const questionText = navigatorContainer.append("span")
+        .attr("class", "current-question")
+        .style("font-size", "12px")  // Smaller font size for the description
+        .style("font-weight", "normal")  // Remove bold styling
+        .text(getCurrentQuestionText());
+
+    // d3.select("#visualizationMain").on("click", function(event) {
+    //     // Check if the clicked target has the class "description-button"
+    //     if (event.target.classList.contains("description-button")) {
+    //         questionText.text(getCurrentQuestionText());
+    //     }
+    // });
+
+    // Right arrow button
+    const rightArrow = navigatorContainer.append("button")
+        .attr("class", "nav-arrow right-arrow")
+        .html("&#9654;")  // Right-facing triangle
+        .style("font-size", "16px")  // Reduced font size
+        .style("padding", "5px")     // Add padding for better clickability
+        .style("margin", "0")        // No additional margin
+        .style("opacity", ctx.appState.currentCorrelationSelection[i] === 'se15o' ? 0.5 : 1)
+        .style("cursor", ctx.appState.currentCorrelationSelection[i] === 'se15o' ? "not-allowed" : "pointer")
+        .on("click", () => {
+            if (ctx.appState.currentCorrelationSelection[i] !== 'se15o') {
+                navigateQuestion(1);
+            }
+        });
+
+    // Helper function to update the display
+    function updateNavigator() {
+        questionText.text(getCurrentQuestionText());
+
+        // Update left arrow state
+        leftArrow
+            .style("opacity", ctx.appState.currentCorrelationSelection[i] === 'q1' ? 0.5 : 1)
+            .style("cursor", ctx.appState.currentCorrelationSelection[i] === 'q1' ? "not-allowed" : "pointer");
+
+        // Update right arrow state
+        rightArrow
+            .style("opacity", ctx.appState.currentCorrelationSelection[i] === 'se15o' ? 0.5 : 1)
+            .style("cursor", ctx.appState.currentCorrelationSelection[i] === 'se15o' ? "not-allowed" : "pointer");
+    }
+
+    // Helper function to get the current question's text
+    function getCurrentQuestionText() {
+        const currentCorrelationSelection = ctx.questions.find(q => q.id === ctx.appState.currentCorrelationSelection[i]);
+        return currentCorrelationSelection ? `${currentCorrelationSelection.id}: ${currentCorrelationSelection.description}` : "Question not found";
+    }
+
+    // Helper function to navigate between questions
+    function navigateQuestion(direction) {
+        const currentIndex = ctx.questions.findIndex(q => q.id === ctx.appState.currentCorrelationSelection[i]);
+        const newIndex = currentIndex + direction;
+
+        if (newIndex >= 0 && newIndex < ctx.questions.length) {
+            ctx.appState.currentCorrelationSelection[i] = ctx.questions[newIndex].id;
+            updateNavigator();
         }
     }
 }

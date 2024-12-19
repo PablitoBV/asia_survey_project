@@ -3,10 +3,13 @@ import { ctx } from './parameters.js'; // Import ctx and loadQuestions
 export function questionSection() {
     const container = d3.select("#visualizationMain");
 
+    if (ctx.appState.currentViz !== 'correlation'){ctx.appState.collapseTab = true}
     // Remove any previous instances of the side page or pull tab
-    container.select("#sidePage").remove();
-    container.select("#pullTab").remove();
-
+    if (ctx.appState.collapseTab){
+        if (ctx.currentViz === 'correlation'){ctx.appState.collapseTab = false}
+        container.select("#sidePage").remove();
+        container.select("#pullTab").remove();
+    }
     // Get the dimensions of the visualizationMain container
     const containerWidth = container.node().clientWidth;
     const containerHeight = container.node().clientHeight;
@@ -34,10 +37,8 @@ export function questionSection() {
         createGroupButtons();
     } else if (ctx.appState.currentViz === "factorHistogram") {
         createSEButtons();
-    } else if (ctx.appState.currentViz === "questionCorrelation") {
-        
-    } else if (ctx.appState.currentViz === "factorCorrelation") {
-    
+    } else if (ctx.appState.currentViz === "correlation") {
+        createGroupButtons();
     }
 
     // Create the pull tab
@@ -85,13 +86,23 @@ export function questionSection() {
 }
 
 function createGroupButtons() {
-    const groupContainer = d3.select("#sidePage") // This should be the container where you want to add the buttons
-        .html(''); // Clear any previous content
 
-    // Extract the distinct group elements from ctx.questions
-    const distinctGroups = Array.from(new Set(ctx.questions.map(q => q.group)))
-    .filter(group => group !== "Socio-Economic Background"); // Remove the specific group
-    
+    let groupContainer = d3.select("#sidePage")
+
+    if (ctx.appState.currentViz !== 'correlation'){ctx.appState.clearTabContent = true}
+    if (ctx.appState.clearTabContent){
+        if (ctx.appState.currentViz === 'correlation'){ctx.appState.clearTabContent = false}
+        groupContainer
+            .html('');
+    }
+
+    let distinctGroups = Array.from(new Set(ctx.questions.map(q => q.group)))
+
+    if (ctx.appState.currentViz === "questionHistogram"){
+         distinctGroups = distinctGroups
+        .filter(group => group !== "Socio-Economic Background"); // Remove the specific group
+    }
+
 
     // Set some styling variables
     const buttonPadding = 10;
@@ -130,7 +141,6 @@ function createGroupButtons() {
         });
 }
 
-
 function displayQuestions(group) {
     const groupContainer = d3.select("#sidePage");
 
@@ -165,33 +175,62 @@ function displayQuestions(group) {
         .style("height", `${buttonHeight}px`)
         .style("margin-bottom", `${buttonMargin}px`)
         .style("border-radius", "12px")
-        .style("background-color", "#00BFAE")
         .style("color", "white")
         .style("font-size", "14px")
         .style("border", "none")
         .style("cursor", "pointer")
         .style("transition", "all 0.1s ease-in-out")
         .text(d => d.description)
-        .on("click", (event, d) => {
-            ctx.appState.currentQuestion = d.id; // Assuming id is the field you want
+        .classed("pushed", function(d) {
+            // For correlation view, check if the button is in the currentCorrelationSelection
+            return ctx.appState.currentViz === 'correlation' && ctx.appState.currentCorrelationSelection.includes(d.id);
+        })
+        .on("click", function(event, d) {
+            if (ctx.appState.currentViz === 'correlation') {
+                const clickedButton = d3.select(this);
+                const isPressed = clickedButton.classed("pushed");
+        
+                // Toggle the pressed state of the clicked button
+                clickedButton.classed("pushed", !isPressed);
+        
+                // Update the correlation selection
+                if (isPressed) {
+                    // If the button was already pressed and we are unpressing it,
+                    // just clear the second selection without updating the first
+                    ctx.appState.currentCorrelationSelection[1] = null;
+                } else {
+                    // If the button was pressed, update the selection
+                    ctx.appState.currentCorrelationSelection[0] = ctx.appState.currentCorrelationSelection[1];
+                    ctx.appState.currentCorrelationSelection[1] = d.id;  // Set the id of the clicked button
+                }
+            } else {
+                // For question histogram or other visualizations
+                ctx.appState.currentQuestion = d.id; // Assuming id is the field you want
+            }
         })
         .on("mousedown", function() {
             // Simulate a "pressed" effect on mousedown (when the button is clicked)
-            d3.select(this)
-                .style("box-shadow", "inset 2px 2px 5px rgba(0, 0, 0, 0.3)")  // Inner shadow
-                .style("transform", "translateY(2px)"); // Move the button down a bit
+            if (ctx.appState.currentViz !== 'correlation' || !d3.select(this).classed("pushed")) {
+                d3.select(this)
+                    .style("box-shadow", "inset 2px 2px 5px rgba(0, 0, 0, 0.3)")  // Inner shadow
+                    .style("transform", "translateY(2px)"); // Move the button down a bit
+            }
         })
         .on("mouseup", function() {
             // Remove the "pressed" effect when the mouse button is released
-            d3.select(this)
-                .style("box-shadow", "") // Remove shadow
-                .style("transform", "translateY(0)"); // Reset position
+            if (ctx.appState.currentViz !== 'correlation' || !d3.select(this).classed("pushed")) {
+                d3.select(this)
+                    .style("box-shadow", "") // Remove shadow
+                    .style("transform", "translateY(0)"); // Reset position
+            }
         })
         .on("mouseout", function() {
             // Reset the "pressed" effect if the mouse leaves the button without releasing the click
-            d3.select(this)
-                .style("box-shadow", "") // Remove shadow
-                .style("transform", "translateY(0)"); // Reset position
+            if (ctx.appState.currentViz !== 'correlation' || !d3.select(this).classed("pushed")) {
+                d3.select(this)
+                    .style("box-shadow", "") // Remove shadow
+                    .style("transform", "translateY(0)"); // Reset position
+            }
         });
 
     // Step 4: Create the small arrow button to call createGroupButtons
@@ -209,7 +248,7 @@ function displayQuestions(group) {
         .style("color", "#007BFF")  // Arrow color
         .html("←") // Simple left arrow
         .on("click", function() {
-            // Call the createGroupButtons function when the arrow button is clicked
+            if (ctx.appState.currentViz === 'correlation'){groupContainer.html('')}
             createGroupButtons();
         })
         .append("title") // Tooltip text when hovering
@@ -241,8 +280,8 @@ function displayQuestions(group) {
         d3.select(this).style("opacity", 0)  // Hide tooltip when mouse leaves
                       .style("pointer-events", "none");  // Disable interaction
     });
-
 }
+
 
 function createSEButtons() {
     const groupContainer = d3.select("#sidePage");
@@ -251,7 +290,6 @@ function createSEButtons() {
     groupContainer.selectAll(".group-button").remove();
 
     const filteredSEIndicators = ctx.questions.filter(q => q.group === 'Socio-Economic Background');
-    console.log(filteredSEIndicators);
 
     const buttonHeight = 35;
     const containerWidth = groupContainer.node().clientWidth;
@@ -283,7 +321,6 @@ function createSEButtons() {
         .style("height", `${buttonHeight}px`) // Button height
         .style("margin-bottom", `${buttonMargin}px`) // Space between buttons
         .style("border-radius", "12px")
-        .style("background-color", "#00BFAE")
         .style("color", "white")
         .style("font-size", "14px")
         .style("border", "none")

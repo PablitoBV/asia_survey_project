@@ -24,11 +24,20 @@ export function createHistogram() {
     // Create an array of answer-count pairs
     const initData = Array.from(countryAnswerCounts, ([answer, count]) => ({ answer, count }));
 
+    // Filter to keep the top 30 answers with the largest counts if the question is 'q34' or 'q53'
+    let countryData = initData;
+    if (questionColumn === 'q34' || questionColumn === 'q53') {
+        // Sort by count and take the top 30
+        countryData = initData
+            .sort((a, b) => b.count - a.count) // Sort by descending count
+            .slice(0, 30); // Keep only the top 30
+    }
+
     const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
     // const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
-    const countryData = sortByScale(initData, scaleName);
-    console.log(countryData);
+    countryData = sortByScale(countryData, scaleName);
+
     // Clear the container of any existing SVG
     const visualizationDiv = document.getElementById("visualizationMain");
     d3.select(visualizationDiv).select("svg").remove();
@@ -80,9 +89,9 @@ export function createHistogram() {
         .attr("y", d => yScaleCountry(d.count))
         .attr("width", xScaleCountry.bandwidth())
         .attr("height", d => histHeight - yScaleCountry(d.count))
-        .attr("fill", "tomato"); // Bars colored tomato
+        .attr("fill", "rgb(177, 119, 37)"); // Bars colored tomato
 
-    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
+    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(213, 169, 108)"); // Highlight slightly lighter tomato
 
 
     // Add x-axis (rotated labels beneath the bars)
@@ -110,7 +119,7 @@ export function createHistogram() {
         .attr("x2", histWidth)
         .attr("y1", yScaleCountry(averageCount))
         .attr("y2", yScaleCountry(averageCount))
-        .attr("stroke", "blue")
+        .attr("stroke", "rgb(0, 8, 255)")
         .attr("stroke-dasharray", "4 4") // Dashed line
         .attr("stroke-width", 2);
 
@@ -124,9 +133,9 @@ export function createHistogram() {
 }
 
 
+
 export function createSEHistogram() {
     const questionColumn = ctx.appState.currentSEIndicator;
-    console.log(questionColumn);
 
     let selectedCountries = ctx.appState.selectedCountries;
     if (selectedCountries.length === 0) {
@@ -185,10 +194,8 @@ export function createSEHistogram() {
 
     const actualQuestion = ctx.questions.find(q => q.id === questionColumn);
     const scaleName = actualQuestion.order_outputs; // Default to 'alphabetical' if not found
-    console.log("question:", actualQuestion, "scaleName:", scaleName);
 
     const scale = ctx.scales[scaleName] || ctx.scales['alphabetical']; // Default to 'alphabetical' if scaleName is not found
-    console.log("Scale used for sorting:", scale);
 
     const countryData = sortByScale(initData, scaleName);
 
@@ -243,9 +250,9 @@ export function createSEHistogram() {
         .attr("y", d => yScaleCountry(d.count))
         .attr("width", xScaleCountry.bandwidth())
         .attr("height", d => histHeight - yScaleCountry(d.count))
-        .attr("fill", "tomato"); // Bars colored tomato
+        .attr("fill", "rgb(177, 119, 37)"); // Bars colored tomato
         
-    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(255,99,71,0.8)"); // Highlight slightly lighter tomato
+    histHoverAndHighlight(countryGroup.selectAll("rect"), countryData, "rgb(213, 169, 108)"); // Highlight slightly lighter tomato
 
     // Add x-axis (rotated labels beneath the bars)
     countryGroup.append("g")
@@ -285,7 +292,7 @@ export function createSEHistogram() {
         .attr("x2", histWidth)
         .attr("y1", yScaleCountry(averageCount))
         .attr("y2", yScaleCountry(averageCount))
-        .attr("stroke", "blue")
+        .attr("stroke", "rgb(0, 8, 255)")
         .attr("stroke-dasharray", "4 4") // Dashed line
         .attr("stroke-width", 2);
 
@@ -297,7 +304,6 @@ export function createSEHistogram() {
         .attr("fill", "blue")
         .style("font-size", "12px");
 }
-
 
 
 
@@ -317,7 +323,7 @@ export function createSEHistogram() {
 
 
 // On-hover behavior (hoverbox + highlight)
-export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(127,205,187)") {
+export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(0, 8, 255)") {
     
     const hoverbox = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -353,43 +359,11 @@ export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(127,
         hoverbox.style("visibility", "hidden");
     
         // Reset country color
-        d3.select(event.target).style("fill", d.count > 0 ? "tomato" : "#EEE");
+        d3.select(event.target).style("fill", d.count > 0 ? "rgb(177, 119, 37)" : "#EEE");
 
         
     })
 };
-
-// export function histHoverAndHighlight(bar, count, perc, highlightColor="rgb(127,205,187)") {
-//     const hoverbox = d3.select("body").append("div")
-//         .attr("class", "tooltip")
-//         .style("position", "absolute")
-//         .style("z-index", "10")
-//         .style("visibility", "hidden")
-//         .style("background-color", "rgba(0, 0, 0, 0.75)")
-//         .style("color", "#fff")
-//         .style("padding", "5px")
-//         .style("border-radius", "5px")
-//         .style("font-size", "14px")
-//         .style("z-index", "9999")
-//         .style("font-family", "'Righteous', sans-serif");
-
-//     // Display the tooltip
-//     hoverbox.html(`${count} (${perc}%)`)
-//         .style("visibility", "visible")
-//         .style("top", (d3.event.pageY + 10) + "px")
-//         .style("left", (d3.event.pageX + 10) + "px");
-
-//     // Highlight the bar
-//     bar.style("fill", highlightColor);
-// }
-
-// export function hideHoverAndHighlight(bar, d) {
-//     // Hide the tooltip
-//     d3.select(".tooltip").style("visibility", "hidden");
-
-//     // Reset the bar's color
-//     bar.style("fill", d.count > 0 ? "tomato" : "#EEE");
-// }
 
 
 

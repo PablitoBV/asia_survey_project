@@ -282,7 +282,7 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
 
 
 
-function handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, countries, answerOptions) {
+function handleHover(svg, d, xScale, yScale, cellSize, matrix, countries, answerOptions) {
     if (!d || !d.row || !d.col || d.value === undefined) {
         console.error("Invalid data in handleHover: ", d);
         return;
