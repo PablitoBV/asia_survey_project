@@ -11,7 +11,7 @@ export function linksToTemplates() {
     const titleHeight = 0.2 * linksDiv.node().clientHeight; // 50% of the height for the title
 
     linksDiv.append("h2")
-        .text("Templates")
+        .text("Other visualizations")
         .style("margin", "0")  // Remove margin to fit the 50% height
         .style("font-family", "Arial, sans-serif")
         .style("color", "#333")
