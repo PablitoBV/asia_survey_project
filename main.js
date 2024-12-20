@@ -183,6 +183,7 @@ function modifyDisplay(){
         questionSection();
         createSENavigator();
     } else if (ctx.appState.currentViz === "correlation") {
+        console.log("vnowisapjc")
         plotCorrelationMatrix();
         if (ctx.appState.collapseTab) {
             questionSection();

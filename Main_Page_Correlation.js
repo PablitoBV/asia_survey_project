@@ -1,21 +1,39 @@
 import { ctx } from './parameters.js';
 
 export function plotCorrelationMatrix() {
-    // Extract feature IDs from current selection
     const [id1, id2] = ctx.appState.currentCorrelationSelection;
-    // Filter out invalid responses
-    const filteredData = ctx.CSVDATA.filter(row =>
-        row[id1] !== "Do not understand the question" &&
-        row[id1] !== "Decline to answer" &&
-        row[id1] !== "Missing" &&
-        row[id1] !== "Can't choose" &&
-        row[id1] !== "Not applicable" &&
-        row[id2] !== "Do not understand the question" &&
-        row[id2] !== "Decline to answer" &&
-        row[id2] !== "Missing" &&
-        row[id2] !== "Can't choose" &&
-        row[id2] !== "Not applicable"
-    );
+
+    let selectedCountries = ctx.appState.selectedCountries;
+    if (selectedCountries.length === 0) {
+        selectedCountries = ["China", "Japan", "Myanmar", "Thailand", "Vietnam", "Cambodia", "Indonesia", "Malaysia", "Hong Kong", "South Korea", "Taiwan", "Singapore", "Mongolia", "Philippines"];
+    }
+
+    const filteredData = ctx.CSVDATA.filter(row => {
+        // Filter out rows with invalid responses for id1 and id2
+        const invalidResponses = [
+            "Do not understand the question",
+            "Decline to answer",
+            "Missing",
+            "Can't choose",
+            "Not applicable"
+        ];
+        
+        if (invalidResponses.includes(row[id1]) || invalidResponses.includes(row[id2])) {
+            return false;
+        }
+    
+        // Check if the country is in the current country selection
+        if (!selectedCountries.includes(row['country'])) {
+            return false;
+        }
+    
+        // Check the year if a specific date is selected
+        if (ctx.appState.currentDate !== 'all' && row['year'] !== ctx.appState.currentDate) {
+            return false;
+        }
+    
+        return true; // Include the row if all conditions are met
+    });    
 
     // Count occurrences of each answer in id1 and id2
     const countOccurrences = (data, id) => {
