@@ -11,6 +11,10 @@ export const ctx = {
     TOP_MARGIN: 20,
     questions: [],
     respondent_map_bounds: NamedNodeMap, 
+    stackedEvolutionChart: {
+        currentQuestion: 'q1',
+        currentSEfactor: 'se2',
+       },
     appState: {
         currentQuestion: 'q1',
         currentCorrelationSelection: ['se2','q44'],

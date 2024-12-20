@@ -10,6 +10,8 @@ import { linksToTemplates } from './template_links.js';
 import { createQuestionNavigator, createGroupNavigator, createSENavigator, createCorrelationNavigator} from './navigator.js';
 import { createSpiderChart } from './spiderweb.js';
 import { plotCorrelationMatrix } from './Main_Page_Correlation.js';
+import { createStackedEvolutionChart } from './page4_main.js';
+
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
 
@@ -63,13 +65,14 @@ document.body.style.backgroundColor = ctx.background_color; // set background co
 
 document.addEventListener("DOMContentLoaded", () => { // check which page is loaded to call the proper createViz_ function
     const pageType = document.body.getAttribute("page"); 
-
     if (pageType === "main_page") {
         createViz_mainPage();
     } else if (pageType === "page2") {
         createViz_Page2();
     } else if (pageType === "page3") {
         createViz_Page3();
+    } else if (pageType === "page4") {
+        createViz_Page4();
     }
 });
 
@@ -250,34 +253,16 @@ function createViz_Page3() {
     }
 };
 
-
-
-
-
-// const columns = csvData.columns;
-
-// // Group columns into variables
-// ctx.csvTimeSpace = columns.slice(0, 6).map(col => ({
-//     header: col,
-//     values: csvData.map(row => row[col])
-// }));
-
-// ctx.csvQuestions = columns.slice(6, 185).map(col => ({
-//     header: col,
-//     values: csvData.map(row => row[col])
-// }));
-
-// ctx.csvSEIndicators = columns.slice(185, 244).map(col => ({
-//     header: col,
-//     values: csvData.map(row => row[col])
-// }));
-
-// ctx.csvInterviewRecords = columns.slice(244, 276).map(col => ({
-//     header: col,
-//     values: csvData.map(row => row[col])
-// }));
-
-// ctx.csvWeights = columns.slice(276, 278).map(col => ({
-//     header: col,
-//     values: csvData.map(row => row[col])
-// }));
+function createViz_Page4() {
+    document.getElementById("loading4").style.display = "block";
+    if (ctx.CSVDATA.length === 0) {
+        Promise.all([csvDataPromise, loadQuestions()]).then(([csvData]) => {
+            document.getElementById("loading4").style.display = "none";
+            ctx.CSVDATA = csvData;  
+            createStackedEvolutionChart();         
+        })
+    }
+    else {
+        createStackedEvolutionChart();
+    }
+};

@@ -38,6 +38,11 @@
   },
   "elements": [
     {
+      "id": "level",
+      "description": "Urban or Rural",
+      "group": "Socio-Economic Background"
+    },
+    {
       "id": "q1",
       "description": "How would you rate the overall economic condition of our country today?",
       "order_outputs": "good_bad_scale",
@@ -333,13 +338,13 @@
     },
     {
       "id": "q50",
-      "description": "Do you currently use any of the following social media networks? (provide the three most popular examples in a given country context)",
+      "description": "Do you currently use any of the following social media networks?",
       "order_outputs": "yes_no_scale",
       "group": "G. INTERNET AND SOCIAL MEDIA"
     },
     {
       "id": "q51",
-      "description": "How often do you use the Internet including social media networks to find information about politics and government? (provide the three most popular examples in a given country context)",
+      "description": "How often do you use the Internet including social media networks to find information about politics and government?",
       "order_outputs": "frequency_scale",
       "group": "G. INTERNET AND SOCIAL MEDIA"
     },
@@ -1106,7 +1111,7 @@
     },
     {
       "id": "se2",
-      "description": "  ",
+      "description": "gender",
       "group": "Socio-Economic Background",
       "missing_mark": -1
     },

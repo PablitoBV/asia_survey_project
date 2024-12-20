@@ -1,0 +1,78 @@
+:root {
+    --background: #fafafa;
+    --buttons: #007038;
+    --histogram-bar-start: #6A5ACD;
+    --histogram-bar-end: #BA55D3;
+    --histogram-line: #FFD700;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+#back_homepage_button {
+    background-color: #0360c4; /* Blue background */
+    color: white; /* White text color */
+    font-size: 16px; /* Font size */
+    padding: 12px 24px; /* Padding around the text */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+#back_homepage_button:hover {
+    background-color: #002853; /* Darker blue when hovered */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+#back_homepage_button:active {
+    background-color: #004085; /* Even darker blue when pressed */
+    transform: translateY(0); /* Reset lift effect */
+}
+
+#back_homepage_button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Custom focus ring */
+}
+
+#loading4 {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000; 
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 1.5rem;
+    color: white; 
+}
+
+#main-container{
+    width: 100%;
+    height: 100%;
+}
+
+.description-button{
+    background-color: var(--buttons);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

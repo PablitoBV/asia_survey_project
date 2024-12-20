@@ -148,20 +148,14 @@ function displayQuestions(group) {
 
     const filteredQuestions = ctx.questions.filter(q => q.group === group);
 
-    const buttonHeight = 35;
+    const buttonHeight = 50; // Increased button height
     const containerWidth = groupContainer.node().clientWidth;
     const buttonWidth = containerWidth * 0.9;
     const buttonMargin = 10;
 
-    if (filteredQuestions.length > 14) {
-        groupContainer
-            .style("overflow-y", "auto") // Enable vertical scrolling
-            .style("max-height", "90vh"); // Limit container height for scroll
-    } else {
-        groupContainer
-            .style("overflow", "hidden") // Reset overflow for fewer buttons
-            .style("max-height", "none");
-    }
+    groupContainer
+        .style("overflow-y", "auto") // Enable vertical scrolling
+        .style("max-height", "90vh"); // Limit container height for scroll
 
     const descriptionContainer = groupContainer.append("div")
         .attr("class", "description-container");
@@ -172,68 +166,57 @@ function displayQuestions(group) {
         .append("button")
         .attr("class", "description-button")
         .style("width", `${buttonWidth}px`)
-        .style("height", `${buttonHeight}px`)
+        .style("height", `${buttonHeight}px`) // Updated button height
         .style("margin-bottom", `${buttonMargin}px`)
         .style("border-radius", "12px")
         .style("color", "white")
-        .style("font-size", "14px")
+        .style("font-size", "12px") // Adjusted font size for proportion
         .style("border", "none")
         .style("cursor", "pointer")
         .style("transition", "all 0.1s ease-in-out")
         .text(d => d.description)
         .classed("pushed", function(d) {
-            // For correlation view, check if the button is in the currentCorrelationSelection
             return ctx.appState.currentViz === 'correlation' && ctx.appState.currentCorrelationSelection.includes(d.id);
         })
         .on("click", function(event, d) {
             if (ctx.appState.currentViz === 'correlation') {
                 const clickedButton = d3.select(this);
                 const isPressed = clickedButton.classed("pushed");
-        
-                // Toggle the pressed state of the clicked button
+
                 clickedButton.classed("pushed", !isPressed);
-        
-                // Update the correlation selection
+
                 if (isPressed) {
-                    // If the button was already pressed and we are unpressing it,
-                    // just clear the second selection without updating the first
                     ctx.appState.currentCorrelationSelection[1] = null;
                 } else {
-                    // If the button was pressed, update the selection
                     ctx.appState.currentCorrelationSelection[0] = ctx.appState.currentCorrelationSelection[1];
-                    ctx.appState.currentCorrelationSelection[1] = d.id;  // Set the id of the clicked button
+                    ctx.appState.currentCorrelationSelection[1] = d.id;
                 }
             } else {
-                // For question histogram or other visualizations
-                ctx.appState.currentQuestion = d.id; // Assuming id is the field you want
+                ctx.appState.currentQuestion = d.id;
             }
         })
         .on("mousedown", function() {
-            // Simulate a "pressed" effect on mousedown (when the button is clicked)
             if (ctx.appState.currentViz !== 'correlation' || !d3.select(this).classed("pushed")) {
                 d3.select(this)
-                    .style("box-shadow", "inset 2px 2px 5px rgba(0, 0, 0, 0.3)")  // Inner shadow
-                    .style("transform", "translateY(2px)"); // Move the button down a bit
+                    .style("box-shadow", "inset 2px 2px 5px rgba(0, 0, 0, 0.3)")
+                    .style("transform", "translateY(2px)");
             }
         })
         .on("mouseup", function() {
-            // Remove the "pressed" effect when the mouse button is released
             if (ctx.appState.currentViz !== 'correlation' || !d3.select(this).classed("pushed")) {
                 d3.select(this)
-                    .style("box-shadow", "") // Remove shadow
-                    .style("transform", "translateY(0)"); // Reset position
+                    .style("box-shadow", "")
+                    .style("transform", "translateY(0)");
             }
         })
         .on("mouseout", function() {
-            // Reset the "pressed" effect if the mouse leaves the button without releasing the click
             if (ctx.appState.currentViz !== 'correlation' || !d3.select(this).classed("pushed")) {
                 d3.select(this)
-                    .style("box-shadow", "") // Remove shadow
-                    .style("transform", "translateY(0)"); // Reset position
+                    .style("box-shadow", "")
+                    .style("transform", "translateY(0)");
             }
         });
 
-    // Step 4: Create the small arrow button to call createGroupButtons
     groupContainer.append("button")
         .attr("class", "back-button")
         .style("width", "30px")
@@ -244,43 +227,43 @@ function displayQuestions(group) {
         .style("position", "absolute")
         .style("top", "10px")
         .style("left", "10px")
-        .style("font-size", "20px")  // Adjust size of the arrow
-        .style("color", "#007BFF")  // Arrow color
-        .html("←") // Simple left arrow
+        .style("font-size", "20px")
+        .style("color", "#007BFF")
+        .html("←")
         .on("click", function() {
-            if (ctx.appState.currentViz === 'correlation'){groupContainer.html('')}
+            if (ctx.appState.currentViz === 'correlation') groupContainer.html('');
             createGroupButtons();
         })
-        .append("title") // Tooltip text when hovering
+        .append("title")
         .text("Go back to the topic selection");
 
-    // Optional: Tooltip text on hover can also be handled via CSS:
     groupContainer.selectAll(".back-button")
-    .style("position", "relative")  // Ensure the parent element has relative positioning
-    .style("z-index", "1")
-    .append("span")
-    .attr("class", "tooltip")  // Add class for better control
-    .style("position", "absolute")
-    .style("top", "50px")  // Position relative to the button
-    .style("left", "0")
-    .style("background-color", "black")
-    .style("color", "white")
-    .style("padding", "5px")
-    .style("border-radius", "5px")
-    .style("z-index", "2")  // Ensure it's on top of other elements
-    .style("opacity", 0)  // Initially hidden
-    .style("pointer-events", "none")  // Prevent interaction with the tooltip initially
-    .style("transition", "opacity 0.3s ease")  // Smooth transition for opacity
-    .text("Go back to the topic selection")
-    .on("mouseover", function() {
-        d3.select(this).style("opacity", 1)  // Show tooltip on hover
-                      .style("pointer-events", "auto");  // Allow interaction
-    })
-    .on("mouseout", function() {
-        d3.select(this).style("opacity", 0)  // Hide tooltip when mouse leaves
-                      .style("pointer-events", "none");  // Disable interaction
-    });
+        .style("position", "relative")  // Ensure the parent element has relative positioning
+        .style("z-index", "1")
+        .append("span")
+        .attr("class", "tooltip")  // Add class for better control
+        .style("position", "absolute")
+        .style("top", "50px")  // Position relative to the button
+        .style("left", "0")
+        .style("background-color", "black")
+        .style("color", "white")
+        .style("padding", "5px")
+        .style("border-radius", "5px")
+        .style("z-index", "2")  // Ensure it's on top of other elements
+        .style("opacity", 0)  // Initially hidden
+        .style("pointer-events", "none")  // Prevent interaction with the tooltip initially
+        .style("transition", "opacity 0.3s ease")  // Smooth transition for opacity
+        .text("Go back to the topic selection")
+        .on("mouseover", function() {
+            d3.select(this).style("opacity", 1)  // Show tooltip on hover
+                        .style("pointer-events", "auto");  // Allow interaction
+        })
+        .on("mouseout", function() {
+            d3.select(this).style("opacity", 0)  // Hide tooltip when mouse leaves
+                        .style("pointer-events", "none");  // Disable interaction
+        });
 }
+
 
 
 function createSEButtons() {
@@ -291,7 +274,7 @@ function createSEButtons() {
 
     const filteredSEIndicators = ctx.questions.filter(q => q.group === 'Socio-Economic Background');
 
-    const buttonHeight = 35;
+    const buttonHeight = 50;
     const containerWidth = groupContainer.node().clientWidth;
     const buttonWidth = containerWidth * 0.6;  // 60% of the container width for buttons
     const buttonMargin = 10;  // Margin between buttons
