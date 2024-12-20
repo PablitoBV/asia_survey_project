@@ -29,8 +29,8 @@ export const ctx = {
         currentSEIndicator: 'se2',
     },
     background_color: "rgb(190,190,190)",
-    spiderWeb_H : 600,
-    spiderWeb_W: 600,
+    spiderWeb_H : 750,
+    spiderWeb_W: 750,
 };
 
 export function loadQuestions() {

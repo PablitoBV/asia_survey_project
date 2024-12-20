@@ -1,5 +1,31 @@
 import { ctx } from './parameters.js';
 
+
+export function mainSpiderWeb() {
+    const countries = ["Japan", "Myanmar", "Thailand", "Vietnam", "Cambodia", "Indonesia", 
+        "Malaysia", "Hong Kong", "South Korea", "Singapore", "Mongolia", "Philippines"];
+    
+    countries.sort();
+    
+    // Populate the dropdown with sorted countries
+    const dropdown = document.getElementById("countryDropdown");
+    countries.forEach(country => {
+        const option = document.createElement("option");
+        option.value = country;
+        option.textContent = country;
+        dropdown.appendChild(option);
+    });
+    
+    // Event listener for dropdown selection change
+    dropdown.addEventListener("change", (event) => {
+        const selectedCountry = event.target.value;
+        createSpiderChart(selectedCountry);
+    });
+    
+    createSpiderChart(countries[0]);
+}
+
+
 const questionMapping = {
     "averageAge": "se3_2",
     "selfPlacement": "se13a",
@@ -67,16 +93,18 @@ export function createSpiderChart(selectedCountry = "Hong Kong") {
         })()
     };
 
-    
-    const filteredAverages = Object.entries(averages).filter(([key, value]) => value !== null);
-    const labels = filteredAverages.map(([key]) => key);
-    const data = filteredAverages.map(([key, value]) => value);
+    const filteredAverages = Object.entries(averages)
+        .filter(([key, value]) => value !== null)
+        .map(([key, value]) => ({ key, value })); 
+    const labels = filteredAverages.map(d => d.key); 
+    const data = filteredAverages.map(d => d.value); 
+
     const cleanedData = data.map(d => (isNaN(d) ? 0 : d));
 
     // dimensions of the chart
     const width = ctx.spiderWeb_W;
     const height = ctx.spiderWeb_H;
-    const margin = 70;
+    const margin = 80;
     const radius = Math.min(width, height) / 2 - margin;
 
     const angleSlice = Math.PI * 2 / labels.length;
@@ -100,72 +128,76 @@ export function createSpiderChart(selectedCountry = "Hong Kong") {
         .append("g")
         .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-    // Draw axis lines and graduations
     const axis = svg.selectAll(".axis")
-        .data(labels)
+        .data(filteredAverages) // Bind filteredAverages directly
         .enter()
         .append("g")
         .attr("class", "axis");
 
-        axis.append("line")
-        .attr("class", "highlightable")
+    axis.append("line")
+        .attr("class", d => `highlightable ${d.key}`) // Add class based on key
+        .attr("data-index", (d, i) => i) // Add data-index for targeting
         .attr("x1", 0)
         .attr("y1", 0)
         .attr("x2", (d, i) => radius * Math.cos(angleSlice * i - Math.PI / 2))
         .attr("y2", (d, i) => radius * Math.sin(angleSlice * i - Math.PI / 2))
         .attr("stroke", "#999")
         .attr("stroke-width", 1);
-    
     axis.append("text")
+        .attr("data-index", (d, i) => i) // Add data-index for targeting
         .attr("x", (d, i) => {
-            if (d === "incomeQuintile") return (radius + 30) * Math.cos(angleSlice * i - Math.PI / 2); // Example adjustment
-            return (radius + 20) * Math.cos(angleSlice * i - Math.PI / 2);
+            // Adjust the position based on the key for incomeQuintile
+            const offset = d.key === "incomeQuintile" ? 30 : 20;
+            return (radius + offset) * Math.cos(angleSlice * i - Math.PI / 2);
         })
         .attr("y", (d, i) => {
-            if (d === "incomeQuintile") return (radius + 30) * Math.sin(angleSlice * i - Math.PI / 2); // Example adjustment
-            return (radius + 20) * Math.sin(angleSlice * i - Math.PI / 2);
+            const offset = d.key === "incomeQuintile" ? 30 : 20;
+            return (radius + offset) * Math.sin(angleSlice * i - Math.PI / 2);
         })
-        .attr("class", "highlightable")
+        .attr("class", d => `highlightable ${d.key}`)
         .attr("text-anchor", "middle")
-        .attr("font-size", "12px")
+        .attr("font-size", "16px")
         .attr("fill", "#666")
-        .text(d => d);
+        .text(d => d.key); // Use the `key` from filteredAverages for labels
+
 
     // Add center 0
     axis.append("text")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("font-size", "12px")
+        .attr("font-size", "13px")
         .attr("fill", "#666")
         .text(d => 0);
 
 
+    // draw circles and labels on the axes
     for (let i = 1; i <= 4; i++) {
         const levelFactor = radius * (i / 4);
-
+    
         // Draw the concentric circles of the chart
         svg.append("circle")
             .attr("r", levelFactor)
             .attr("fill", "none")
-            .attr("fill", "rgba(129, 129, 129, 0.1)")
             .attr("stroke", "#d3d3d3")
             .attr("stroke-width", 1);
-
+    
         // Add graduations for each axis
         axis.append("text")
             .attr("x", (d, j) => levelFactor * Math.cos(angleSlice * j - Math.PI / 2))
             .attr("y", (d, j) => levelFactor * Math.sin(angleSlice * j - Math.PI / 2))
-            .attr("font-size", "12px")
+            .attr("font-size", "13px")
             .style("z-index", "999")
             .attr("fill", "#666")
-            .text(d => (maxAvgs[d] * i / 4).toFixed(1));
-    };
+            .text(d => ((maxAvgs[d.key] || 0) * i / 4).toFixed(1)); // Use d.key to access maxAvgs
+    }
+    
 
     const webLine = d3.lineRadial()
         .radius((d, i) => scales[i](d))
         .angle((d, i) => i * angleSlice)
         .curve(d3.curveLinearClosed);
 
+    // add the main country line
     svg.append("path")
         .datum(cleanedData)
         .attr("d", webLine)
@@ -173,95 +205,139 @@ export function createSpiderChart(selectedCountry = "Hong Kong") {
         .attr("stroke", "#0073e6")
         .attr("stroke-width", 2);
 
-    // Add dots for selected country
+        // add the grey line for the global average
+        svg.append("path")
+        .datum(globalData)
+        .attr("class", "global-average")
+        .attr("d", webLine)
+        .attr("fill", "none")
+        .attr("stroke", "grey")
+        .attr("stroke-width", 2)
+        .attr("stroke-dasharray", "4 4"); // Dashed line for global averages
+            
+    // Handling the data point hover event
     svg.selectAll(".data-point")
-        .data(cleanedData)
+        .data(cleanedData.map((value, index) => ({ key: labels[index], value, index })))
         .enter()
         .append("circle")
-        .attr("class", "data-point")
-        .attr("cx", (d, i) => scales[i](d) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("cy", (d, i) => scales[i](d) * Math.sin(angleSlice * i - Math.PI / 2))
+        .attr("class", d => `data-point ${d.key}`)
+        .attr("cx", (d) => scales[d.index](d.value) * Math.cos(angleSlice * d.index - Math.PI / 2))
+        .attr("cy", (d) => scales[d.index](d.value) * Math.sin(angleSlice * d.index - Math.PI / 2))
         .attr("r", 6)
         .attr("fill", "#0073e6")
         .attr("stroke", "white")
         .attr("stroke-width", 1.5)
         .on("mouseover", function (event, d) {
-            d3.select(this)
-                .attr("fill", "#ff5733");
+            d3.select(this).attr("fill", "rgb(227, 12, 255)");
 
-            // Highlight the corresponding axis and graduation marks
-            svg.selectAll(".highlightable")
-                .filter((d, j) => j === i)  // Target the axis corresponding to the hovered point
-                .attr("stroke", "#ff5733")  // Change stroke color
-                .attr("stroke-width", 2);  // Highlight with a thicker stroke
-                
+            svg.selectAll(`.highlightable.${d.key}`)
+                .attr("stroke", "rgb(152, 59, 92)")
+                .attr("stroke-width", 1);
+
+            // Calculate tooltip position
+            const tooltipX = parseFloat(d3.select(this).attr("cx")) + 20;
+            const tooltipY = parseFloat(d3.select(this).attr("cy")) - 30;
+
+            const tooltipText = d.value.toFixed(2);
+            const textWidth = tooltipText.length * 8;
+
+            // Add tooltip background box
+            svg.append("rect")
+                .attr("class", "tooltip-box")
+                .attr("x", tooltipX - textWidth / 2 - 10)
+                .attr("y", tooltipY - 20)
+                .attr("width", textWidth + 20)
+                .attr("height", 30)
+                .attr("fill", "rgb(173, 216, 230)")
+                .attr("stroke", "rgb(135, 206, 250)")
+                .attr("stroke-width", 1)
+                .attr("rx", 8)
+                .attr("ry", 8);
+
+            // Add tooltip text
             svg.append("text")
-                .attr("x", parseFloat(d3.select(this).attr("cx")) + 10) 
-                .attr("y", parseFloat(d3.select(this).attr("cy")) + 5)
-                .attr("font-size", "14px")
-                .attr("font-weight", "bold")
-                .attr("fill", "#666")
                 .attr("class", "tooltip")
-                .text(d.toFixed(2));
+                .attr("x", tooltipX)
+                .attr("y", tooltipY)
+                .attr("font-size", "14px")
+                .attr("fill", "#003366")
+                .attr("font-family", "Arial, sans-serif")
+                .attr("text-anchor", "middle")
+                .text(tooltipText);
         })
         .on("mouseout", function () {
-            d3.select(this).attr("fill", "#0073e6");
-            svg.select(".tooltip").remove();
-
-            // Reset the axis highlighting
+            d3.select(this).attr("fill", "grey");
+        
             svg.selectAll(".highlightable")
                 .attr("stroke", "#999")
                 .attr("stroke-width", 1);
+        
+            svg.select(".tooltip-box").remove();
+            svg.select(".tooltip").remove();
         });
         
 
-    // add the grey line for the global average
-    svg.append("path")
-        .datum(globalData)
-        .attr("class", "global-average")
-        .attr("d", webLine)
-        .attr("fill", "none")
-        .attr("stroke", "grey") // Grey for global averages
-        .attr("stroke-width", 2)
-        .attr("stroke-dasharray", "4 4"); // Dashed line for distinction
-
-    // Add global average points (grey)
+    // Handling the global average points hover event
     svg.selectAll(".global-point")
-        .data(globalData)
+        .data(globalData.map((value, index) => ({ value, index })))
         .enter()
         .append("circle")
         .attr("class", "global-point")
-        .attr("cx", (d, i) => scales[i](d) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("cy", (d, i) => scales[i](d) * Math.sin(angleSlice * i - Math.PI / 2))
+        .attr("cx", (d) => scales[d.index](d.value) * Math.cos(angleSlice * d.index - Math.PI / 2))
+        .attr("cy", (d) => scales[d.index](d.value) * Math.sin(angleSlice * d.index - Math.PI / 2))
         .attr("r", 6)
         .attr("fill", "grey")
         .attr("stroke", "none")
-        .on("mouseover", function(event, d, i) {
-            d3.select(this).attr("fill", "#ff5733");
-            svg.append("text")
-                .attr("x", parseFloat(d3.select(this).attr("cx")) + 10) 
-                .attr("y", parseFloat(d3.select(this).attr("cy")) + 5)
-                .attr("font-size", "14px")
-                .attr("font-weight", "bold")
-                .attr("fill", "#666")
-                .attr("class", "tooltip")
-                .text(`${d.toFixed(2)} (AVG)`); // Add (AVG) to the text
+        .on("mouseover", function (event, d) {
+            d3.select(this).attr("fill", "rgb(227, 12, 255)");
 
-            // Highlight the corresponding axis and graduation marks
-            svg.selectAll(".highlightable")
-                .filter((d, j) => j === i)  // Target the axis corresponding to the hovered point
-                .attr("stroke", "#ff5733")  // Change stroke color
-                .attr("stroke-width", 2);  // Highlight with a thicker stroke
+            svg.selectAll(`.highlightable[data-index='${d.index}']`)
+                .attr("stroke", "rgb(152, 59, 92)")
+                .attr("stroke-width", 1); // Only apply to matching elements
+
+            const tooltipX = parseFloat(d3.select(this).attr("cx")) + 20;
+            const tooltipY = parseFloat(d3.select(this).attr("cy")) - 30;
+
+            const tooltipText = d.value.toFixed(2);
+            const textWidth = tooltipText.length * 8;
+
+            // Add tooltip background box
+            svg.append("rect")
+                .attr("class", "tooltip-box")
+                .attr("x", tooltipX - textWidth / 2 - 10)
+                .attr("y", tooltipY - 20)
+                .attr("width", textWidth + 20)
+                .attr("height", 30)
+                .attr("fill", "rgb(173, 216, 230)")
+                .attr("stroke", "rgb(135, 206, 250)")
+                .attr("stroke-width", 1)
+                .attr("rx", 8)
+                .attr("ry", 8);
+
+            // Add tooltip text
+            svg.append("text")
+                .attr("class", "tooltip")
+                .attr("x", tooltipX)
+                .attr("y", tooltipY)
+                .attr("font-size", "14px")
+                .attr("fill", "#003366")
+                .attr("font-family", "Arial, sans-serif")
+                .attr("text-anchor", "middle")
+                .text(tooltipText);
         })
-        .on("mouseout", function() {
+        .on("mouseout", function () {
             d3.select(this).attr("fill", "grey");
+        
+            svg.selectAll(".highlightable")
+                .attr("stroke", "#999")
+                .attr("stroke-width", 1);
+        
+            svg.select(".tooltip-box").remove();
             svg.select(".tooltip").remove();
-            // Reset the axis highlighting
-        svg.selectAll(".highlightable")
-            .attr("stroke", "#999")
-            .attr("stroke-width", 1);
-        });
+        });    
 }
+
+
 
 
 

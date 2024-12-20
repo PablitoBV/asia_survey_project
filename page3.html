@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>TITLE ???</title>
+    <title>SpiderWeb chart</title>
     <script type="module" src="main.js"></script>
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles_page3.css">
@@ -10,15 +10,24 @@
 </head>
 <body page="page3">
     <div id="loading3">Loading data...</div>
-    <h2>Spider web of various economic factors, by country</h2>
-    <p></p>
+    <h2>Spider web of various economic factors, by country (blue) compared to all countries</h2>
     <a id="back_homepage_button" href="main_page.html">Back to Home Page</a>
-    <br>
-
-
-    <div id="spider-web-div"></div>
-
-
-
+    <select id="countryDropdown">
+      </select>
+    <div id="content-container">
+        <div id="spider-web-div"></div>
+        <div id="divider"></div> 
+        <div id="explanation-box">
+            <h3>Explanation of the variables:</h3>
+            <p><strong>averageAge:</strong> The average age of the respondents</p>
+            <p><strong>parentsPlacement:</strong> Average placement of the respondent's parents on a scale from 1 to 10 (from poorest to richest) </p>
+            <p><strong>selfPlacement:</strong> Average placement of the respondent themself on a scale from 1 to 10 (from poorest to richest) </p>
+            <p><strong>childrenPlacement:</strong> Average placement of the respondent's children on a scale from 1 to 10 (from poorest to richest) </p>
+            <p><strong>yearsEducation:</strong> Average number of years of education </p>
+            <p><strong>incomeQuintile:</strong> Average quintile for the respondent's income </p>
+        </div>
+    </div>
 </body>
+
+
 </html>
