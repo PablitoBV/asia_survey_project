@@ -201,12 +201,12 @@ export function plotCorrelationMatrix() {
         .style("font-size", "10px");
 
     // Define dimensions for the legend
-    const legendWidth = svgWidth * 0.05; 
+    const legendWidth = svgWidth * 0.03; 
     const legendHeight = heatmapHeight;
 
     const legendGroup = svg.append("g")
         .attr("id", "legend")
-        .attr("transform", `translate(${margin.left - legendWidth - 100}, ${margin.top - 50})`); // Adjusted transform for better alignment
+        .attr("transform", `translate(${margin.left - legendWidth - 150}, ${margin.top - 50})`); // Adjusted transform for better alignment
 
     // Define a linear scale for the legend
     const legendScale = d3.scaleLinear()
