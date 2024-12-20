@@ -13,11 +13,11 @@ export const ctx = {
     respondent_map_bounds: NamedNodeMap, 
     stackedEvolutionChart: {
         currentQuestion: 'q1',
-        currentSEfactor: 'se5',
+        currentSEfactor: 'level',
        },
     appState: {
         currentQuestion: 'q1',
-        currentCorrelationSelection: ['se2','q44'],
+        currentCorrelationSelection: ['level','q1'],
         selectedCountries: [],
         selectedGroup: null,
         selectedQuestionMatrix: "q163",
@@ -26,7 +26,7 @@ export const ctx = {
         clearTabContent: true,
         currentFactors: [''],
         currentDate: 'all',
-        currentSEIndicator: 'se2',
+        currentSEIndicator: 'level',
     },
     background_color: "rgb(190,190,190)",
     spiderWeb_H : 750,
