@@ -103,7 +103,6 @@ function createViz_mainPage() {
         linksToTemplates();
 
         centralisedDisplay();
-
         
         // scroll back up when all has loaded
         window.scrollTo({ top: 0, behavior: 'smooth' }); 

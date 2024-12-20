@@ -3,8 +3,6 @@ import { ctx } from './parameters.js';
 export function plotCorrelationMatrix() {
     // Extract feature IDs from current selection
     const [id1, id2] = ctx.appState.currentCorrelationSelection;
-    console.log(ctx.appState.currentCorrelationSelection)
-
     // Filter out invalid responses
     const filteredData = ctx.CSVDATA.filter(row =>
         row[id1] !== "Do not understand the question" &&
@@ -79,8 +77,6 @@ export function plotCorrelationMatrix() {
             matrix[value1][value2]++;
         }
     });
-
-    console.log(matrix);
 
     // Set up SVG dimensions and margins
     const containerId = "#visualizationMain";
@@ -172,7 +168,7 @@ export function plotCorrelationMatrix() {
         .style("z-index", "999")
         .attr("stroke", "none")
         .on("mouseenter", function(event, d) {
-            handleHover(svg, d, xScale, yScale, cellSize, colorScale, matrix, largerAnswers, smallerAnswers);
+            handleHover(svg, d, xScale, yScale, cellSize, matrix, largerAnswers, smallerAnswers);
         })
         .on("mouseleave", function(event, d) {
             handleHoverOut(svg, d);
@@ -204,51 +200,59 @@ export function plotCorrelationMatrix() {
         .text(d => truncateName(d))
         .style("font-size", "10px");
 
-    // Add legend
-    const legendWidth = 400;
-    const legendHeight = 30;
-    const legend = svg.append("g")
-        .attr("transform", `translate(${(svgWidth - legendWidth) / 2}, ${svgHeight - margin.bottom + 20})`);
+    // Define dimensions for the legend
+    const legendWidth = svgWidth * 0.05; 
+    const legendHeight = heatmapHeight;
 
+    const legendGroup = svg.append("g")
+        .attr("id", "legend")
+        .attr("transform", `translate(${margin.left - legendWidth - 100}, ${margin.top - 50})`); // Adjusted transform for better alignment
+
+    // Define a linear scale for the legend
     const legendScale = d3.scaleLinear()
-        .domain([0, maxValue])
-        .range([0, legendWidth]);
+        .domain([0, maxValue]) // Match heatmap's data range
+        .range([legendHeight, 0]); // Invert scale for vertical orientation
 
-    legend.selectAll("rect")
-        .data(d3.range(0, maxValue, maxValue / 10))
+    // Define a vertical color gradient for the legend
+    const legendGradient = d3.scaleLinear()
+        .domain([0, maxValue / 2, maxValue])
+        .range(["rgb(220, 234, 214)", "rgb(68, 162, 85)", "rgb(8, 101, 168)"]);
+
+    // Calculate adjusted rectangle height to cover the full range
+    const rectHeight = legendHeight / 20;
+
+    // Draw the legend's gradient as a series of rectangles
+    legendGroup.selectAll(".legend-rect")
+        .data(d3.range(0, maxValue, maxValue / 20)) 
         .enter()
         .append("rect")
-        .attr("x", d => legendScale(d))
-        .attr("y", 0)
-        .attr("stroke", "rgb(67, 67, 67)")
-        .attr("stroke-width", 1) 
-        .attr("width", legendWidth / 10)
-        .attr("height", legendHeight)
-        .attr("fill", d => colorScale(d));
+        .attr("class", "legend-rect")
+        .attr("x", legendWidth) 
+        .attr("y", d => legendScale(d) - rectHeight) 
+        .attr("width", legendWidth)
+        .attr("height", rectHeight + (rectHeight / 20)) 
+        .attr("fill", d => legendGradient(d));
 
-    legend.append("text")
-        .attr("x", 0)
-        .attr("y", legendHeight + 15)
-        .attr("text-anchor", "middle")
-        .text("0");
+    // Add axis for the legend
+    const legendAxis = d3.axisLeft(legendScale) 
+        .ticks(5)
+        .tickFormat(d3.format(".0f")); 
 
-    legend.append("text")
-        .attr("x", legendWidth / 2)
-        .attr("y", legendHeight + 15)
-        .attr("text-anchor", "middle")
-        .text((maxValue / 2).toFixed(0));
+    legendGroup.append("g")
+        .attr("class", "legend-axis")
+        .attr("transform", `translate(${legendWidth}, 0)`) 
+        .call(legendAxis);
 
-    legend.append("text")
-        .attr("x", legendWidth)
-        .attr("y", legendHeight + 15)
+    // Add a label for the legend
+    legendGroup.append("text")
+        .attr("x", legendWidth / 2 + 5) 
+        .attr("y", -10) 
         .attr("text-anchor", "middle")
-        .text(maxValue);
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .text("Value");
+
 }
-
-
-
-
-
 
 function handleHover(svg, d, xScale, yScale, cellSize, correlationMatrix, countries, answerOptions) {
     if (!d || !d.row || !d.col || d.value === undefined) {
@@ -257,14 +261,6 @@ function handleHover(svg, d, xScale, yScale, cellSize, correlationMatrix, countr
     }
 
     svg.selectAll(".hover-value").remove(); // Clear any previous hover
-
-    // Highlight the row and column with borders
-    svg.selectAll(`.row-${sanitizeName(d.row)}`)
-        .attr("stroke", "gray")
-        .attr("stroke-width", 1);
-    svg.selectAll(`.col-${sanitizeName(d.col)}`)
-        .attr("stroke", "gray")
-        .attr("stroke-width", 1);
 
     // Bolden the names of the countries involved and increase font size by 30%
     svg.selectAll(`.x-axis-label-${sanitizeName(d.col)}`)
@@ -281,28 +277,44 @@ function handleHover(svg, d, xScale, yScale, cellSize, correlationMatrix, countr
             return `${currentFontSize * 1.25}px`;
         });
 
-    // Show the correlation values for all rows and columns on hover
-    answerOptions.forEach((colCountry) => {
-        countries.forEach((rowCountry) => {
-            const value = correlationMatrix[rowCountry][colCountry];
-            
-            // Display the value in the middle of the corresponding cell
-            svg.append("text")
-                .attr("class", "hover-value")
-                .attr("x", xScale(colCountry) + cellSize / 2)
-                .attr("y", yScale(rowCountry) + cellSize / 2 + 5)
-                .attr("text-anchor", "middle")
-                .style("font-size", "12px")
-                .style("font-weight", "bold")
-                .style("fill", "black")
-                .text(value === 0 ? "0" : value.toFixed(1));
+    // Calculate total counts for row and column
+    const totalForRow = answerOptions.reduce((sum, colCountry) => sum + (correlationMatrix[d.row][colCountry] || 0), 0);
+    const totalForCol = countries.reduce((sum, rowCountry) => sum + (correlationMatrix[rowCountry][d.col] || 0), 0);
+    const totalOverall = d3.sum(countries.flatMap(rowCountry =>
+        answerOptions.map(colCountry => correlationMatrix[rowCountry][colCountry] || 0)
+    ));
 
-            // Prevent pointer events on hover text to avoid interfering with interaction
-            svg.selectAll(".hover-value")
-                .style("pointer-events", "none");
-        });
-    });
+    // Calculate percentage contributions
+    const rowPercentage = totalForRow ? (d.value / totalForRow * 100).toFixed(1) : "0.0";
+    const colPercentage = totalForCol ? (d.value / totalForCol * 100).toFixed(1) : "0.0";
+    const overallPercentage = totalOverall ? (d.value / totalOverall * 100).toFixed(1) : "0.0";
+
+    // Display the value and percentage in the middle of the corresponding cell
+    svg.append("text")
+        .attr("class", "hover-value")
+        .attr("x", d.x + cellSize / 2)
+        .attr("y", d.y + cellSize / 2 - 5) // Slightly above the center
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .style("fill", "black")
+        .text(d.value === 0 ? "0" : d.value.toFixed(0));
+
+    // Display percentage below the value
+    svg.append("text")
+        .attr("class", "hover-value")
+        .attr("x", d.x + cellSize / 2)
+        .attr("y", d.y + cellSize / 2 + 15) // Slightly below the center
+        .attr("text-anchor", "middle")
+        .style("font-size", "10px")
+        .style("fill", "black")
+        .text(`(${overallPercentage}%)`);
+
+    // Prevent pointer events on hover text to avoid interfering with interaction
+    svg.selectAll(".hover-value")
+        .style("pointer-events", "none");
 }
+
     
 
 function handleHoverOut(svg, d) {
@@ -332,7 +344,7 @@ function sanitizeName(name) {
 }
 
 
-function truncateName(name, maxLength = 12) {
+function truncateName(name, maxLength = 14) {
     if (name.length > maxLength) {
         return name.substring(0, maxLength) + '...';
     }

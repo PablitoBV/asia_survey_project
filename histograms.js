@@ -350,10 +350,6 @@ export function histHoverAndHighlight(bar, countryData, highlightColor="rgb(0, 8
         // Highlight country
         d3.select(event.target).style("fill", highlightColor);
     })
-    // .on("mousemove", (event) => { // follow mouse
-    //     hoverbox.style("top", (event.pageY + 10) + "px")
-    //         .style("left", (event.pageX + 10) + "px");
-    // })
     .on("mouseout", (event, d) => {
         // Hide hoverbox
         hoverbox.style("visibility", "hidden");

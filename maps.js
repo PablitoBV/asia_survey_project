@@ -25,12 +25,12 @@ export function drawMap(geoData, countryCounts) {
 
     d3.select("#respondentMap")
         .append("h2")
-        .text("Map")  // Add the text for the heading
-        .style("text-align", "center")  // Center the heading
-        .style("margin", "0")  // Remove default margin
-        .style("padding", "10px")  // Add padding around the heading
-        .style("font-size", "24px")  // Adjust font size
-        .style("font-weight", "bold");  // Make the font bold
+        .text("Map")  
+        .style("text-align", "center")  
+        .style("margin", "0")  
+        .style("padding", "10px")  
+        .style("font-size", "24px")  
+        .style("font-weight", "bold");  
 
     // Get the container's width and height dynamically
     const svgContainer = d3.select("#respondentMap");

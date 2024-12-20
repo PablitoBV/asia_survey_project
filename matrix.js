@@ -141,29 +141,9 @@ export function plotCountryVsCountryMatrix(csvData, questionColumn) {
     
     const maxPercentage = (allValues.length > 0 ? Math.max(...allValues) : 0).toFixed(1);
 
-    // const colorScale = d3.scaleLinear()
-    // .domain([0, maxPercentage * 0.33, maxPercentage * 0.66, maxPercentage])
-    // .range(["#fdf6e3", "#fdd49e", "#fdae61", "#d95f0e"]);
     const colorScale = d3.scaleLinear()
-    .domain([0, maxPercentage * 0.25, maxPercentage * 0.7, maxPercentage])
-    .range(["#e3f2fd", "#90caf9", "#42a5f5", "#1565c0"]);
-
-
-
-    // const colorScale = d3.scaleLinear()
-    //     .domain([0, maxPercentage/3, 2*maxPercentage/3, maxPercentage])
-    //     .range(["#fff9c4", "#ffe082", "#ffab91", "#f4511e"]);
-        // .range(["#e3f2fd", "#90caf9", "#42a5f5", "#1565c0"]); // blue chill one
-        // .range(["#f5f5dc", "#dcedc1", "#a5d6a7", "#388e3c"]); // green chill one
-        // .range(["#e0f7fa", "#80deea", "#4dd0e1", "#00acc1"]);
-        // .range(["#fdf6e3", "#fdd49e", "#fdae61", "#d95f0e"]); // warm, from beige to orange, pretty nice one
-        // .range(["#e3f2fd", "#bbdefb", "#d1c4e9", "#f8bbd0"]); // pastel scale, a bit too light but definitely adaptable
-        // .range(["rgba(220, 234, 214, 0.61)", "rgba(68, 162, 85, 0.85)", "rgba(118, 0, 161, 0.95)"]);
-
-    // const colorScale = d3.scaleSequential()
-    //     .domain([0, maxPercentage])
-    //     .interpolator(d3.interpolateViridis) //viridis color scale for better visibility
-    //     .clamp(true);
+        .domain([0, maxPercentage * 0.25, maxPercentage * 0.7, maxPercentage])
+        .range(["#e3f2fd", "#90caf9", "#42a5f5", "#1565c0"]);
 
     const xScale = d3.scaleBand()
         .domain(answerOptions)
@@ -332,34 +312,6 @@ function handleHover(svg, d, xScale, yScale, cellSize, matrix, countries, answer
             return `${currentFontSize * 1.25}px`;  
         });
     
-    // Show numbers on row and column
-    // countries.forEach((rowCountry) => {
-    //     answerOptions.forEach((colCountry) => {
-    //         const value = matrix[rowCountry][colCountry];
-            
-    //         if (rowCountry === d.row || colCountry === d.col) {
-    //             const cellColor = d3.select(`.cell.row-${sanitizeName(rowCountry)}.col-${sanitizeName(colCountry)}`)
-    //                 .attr("fill");
-    //             const [r, g, b] = d3.color(cellColor).rgb().array();
-    //             const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
-
-    //             svg.append("text")
-    //                 .attr("class", "hover-value")
-    //                 .attr("x", xScale(colCountry) + cellSize / 2)
-    //                 .attr("y", yScale(rowCountry) + cellSize / 2 + 5) 
-    //                 .attr("text-anchor", "middle")
-    //                 .style("font-size", "10px")
-    //                 .style("z-index", 100)
-    //                 .style("font-weight", "bold")
-    //                 .style("fill", "black") 
-    //                 .text(value === 0 ? "0" : value.toFixed(1)); 
-                
-    //             svg.selectAll(".hover-value") // remove any hover behavior of the numbers
-    //                 .style("pointer-events", "none");
-    //         }
-    //     });
-    // });
     countries.forEach((rowCountry) => {
         answerOptions.forEach((colCountry) => {
             const value = matrix[rowCountry][colCountry];
@@ -391,8 +343,6 @@ function handleHover(svg, d, xScale, yScale, cellSize, matrix, countries, answer
             }
         });
     });
-    
-    
 }
 
 function handleHoverOut(svg, d) {
@@ -412,7 +362,6 @@ function handleHoverOut(svg, d) {
     svg.selectAll(".x-axis-label").attr("font-weight", "normal").style("font-size", "10px");;
     svg.selectAll(".y-axis-label").attr("font-weight", "normal").style("font-size", "10px");; 
 
-    // Remove the hover value text
     svg.selectAll(".hover-value").remove();
 }
 

@@ -7,13 +7,12 @@ export function createStackedEvolutionChart(){
     questionSection(question_ids, SEfactors_ids);
     showQuestion();
     stackedEvolutionChart();
-    // Select the main-container division
+
     const mainContainer = d3.select("#main-container");
 
-    // Add an event listener for click events
+
     mainContainer.on("click", function (event) {
         const target = event.target;
-        // Check if the clicked element is a button with the class 'description-button'
         if (target.classList.contains("description-button")) {
             d3.select("#main-container").html('')
             questionSection(question_ids, SEfactors_ids);
@@ -36,7 +35,7 @@ function showQuestion() {
         .style("position", "absolute")
         .style("bottom", "10px")
         .style("right", "10px")
-        .style("width", "300px")  // Adjust width as necessary
+        .style("width", "300px")  
         .style("z-index", "-1"); // Ensure it's above other elements
 
     // Add the selected question
@@ -69,26 +68,25 @@ function showQuestion() {
 function questionSection(question_ids, SEfactors_ids) {
     const container = d3.select("#main-container");
 
-    // Get the dimensions of the main-container
     const containerWidth = container.node().clientWidth;
     const containerHeight = container.node().clientHeight;
 
-    const pullTabWidth = 40; // Width of the pull tab
-    const animationDuration = 500; // Duration of the slide animation in ms
-    const sidePageWidth = containerWidth * 0.4; // Side page takes 40% of the container's width
+    const pullTabWidth = 40; 
+    const animationDuration = 500; 
+    const sidePageWidth = containerWidth * 0.4; // Side page takes 40% of the container width
 
     // Create the sliding side page container
     const sidePage = container.append("div")
         .attr("id", "sidePage")
         .style("position", "absolute")
         .style("top", "0px")
-        .style("right", `-${sidePageWidth}px`) // Initially hidden to the right
+        .style("right", `-${sidePageWidth}px`)
         .style("width", `${sidePageWidth}px`)
-        .style("height", `${containerHeight}px`) // Match main-container height
+        .style("height", `${containerHeight}px`) 
         .style("background", "#f9f9f9")
         .style("border", "1px solid #ccc")
         .style("box-shadow", "-2px 0px 5px rgba(0,0,0,0.3)")
-        .style("transition", `right ${animationDuration}ms ease`); // Smooth sliding animation
+        .style("transition", `right ${animationDuration}ms ease`);
 
     // Call createQuestionButtons regardless of ctx.appState.currentViz
     createButtons(question_ids, SEfactors_ids);
@@ -148,20 +146,20 @@ function createButtons(question_ids, SEfactors_ids) {
         .style("flex-direction", "row")
         .style("justify-content", "center")
         .style("align-items", "center")
-        .style("gap", "20px") // Space between buttons
-        .style("height", "100%"); // Ensure full height for centering
+        .style("gap", "20px") 
+        .style("height", "100%"); 
 
     // Create the 'Questions' button
     const questionButton = buttonGroup.append("button")
         .attr("class", "button questions-button")
         .text("Questions")
         .on("click", function () {
-            d3.select(this) // Add a clicked effect
+            d3.select(this)
                 .style("transform", "scale(0.95)")
                 .transition()
                 .duration(200)
                 .style("transform", "scale(1)");
-            createQuestionButtons(question_ids); // Call the function
+            createQuestionButtons(question_ids); 
         });
 
     // Create the 'Socio-Economic Factors' button
@@ -169,21 +167,21 @@ function createButtons(question_ids, SEfactors_ids) {
         .attr("class", "button SE-button")
         .text("Socio-Economic Factors")
         .on("click", function () {
-            d3.select(this) // Add a clicked effect
+            d3.select(this)
                 .style("transform", "scale(0.95)")
                 .transition()
                 .duration(200)
                 .style("transform", "scale(1)");
-            createQuestionButtons(SEfactors_ids); // Call the function
+            createQuestionButtons(SEfactors_ids);
         });
 
     // Style the buttons
     d3.selectAll(".button")
-        .style("padding", "15px 30px") // Increased size
-        .style("font-size", "16px")   // Bigger text
+        .style("padding", "15px 30px") 
+        .style("font-size", "16px")   
         .style("margin", "5px")
-        .style("border", "2px solid #ccc") // Slightly thicker border
-        .style("border-radius", "10px")   // More rounded corners
+        .style("border", "2px solid #ccc") 
+        .style("border-radius", "10px")  
         .style("background-color", "#f4f4f4")
         .style("cursor", "pointer")
         .style("transition", "all 0.2s")

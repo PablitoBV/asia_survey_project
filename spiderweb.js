@@ -338,10 +338,6 @@ export function createSpiderChart(selectedCountry = "Hong Kong") {
 }
 
 
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////
 // one-time-use stuff to compute the two averages object (globalAvgs, maxAvgs (by country)) at the top of the file
 

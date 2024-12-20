@@ -176,13 +176,13 @@
     },
     {
       "id": "q23",
-      "description": "General speaking, would you say that “Most people can be trusted” or “that you must be very careful in dealing with people”?",
+      "description": "Generally speaking, would you say that “Most people can be trusted” or “that you must be very careful in dealing with people”?",
       "order_outputs": "careful_scale",
       "group": "C. SOCIAL CAPITAL"
     },
     {
       "id": "q24",
-      "description": "General Speaking, would you say you strongly agree, somewhat agree, somewhat disagree, or strongly disagree with the statement that “most people are trustworthy”?",
+      "description": "Generally Speaking, would you say you strongly agree, somewhat agree, somewhat disagree, or strongly disagree with the statement that “most people are trustworthy”?",
       "order_outputs": "agree_scale",
       "group": "C. SOCIAL CAPITAL"
     },
@@ -194,19 +194,19 @@
     },
     {
       "id": "q26",
-      "description": "How much do you trust your relatives",
+      "description": "How much do you trust your relatives?",
       "order_outputs": "trust_scale",
       "group": "C. SOCIAL CAPITAL"
     },
     {
       "id": "q27",
-      "description": "How much do you trust your neighbours",
+      "description": "How much do you trust your neighbours?",
       "order_outputs": "trust_scale",
       "group": "C. SOCIAL CAPITAL"
     },
     {
       "id": "q28",
-      "description": "How much do you trust other people you interact with",
+      "description": "How much do you trust other people you interact with?",
       "order_outputs": "trust_scale",
       "group": "C. SOCIAL CAPITAL"
     },
