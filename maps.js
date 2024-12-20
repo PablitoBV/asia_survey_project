@@ -172,33 +172,37 @@ export function drawMap(geoData, countryCounts) {
         });
 
     // Unselect button functionality
-        const existingButton = d3.select("#unselectButton");
-        if (existingButton.empty()) {
-            d3.select("#respondentMap")
-                .append("button")
-                .attr("id", "unselectButton")
-                .style("position", "absolute")
-                .style("top", "360px")
-                .style("right", "1250px")
-                .style("padding", "10px 15px 10px 25px")
-                .style("background-color", "#007038")
-                .style("color", "white")
-                .style("border", "none")
-                .style("border-radius", "5px")
-                .style("cursor", "pointer")
-                .text("Unselect All Countries")
-                .on("click", () => {
-                    // Reset the selection
-                    ctx.appState.selectedCountries = [];
-        
-                    // Reset colors on the map
-                    d3.selectAll(".country")
-                        .style("fill", (d) => getCountryColor(d.properties.name));
-        
-                    d3.selectAll("circle")
-                        .style("fill", smallcountryColour);
-                });
-        }
+    // Ensure the #respondentMap container is positioned relatively
+    d3.select("#respondentMap")
+        .style("position", "relative");
+
+    // Dynamically create the "Unselect All Countries" button
+    d3.select("#respondentMap")
+        .append("button")
+        .attr("id", "unselectButton")
+        .style("position", "absolute")
+        .style("top", "20px")  // Adjust as needed for placement above the SVG
+        .style("right", "20px") // Adjust as needed for placement
+        .style("padding", "10px 15px 10px 25px")
+        .style("background-color", "#007038")
+        .style("color", "white")
+        .style("border", "none")
+        .style("border-radius", "5px")
+        .style("cursor", "pointer")
+        .text("Unselect All Countries")
+        .on("click", () => {
+            // Reset the selection
+            ctx.appState.selectedCountries = [];
+
+            // Reset colors on the map
+            d3.selectAll(".country")
+                .style("fill", (d) => getCountryColor(d.properties.name));
+
+            d3.selectAll("circle")
+                .style("fill", smallcountryColour);
+        });
+
+    
 }
 
 
