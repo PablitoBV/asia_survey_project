@@ -13,7 +13,7 @@ export const ctx = {
     respondent_map_bounds: NamedNodeMap, 
     stackedEvolutionChart: {
         currentQuestion: 'q1',
-        currentSEfactor: 'se2',
+        currentSEfactor: 'se5',
        },
     appState: {
         currentQuestion: 'q1',

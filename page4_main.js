@@ -279,10 +279,12 @@ function stackedEvolutionChart() {
         row[ids] !== "Missing" &&
         row[ids] !== "Can't choose" &&
         row[ids] !== "Not applicable" &&
+        row[ids] !== "Do not undersand the question" &&
         row[idq] !== "Do not understand the question" &&
         row[idq] !== "Decline to answer" &&
         row[idq] !== "Missing" &&
         row[idq] !== "Can't choose" &&
+        row[idq] !== "Do not undersand the question" &&
         row[idq] !== "Not applicable"
     );
 
@@ -300,7 +302,45 @@ function stackedEvolutionChart() {
     });
 
     // Step 2: Create the aggregation object
-    const distinctSEFactors = Array.from(new Set(csvData.map(row => row[ids])));
+    let distinctSEFactors = Array.from(new Set(csvData.map(row => row[ids])));
+    if (ids === 'se5'){
+        distinctSEFactors = [
+            'No formal education',
+            'Incomplete primary/elementary',
+            'Complete primary/elementary',
+            'Incomplete secondary/high school: technical/vocational type',
+            'Incomplete secondary/high school',
+            'Complete secondary/high school: technical/vocational type',
+            'Complete secondary/high school',
+            'Some university education',
+            'University education completed',
+            'Post-graduate degree',
+            'other'
+        ];
+    }
+    if (ids === 'se7a'){
+        distinctSEFactors = [
+            'Not religious at all',
+            'Lightly religious',
+            'Moderately religious',
+            'Very religious'
+        ]
+    }
+    if (ids === 'se12'){
+        distinctSEFactors = [
+            'Lowest status',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            'Higest status'
+        ]
+    }
+
 
     const aggregatedData = months.map(({ year, month }) => {
         const dataForMonth = csvData.filter(row => row['year'] === String(year) && row['month'] === String(month)); // Filter rows for this month
@@ -323,6 +363,21 @@ function stackedEvolutionChart() {
         });
     });
     
+    aggregatedData.forEach((monthData, monthIndex) => {
+        // Skip the first month as it has no previous data
+        if (monthIndex > 0) {
+            monthData.forEach((data, dataIndex) => {
+                // Check if the aggregateValue is 0
+                if (data.aggregateValue === 0) {
+                    // Replace with the aggregateValue from the previous month at the same position in the tuple
+                    data.aggregateValue = aggregatedData[monthIndex - 1][dataIndex].aggregateValue;
+                }
+            });
+        }
+    });
+
+    console.log(aggregatedData)
+
 
     // Fixed dimensions for the SVG element
     const margin = { top: 100, right: 400, bottom: 50, left: 60 };
