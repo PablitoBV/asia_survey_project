@@ -61,6 +61,17 @@ function showQuestion() {
         .style("font-size", "16px")
         .style("line-height", "1.5")
         .html(`<strong>Selected Socio-Economic Factor:</strong> <br> ${SEdescription}`);
+
+    descriptionWrapper.append("div")
+        .attr("class", "description-container")
+        .style("padding", "10px")
+        .style("margin", "5px 0")
+        .style("border", "1px solid #ccc")
+        .style("border-radius", "5px")
+        .style("background-color", "#f9f9f9")
+        .style("font-size", "16px")
+        .style("line-height", "1.5")
+        .html(`<strong>⚠️ Warning, the sampling over time isn't uniform, these results are probably not generalisable.</strong> <br>`);
 }
 
 
@@ -192,7 +203,6 @@ function createButtons(question_ids, SEfactors_ids) {
             d3.select(this).style("background-color", "#f4f4f4");
         });
 }
-
 
 function createQuestionButtons(question_ids) {
     const groupContainer = d3.select("#sidePage");
@@ -481,9 +491,6 @@ function stackedEvolutionChart() {
 
 
 }
-
-
-
 
 function aggregate_values(values) {
     const idq = ctx.stackedEvolutionChart.currentQuestion;
