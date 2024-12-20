@@ -200,6 +200,21 @@ function createButtonSelection() {
     // Clear any existing buttons in the container
     buttonContainer.innerHTML = '';
 
+    const titleHeight = 40;  // You can adjust this value as needed
+
+    const titleElement = document.createElement("h3");
+    titleElement.textContent = "Selected Visualization:";
+    titleElement.style.margin = "0";  // Remove margin
+    titleElement.style.fontFamily = "Arial, sans-serif";
+    titleElement.style.color = "#333";
+    titleElement.style.fontSize = "16px";
+    titleElement.style.height = `${titleHeight}px`;  // Set height for centering
+    titleElement.style.lineHeight = `${titleHeight}px`;  // Center the text vertically
+    titleElement.style.paddingLeft = "20px";  // Add padding to the left
+
+    // Append the title element after the buttons
+    buttonContainer.appendChild(titleElement);
+
     // Create buttons
     const buttonNames = [
         { id: "questionHistogramBtn", label: "Question Histogram", icon: "📊" },
@@ -232,10 +247,10 @@ function createButtonSelection() {
             lastClickedBtn = btn;
             ctx.appState.currentViz = btn.id.slice(0, -3);
         });
-
-        buttonContainer.appendChild(btn);
     });
+
 }
+
 
 
 
