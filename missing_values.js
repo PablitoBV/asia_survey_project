@@ -69,7 +69,7 @@ export function drawMissingPercentageHistogram(csvData, containerId, badType = "
         .attr("y", d => yScale(d.improperPercentage))
         .attr("width", xScale.bandwidth())
         .attr("height", d => histHeight - yScale(d.improperPercentage))
-        .attr("fill", "tomato")
+        .attr("fill", "rgba(175, 73, 13, 0.84)")
         .on("mouseover", (event, d) => {
             d3.select(event.target).attr("fill", "darkred");
             hoverbox.html(`${d.country}:<br>${d.improperPercentage}% ${badType}`)
@@ -78,7 +78,7 @@ export function drawMissingPercentageHistogram(csvData, containerId, badType = "
                 .style("left", (event.pageX + 10) + "px");
         })
         .on("mouseout", (event) => {
-            d3.select(event.target).attr("fill", "tomato");
+            d3.select(event.target).attr("fill", "rgba(175, 73, 13, 0.84)");
             hoverbox.style("visibility", "hidden");
         });
 
@@ -115,7 +115,7 @@ export function drawMissingPercentageHistogram(csvData, containerId, badType = "
         .attr("y", 20)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .text(`Percentage of "${badType}" Values by Country`);
+        .text(`Percentage of "${badType}" values by respondent country`);
 
     const averageImproperPercentage = d3.mean(improperData, d => d.improperPercentage);
     
@@ -135,12 +135,11 @@ export function drawMissingPercentageHistogram(csvData, containerId, badType = "
         .attr("y", yScale(averageImproperPercentage) - 5)
         .attr("text-anchor", "end")
         .style("fill", "steelblue")
-        .style("font-size", "12px")
+        .style("font-size", "16px")
         .text(`Average: ${averageImproperPercentage.toFixed(1)}%`);
 }
 export function missing_dropdown_updates() {
     // Add event listener to the dropdown
-    console.log("Dropdown event listener initialized");
     d3.select("#select_bad_type").on("change", function () {
         const selectedBadType = d3.select(this).property("value");
         console.log(`Selected Bad Type: ${selectedBadType}`);

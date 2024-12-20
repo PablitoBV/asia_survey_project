@@ -8,7 +8,7 @@ import { drawMissingPercentageHistogram, missing_dropdown_updates } from './miss
 import { createDates } from './date.js';
 import { linksToTemplates } from './template_links.js';
 import { createQuestionNavigator, createGroupNavigator, createSENavigator, createCorrelationNavigator} from './navigator.js';
-import { createSpiderChart } from './spiderweb.js';
+import { mainSpiderWeb } from './spiderweb.js';
 import { plotCorrelationMatrix } from './Main_Page_Correlation.js';
 
 /* Main Information on the Dataset ------------------------------------------------------------------------------------------------------------------------------
@@ -242,11 +242,11 @@ function createViz_Page3() {
         Promise.all([csvDataPromise, loadQuestions()]).then(([csvData]) => {
             document.getElementById("loading3").style.display = "none";
             ctx.CSVDATA = csvData;  
-            createSpiderChart();         
+            mainSpiderWeb();         
         })
     }
     else {
-        createSpiderChart();
+        mainSpiderWeb();
     }
 };
 

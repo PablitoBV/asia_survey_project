@@ -22,7 +22,7 @@ export function linksToTemplates() {
 
     const buttonData = [
         { id: "button1", link: "page2.html", image: "images/heatmap.png", description: "Heatmap of questions per countries" },
-        { id: "button2", link: "page3.html", image: "images/heatmap.png", description: "Spider web chart of various economic factors" },
+        { id: "button2", link: "page3.html", image: "images/spiderchart.png", description: "Spider web chart of various economic factors" },
         { id: "button3", link: "page2.html", image: "images/heatmap.png", description: "description3" }
     ];
 
